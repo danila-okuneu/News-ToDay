@@ -9,6 +9,8 @@ import UIKit
 
 final class ArticleViewController: UIViewController {
     
+    let scrollView = UIScrollView()
+    let contentView = UIView()
     let imageView = UIImageView()
     let categoryLabel = UILabel()
     let articleLabel = UILabel()
@@ -20,11 +22,15 @@ final class ArticleViewController: UIViewController {
     let backButton = UIButton()
     let stackView = UIStackView()
     
+//    скрывает навигейшн на этом экране, чтобы наверху от СкроллВЬю не было белой полоски.
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        self.navigationController?.setNavigationBarHidden(true, animated: animated)
+    }
     
     override func viewDidLoad() {
         
-        navigationItem.hidesBackButton = true
-
+        
         view.backgroundColor = .white
         setupUI()
         
@@ -35,11 +41,31 @@ final class ArticleViewController: UIViewController {
     
     
     func setupUI() {
+        
+        scrollView.translatesAutoresizingMaskIntoConstraints = false
+        contentView.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(scrollView)
+        scrollView.addSubview(contentView)
+        
+        NSLayoutConstraint.activate([
+                 scrollView.topAnchor.constraint(equalTo: view.topAnchor, constant: 0),
+                 scrollView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
+                 scrollView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+                 scrollView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+                 
+                 contentView.topAnchor.constraint(equalTo: scrollView.topAnchor, constant: -60),
+                 contentView.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor),
+                 contentView.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor),
+                 contentView.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor),
+                 contentView.widthAnchor.constraint(equalTo: scrollView.widthAnchor)
+             ])
+        
+        
         imageView.backgroundColor = .lightGray
         imageView.image = UIImage(named: "image")
         imageView.contentMode = .scaleAspectFill
         imageView.clipsToBounds = true
-        view.addSubview(imageView)
+        contentView.addSubview(imageView)
         
         imageView.translatesAutoresizingMaskIntoConstraints = false
         
@@ -53,26 +79,26 @@ final class ArticleViewController: UIViewController {
         categoryLabel.adjustsFontSizeToFitWidth = true
         categoryLabel.minimumScaleFactor = 0.5
         categoryLabel.translatesAutoresizingMaskIntoConstraints = false
-        view.addSubview(categoryLabel)
+        contentView.addSubview(categoryLabel)
         
         titleLabel.text = "The latest situation in the presidential election"
         titleLabel.textColor = .white
         titleLabel.font = UIFont.interFont(ofSize: 20, weight: .semibold)
         titleLabel.numberOfLines = 0
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
-        view.addSubview(titleLabel)
+        contentView.addSubview(titleLabel)
         
         authorLabel.text = "John Doe"
         authorLabel.textColor = .white
         authorLabel.font = UIFont.interFont(ofSize: 13, weight: .bold)
         authorLabel.translatesAutoresizingMaskIntoConstraints = false
-        view.addSubview(authorLabel)
+        contentView.addSubview(authorLabel)
         
         authorConstLabel.text = "Author"
         authorConstLabel.textColor = .white
         authorConstLabel.font = UIFont.interFont(ofSize: 12, weight: .regular)
         authorConstLabel.translatesAutoresizingMaskIntoConstraints = false
-        view.addSubview(authorConstLabel)
+        contentView.addSubview(authorConstLabel)
         
         articleLabel.text = text
         articleLabel.textColor = .black
@@ -81,7 +107,7 @@ final class ArticleViewController: UIViewController {
         articleLabel.numberOfLines = 0
         articleLabel.textAlignment = .justified
         articleLabel.translatesAutoresizingMaskIntoConstraints = false
-        view.addSubview(articleLabel)
+        contentView.addSubview(articleLabel)
         
         let imgConfigBook = UIImage.SymbolConfiguration(pointSize: 20, weight: .medium, scale: .medium)
         let imageBook = UIImage(systemName: "bookmark", withConfiguration: imgConfigBook)
@@ -103,7 +129,7 @@ final class ArticleViewController: UIViewController {
         backButton.tintColor = .white
         backButton.addTarget(self, action: #selector(goBack), for: .touchUpInside)
         backButton.translatesAutoresizingMaskIntoConstraints = false
-        view.addSubview(backButton)
+        contentView.addSubview(backButton)
         
         stackView.addArrangedSubview(bookmarkButton)
         stackView.addArrangedSubview(shareButton)
@@ -111,14 +137,14 @@ final class ArticleViewController: UIViewController {
         stackView.spacing = 15
         stackView.distribution = .fillEqually
         stackView.translatesAutoresizingMaskIntoConstraints = false
-        view.addSubview(stackView)
+        contentView.addSubview(stackView)
         
         NSLayoutConstraint.activate([
             
-            imageView.widthAnchor.constraint(equalTo: view.widthAnchor),
-            imageView.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.44),
-            imageView.topAnchor.constraint(equalTo: view.topAnchor, constant: 0),
-            imageView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            imageView.widthAnchor.constraint(equalTo: contentView.widthAnchor),
+            imageView.heightAnchor.constraint(equalTo: scrollView.heightAnchor, multiplier: 0.5),
+            imageView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 0),
+            imageView.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
             
             categoryLabel.topAnchor.constraint(equalTo: imageView.bottomAnchor, constant: -190),
             categoryLabel.leadingAnchor.constraint(equalTo: imageView.leadingAnchor, constant: 20),
@@ -130,10 +156,10 @@ final class ArticleViewController: UIViewController {
             titleLabel.topAnchor.constraint(equalTo: categoryLabel.bottomAnchor, constant: 15),
             
             articleLabel.topAnchor.constraint(equalTo: imageView.bottomAnchor, constant: 15),
-            articleLabel.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -15),
-            articleLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
-            articleLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
-
+            articleLabel.bottomAnchor.constraint(equalTo: contentView.safeAreaLayoutGuide.bottomAnchor, constant: -15),
+            articleLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 20),
+            articleLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -20),
+            
             authorLabel.leadingAnchor.constraint(equalTo: imageView.leadingAnchor, constant: 20),
             authorLabel.trailingAnchor.constraint(equalTo: imageView.trailingAnchor, constant: -20),
             authorLabel.bottomAnchor.constraint(equalTo: authorConstLabel.topAnchor, constant: -3),
@@ -142,12 +168,12 @@ final class ArticleViewController: UIViewController {
             authorConstLabel.trailingAnchor.constraint(equalTo: imageView.trailingAnchor, constant: -20),
             authorConstLabel.bottomAnchor.constraint(equalTo: imageView.bottomAnchor, constant: -30),
             
-            stackView.topAnchor.constraint(equalTo: view.topAnchor, constant: 70),
-            stackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -25),
-         
-            backButton.topAnchor.constraint(equalTo: view.topAnchor, constant: 70),
-            backButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
-
+            stackView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 70),
+            stackView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -25),
+            
+            backButton.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 70),
+            backButton.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 20),
+            
         ])
         
     }
