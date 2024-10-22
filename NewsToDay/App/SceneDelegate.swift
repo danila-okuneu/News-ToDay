@@ -18,9 +18,14 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 		
 		window = UIWindow(frame: windowScene.coordinateSpace.bounds)
 		window?.windowScene = windowScene
-		window?.rootViewController = BrowseViewController()
+		window?.rootViewController = UINavigationController(rootViewController: OnboardingViewController())
 		window?.makeKeyAndVisible()
 		
+        let backButtonImage = UIImage(systemName: "arrow.left")?.withRenderingMode(.alwaysOriginal)
+        
+        UINavigationBar.appearance().backIndicatorImage = backButtonImage
+        UINavigationBar.appearance().backIndicatorTransitionMaskImage = backButtonImage
+
     }
 
     func sceneDidDisconnect(_ scene: UIScene) {
