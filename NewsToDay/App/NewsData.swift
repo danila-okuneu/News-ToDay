@@ -13,10 +13,8 @@ struct NewsData: Decodable {
 
 struct Articles: Decodable {
     let author: String?
-    let title: String
+    let title: String?
     let urlToImage: String?
     let url: String
-    let content: String
+    let content: String?
 }
-
-    

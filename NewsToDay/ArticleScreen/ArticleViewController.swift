@@ -190,11 +190,12 @@ final class ArticleViewController: UIViewController {
     @objc func bookmarkButtonTapped() {
         madeBookmark()
         
-        let topics = ["Sports", "Politics","Life","Gaming","Animals","Nature","Food","Art","History","Fashion","Covid-19"]
+        let topics = ["business","entertainment","general","health","science","sports","technology"]
+        
         topic = topics.randomElement()!
 
         newsManager.fetchNews(topic: topic)
-        print("saved")
+        print("\(topic)")
     }
     
     @objc func goBack() {
@@ -234,13 +235,13 @@ final class ArticleViewController: UIViewController {
 // MARK: - NewsManagerDelegate
 
 extension ArticleViewController: NewsManagerDelegate {
-    func didUpdateNews(news: NewsModel) {
+    func didUpdateNews(manager: NewsManager,news: NewsModel) {
         DispatchQueue.main.async {
             self.authorLabel.text = news.author
             self.titleLabel.text = news.title
             self.articleLabel.text = news.content
-            
             self.categoryLabel.text = self.topic
+            print(self.authorLabel.text!, self.titleLabel.text!, self.categoryLabel.text!)
             
         }
     }

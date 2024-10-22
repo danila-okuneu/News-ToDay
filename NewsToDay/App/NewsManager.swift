@@ -8,7 +8,7 @@
 import Foundation
 
 protocol NewsManagerDelegate {
-    func didUpdateNews(news: NewsModel)
+    func didUpdateNews(manager: NewsManager, news: NewsModel)
     func didFailWithError(error: Error)
 }
 struct NewsManager {
@@ -24,18 +24,18 @@ struct NewsManager {
               formatter.dateFormat = "yyyy-MM-dd"
               return formatter.string(from: yesterday)
     }
-    var topic: String {
-        topics.randomElement() ?? "General"
-     }
+//    var topic: String {
+//        topics.randomElement() ?? "General"
+//     }
     
     // URL для джейсона
-    var baseURL: String {
-            return "https://newsapi.org/v2/everything?q=\(topic)&from=\(date)&sortBy=popularity&apiKey=\(apiKey)"
-        }
+//    var baseURL: String {
+//        return "https://newsapi.org/v2/top-headlines?category=\(topic)&apiKey=\(apiKey)"
+//        }
     
     
-    let topics = ["Sports", "Politics","Life","Gaming","Animals","Nature","Food","Art","History","Fashion","Covid-19"]
-    
+//    let topics = ["business","entertainment","general","health","science","sports","technology"]
+
         // метод за сегодня
     func getToday() -> String {
         let date = Date()
@@ -46,12 +46,11 @@ struct NewsManager {
         return today
     }
     
-    func fetchNews (topic: String) {
-        let urlString = "https://newsapi.org/v2/everything?q=\(topic)&from=\(date)&sortBy=popularity&apiKey=\(apiKey)"
-        
+    func fetchNews(topic: String) {
+        let urlString = "https://newsapi.org/v2/top-headlines?category=\(topic)&apiKey=\(apiKey)"
+        print(urlString)
+        print("json \(topic)")
         performRequest(with: urlString)
-        
-
         
     }
     
@@ -67,9 +66,13 @@ struct NewsManager {
                 
                 if let safeData = data {
                     if let news = self.parseJSON(safeData) {
-                        self.delegate?.didUpdateNews (news: news)
+                        self.delegate?.didUpdateNews(manager: self, news: news)
                         
+                    } else {
+                        print("failed to parse data")
                     }
+                } else {
+                    print("failed to fetch Data")
                 }
             }
             
@@ -79,24 +82,21 @@ struct NewsManager {
     
     func parseJSON(_ newsData: Data) -> NewsModel? {
                    let decoder = JSONDecoder()
-                   decoder.keyDecodingStrategy = .convertFromSnakeCase
                    
                    do {
                        let decodedData = try decoder.decode(NewsData.self, from: newsData)
-                       let author = decodedData.articles[0].author
-                       let content = decodedData.articles[4].content
-                       let title = decodedData.articles[1].content
+                       let article = decodedData.articles.randomElement()!
+                       let author = article.author ?? "_"
+                       let title = article.title ?? "_"
+                       let content = article.content ?? "_"
                        
                        
-                       let news = NewsModel(
-                        author: author ?? "_",
-                        title: title,
-                        content: content
-                       )
+                       let news = NewsModel(author: author, title: title, content: content)
                        return news
                        
                    } catch {
                        delegate?.didFailWithError(error: error)
+                       print(error)
                        return nil
                    }
                }
