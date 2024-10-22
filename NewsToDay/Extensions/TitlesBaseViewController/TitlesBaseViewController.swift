@@ -12,6 +12,11 @@ class TitlesBaseViewController: UIViewController {
         setupCustomNavBar()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        navigationController?.setNavigationBarHidden(true, animated: true)
+    }
+    
     //MARK: - SetupUI
     private func setupCustomNavBar() {
         customNavBar.translatesAutoresizingMaskIntoConstraints = false
