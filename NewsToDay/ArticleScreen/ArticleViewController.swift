@@ -9,18 +9,24 @@ import UIKit
 
 final class ArticleViewController: UIViewController {
     
+    var newsManager = NewsManager()
+    
     let scrollView = UIScrollView()
     let contentView = UIView()
-    let imageView = UIImageView()
-    let categoryLabel = UILabel()
-    let articleLabel = UILabel()
-    let titleLabel = UILabel()
-    let authorLabel = UILabel()
+    var imageView = UIImageView()
+    var categoryLabel = UILabel()
+    var articleLabel = UILabel()
+    var titleLabel = UILabel()
+    var authorLabel = UILabel()
     let authorConstLabel = UILabel()
     let shareButton = UIButton()
     let bookmarkButton = UIButton()
     let backButton = UIButton()
     let stackView = UIStackView()
+    var isBookmarked = false
+    
+    //это свойство формируется из рандома, для тестирования, удалить.
+    var topic = "sports"
     
 //    скрывает навигейшн на этом экране, чтобы наверху от СкроллВЬю не было белой полоски.
     override func viewWillAppear(_ animated: Bool) {
@@ -32,6 +38,9 @@ final class ArticleViewController: UIViewController {
         
         
         view.backgroundColor = .white
+        newsManager.delegate = self
+
+        
         setupUI()
         
         
@@ -84,7 +93,7 @@ final class ArticleViewController: UIViewController {
         titleLabel.text = "The latest situation in the presidential election"
         titleLabel.textColor = .white
         titleLabel.font = UIFont.interFont(ofSize: 20, weight: .semibold)
-        titleLabel.numberOfLines = 0
+        titleLabel.numberOfLines = 3
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
         contentView.addSubview(titleLabel)
         
@@ -175,11 +184,18 @@ final class ArticleViewController: UIViewController {
             backButton.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 20),
             
         ])
-        
+   
     }
     
     @objc func bookmarkButtonTapped() {
-        print("saved")
+        madeBookmark()
+        
+        let topics = ["business","entertainment","general","health","science","sports","technology"]
+        
+        topic = topics.randomElement()!
+
+        newsManager.fetchNews(topic: topic)
+        print("\(topic)")
     }
     
     @objc func goBack() {
@@ -189,15 +205,55 @@ final class ArticleViewController: UIViewController {
     @objc func shareTapped() {
         print("share")
         
-        //здесь можно поставить url или текст статьи
-        let activityVC = UIActivityViewController(activityItems: [titleLabel.text!], applicationActivities: nil)
+        //здесь можно поставить текст статьи
+        let activityVC = UIActivityViewController(activityItems: [articleLabel.text!], applicationActivities: nil)
         activityVC.popoverPresentationController?.sourceView = self.view
         
         self.present(activityVC, animated: true)
     }
     
-    
+        //пример текста, в будущем удалить
     let text = "Leads in individual states may change from one party to another as all the votes are counted. Select a state for detailed results, and select the Senate, House or Governor tabs to view those races. For more detailed state results click on the States A-Z links at the bottom of this page. Results source: NEP/Edison via Reuters. Leads in individual states may change from one party to another as all the votes are counted. Select a state for detailed results, and select the Senate, House or Governor tabs to view those races. For more detailed state results click on the States A-Z links at the bottom of this page Results source: NEP/Edison via Reuters.select the Senate, House or Governor tabs to view those races. For more detailed state results click on the States A-Z links at the bottom of this page. Results source: NEP/Edison via Reuters. Leads in individual states may change from one party to another as all the votes are counted. Select a state for detailed results, and select the Senate, House or Governor tabs to view those races. For more detailed state results click on the States A-Z links at the bottom of this page. Results source: NEP/Edison via Reuters."
+    
+    private func madeBookmark(){
+        isBookmarked.toggle()
+        
+        let imgConfigBook = UIImage.SymbolConfiguration(pointSize: 20)
+        let imageBook: UIImage
+        
+        if isBookmarked {
+            imageBook = UIImage(systemName: "bookmark.fill", withConfiguration: imgConfigBook)!
+        } else {
+            imageBook = UIImage(systemName: "bookmark", withConfiguration: imgConfigBook)!
+        }
+        
+        bookmarkButton.setImage(imageBook, for: .normal)
+        
+    }
 }
+
+// MARK: - NewsManagerDelegate
+
+extension ArticleViewController: NewsManagerDelegate {
+    func didUpdateNews(manager: NewsManager,news: NewsModel) {
+        DispatchQueue.main.async {
+            self.authorLabel.text = news.author
+            self.titleLabel.text = news.title
+            self.articleLabel.text = news.content
+            self.categoryLabel.text = self.topic
+            print(self.authorLabel.text!, self.titleLabel.text!, self.categoryLabel.text!)
+            
+        }
+    }
+    
+    func didFailWithError(error: any Error) {
+        func didFailWithError(error: any Error) {
+            print(error.localizedDescription)
+        }
+    }
+    
+    
+}
+
 
 #Preview { ArticleViewController() }
