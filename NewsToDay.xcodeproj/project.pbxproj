@@ -21,6 +21,8 @@
 		F12911762CC57CC900DAC490 /* Adamina.ttf in Resources */ = {isa = PBXBuildFile; fileRef = F12911752CC57CC900DAC490 /* Adamina.ttf */; };
 		F12911792CC57D1700DAC490 /* ColorExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = F12911772CC57D1700DAC490 /* ColorExtension.swift */; };
 		F129117A2CC57D1700DAC490 /* FontExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = F12911782CC57D1700DAC490 /* FontExtension.swift */; };
+		FA192C4D2CC6A62900655769 /* TitlesBaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA192C4C2CC6A62200655769 /* TitlesBaseViewController.swift */; };
+		FA192C502CC6A6B100655769 /* TitlesBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA192C4F2CC6A69600655769 /* TitlesBarView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -39,6 +41,8 @@
 		F12911752CC57CC900DAC490 /* Adamina.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Adamina.ttf; sourceTree = "<group>"; };
 		F12911772CC57D1700DAC490 /* ColorExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorExtension.swift; sourceTree = "<group>"; };
 		F12911782CC57D1700DAC490 /* FontExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FontExtension.swift; sourceTree = "<group>"; };
+		FA192C4C2CC6A62200655769 /* TitlesBaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitlesBaseViewController.swift; sourceTree = "<group>"; };
+		FA192C4F2CC6A69600655769 /* TitlesBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitlesBarView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -101,6 +105,7 @@
 			children = (
 				F12911772CC57D1700DAC490 /* ColorExtension.swift */,
 				F12911782CC57D1700DAC490 /* FontExtension.swift */,
+				FA192C532CC6C4CF00655769 /* TitlesBaseViewController */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -152,6 +157,15 @@
 				DD6CDEC62CC5787300CE12B3 /* SceneDelegate.swift */,
 			);
 			path = App;
+			sourceTree = "<group>";
+		};
+		FA192C532CC6C4CF00655769 /* TitlesBaseViewController */ = {
+			isa = PBXGroup;
+			children = (
+				FA192C4F2CC6A69600655769 /* TitlesBarView.swift */,
+				FA192C4C2CC6A62200655769 /* TitlesBaseViewController.swift */,
+			);
+			path = TitlesBaseViewController;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -232,12 +246,14 @@
 				F12911692CC57B4C00DAC490 /* BookmarksViewController.swift in Sources */,
 				F129116D2CC57B9800DAC490 /* ArticleViewController.swift in Sources */,
 				F12911662CC57AF800DAC490 /* ProfileViewController.swift in Sources */,
+				FA192C502CC6A6B100655769 /* TitlesBarView.swift in Sources */,
 				DD6CDEC52CC5787300CE12B3 /* AppDelegate.swift in Sources */,
 				DD6CDEC72CC5787300CE12B3 /* SceneDelegate.swift in Sources */,
 				F12911792CC57D1700DAC490 /* ColorExtension.swift in Sources */,
 				F129117A2CC57D1700DAC490 /* FontExtension.swift in Sources */,
 				F12911602CC57A5F00DAC490 /* OnboardingViewController.swift in Sources */,
 				F12911632CC57AC000DAC490 /* BrowseViewController.swift in Sources */,
+				FA192C4D2CC6A62900655769 /* TitlesBaseViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
