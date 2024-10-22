@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		79BD6BB92CC84C5100B128B6 /* OnboardingCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79BD6BB82CC84C5100B128B6 /* OnboardingCollectionViewCell.swift */; };
 		DD6CDEC52CC5787300CE12B3 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD6CDEC42CC5787300CE12B3 /* AppDelegate.swift */; };
 		DD6CDEC72CC5787300CE12B3 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD6CDEC62CC5787300CE12B3 /* SceneDelegate.swift */; };
 		DD6CDECE2CC5787800CE12B3 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DD6CDECD2CC5787800CE12B3 /* Assets.xcassets */; };
@@ -24,6 +25,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		79BD6BB82CC84C5100B128B6 /* OnboardingCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingCollectionViewCell.swift; sourceTree = "<group>"; };
 		DD6CDEC12CC5787300CE12B3 /* NewsToDay.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = NewsToDay.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DD6CDEC42CC5787300CE12B3 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		DD6CDEC62CC5787300CE12B3 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -109,6 +111,7 @@
 			isa = PBXGroup;
 			children = (
 				F129115F2CC57A5600DAC490 /* OnboardingViewController.swift */,
+				79BD6BB82CC84C5100B128B6 /* OnboardingCollectionViewCell.swift */,
 			);
 			path = OnboardingScreen;
 			sourceTree = "<group>";
@@ -236,6 +239,7 @@
 				DD6CDEC72CC5787300CE12B3 /* SceneDelegate.swift in Sources */,
 				F12911792CC57D1700DAC490 /* ColorExtension.swift in Sources */,
 				F129117A2CC57D1700DAC490 /* FontExtension.swift in Sources */,
+				79BD6BB92CC84C5100B128B6 /* OnboardingCollectionViewCell.swift in Sources */,
 				F12911602CC57A5F00DAC490 /* OnboardingViewController.swift in Sources */,
 				F12911632CC57AC000DAC490 /* BrowseViewController.swift in Sources */,
 			);
