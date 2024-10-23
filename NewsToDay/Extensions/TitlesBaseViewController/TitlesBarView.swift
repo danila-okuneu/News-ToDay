@@ -48,7 +48,6 @@ class TitlesBarView: UIView {
             descriptionLabel.leadingAnchor.constraint(equalTo: titleLabel.leadingAnchor),
             descriptionLabel.trailingAnchor.constraint(equalTo: titleLabel.trailingAnchor),
             descriptionLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 8),
-            descriptionLabel.heightAnchor.constraint(equalToConstant: 48)
         ])
     }
     

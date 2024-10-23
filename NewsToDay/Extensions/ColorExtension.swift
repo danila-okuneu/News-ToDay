@@ -27,15 +27,17 @@ extension UIColor {
 		case greyLight
 		case greyLighter
 		case greyPrimary
+        
+        case purpleBright
 		
 		var value: UIColor {
 			switch self {
 			case .purpleDark:
 				return getColor(37, 54, 167)
 			case .purpleLight:
-				return getColor(238, 240, 251)
-			case .purpleLighter:
 				return getColor(138, 150, 229)
+			case .purpleLighter:
+				return getColor(238, 240, 251)
 			case .purplePrimary:
 				return getColor(71, 90, 215)
 				
@@ -56,6 +58,9 @@ extension UIColor {
 				return getColor(243, 244, 246)
 			case .greyPrimary:
 				return getColor(124, 130, 161)
+            
+            case .purpleBright:
+                return getColor(101, 99, 255)
 			}
 			
 		}
