@@ -1,0 +1,30 @@
+/*
+  Localizable.strings
+  NewsToDay
+
+  Created by Danila Okuneu on 22.10.24.
+  
+*/
+
+// MARK: - Onboarding Screen
+
+
+// MARK: - Browse Screen
+
+
+// MARK: - Category Screen
+
+
+// MARK: - Profile Screen
+"profile" = "Profile";
+
+// MARK: - Language Screen
+
+"language" = "Language";
+
+// MARK: - Settings Screen
+
+
+// MARK: - Terms Screen
+
+
