@@ -13,38 +13,9 @@ protocol NewsManagerDelegate {
 }
 struct NewsManager {
     
-        var delegate: NewsManagerDelegate?
+    var delegate: NewsManagerDelegate?
     
     let apiKey = "30804caa0fa442909fd0a2999f25c04c"
-    
-        //дата за ВЧЕРА
-    var date: String {
-        let yesterday = Calendar.current.date(byAdding: .day, value: -1, to: Date())!
-              let formatter = DateFormatter()
-              formatter.dateFormat = "yyyy-MM-dd"
-              return formatter.string(from: yesterday)
-    }
-//    var topic: String {
-//        topics.randomElement() ?? "General"
-//     }
-    
-    // URL для джейсона
-//    var baseURL: String {
-//        return "https://newsapi.org/v2/top-headlines?category=\(topic)&apiKey=\(apiKey)"
-//        }
-    
-    
-//    let topics = ["business","entertainment","general","health","science","sports","technology"]
-
-        // метод за сегодня
-    func getToday() -> String {
-        let date = Date()
-        let formatter = DateFormatter()
-        formatter.dateFormat = "yyyy-MM-dd"
-        
-        let today = formatter.string(from: date)
-        return today
-    }
     
     func fetchNews(topic: String) {
         let urlString = "https://newsapi.org/v2/top-headlines?category=\(topic)&apiKey=\(apiKey)"
@@ -59,7 +30,7 @@ struct NewsManager {
             let session = URLSession(configuration: .default)
             let task = session.dataTask(with: url) { (data, response, error) in
                 if error != nil {
-                    print(error!)
+                    print(error!.localizedDescription)
                     self.delegate?.didFailWithError(error: error!)
                     return
                 }
@@ -81,27 +52,52 @@ struct NewsManager {
     }
     
     func parseJSON(_ newsData: Data) -> NewsModel? {
-                   let decoder = JSONDecoder()
-                   
-                   do {
-                       let decodedData = try decoder.decode(NewsData.self, from: newsData)
-                       let article = decodedData.articles.randomElement()!
-                       let author = article.author ?? "_"
-                       let title = article.title ?? "_"
-                       let content = article.content ?? "_"
-                       
-                       
-                       let news = NewsModel(author: author, title: title, content: content)
+        let decoder = JSONDecoder()
+        
+        do {
+            let decodedData = try decoder.decode(NewsData.self, from: newsData)
+            let article = decodedData.articles.randomElement()!
+            let author = article.author ?? ""
+            let title = article.title ?? ""
+            let content = article.content ?? "Read the full article on the site of the publisher"
+            let urlToImage = article.urlToImage ?? ""
+            let publishedAt = article.publishedAt ?? ""
+            
+            let news = NewsModel(
+                author: author,
+                title: title,
+                content: content,
+                urlToImage: urlToImage,
+                publishedAt: publishedAt
+            )
                        return news
-                       
-                   } catch {
-                       delegate?.didFailWithError(error: error)
-                       print(error)
-                       return nil
-                   }
-               }
-
-    
+            
+        } catch {
+            delegate?.didFailWithError(error: error)
+            print(error)
+            return nil
+        }
+    }
     
 }
+
+extension NewsManager {
     
+    // получить дату за сегодня
+    func getToday() -> String {
+        let date = Date()
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy-MM-dd"
+        
+        let today = formatter.string(from: date)
+        return today
+    }
+    
+    //получить дату за ВЧЕРА
+    var date: String {
+        let yesterday = Calendar.current.date(byAdding: .day, value: -1, to: Date())!
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy-MM-dd"
+        return formatter.string(from: yesterday)
+    }
+}
