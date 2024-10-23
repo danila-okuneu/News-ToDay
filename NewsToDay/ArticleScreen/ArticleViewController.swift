@@ -24,15 +24,8 @@ final class ArticleViewController: UIViewController {
     let backButton = UIButton()
     let stackView = UIStackView()
     var isBookmarked = false
-    
-    //это свойство формируется из рандома, для тестирования, удалить.
-    var topic = "sports"
-    
-//    скрывает навигейшн на этом экране, чтобы наверху от СкроллВЬю не было белой полоски.
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        self.navigationController?.setNavigationBarHidden(true, animated: animated)
-    }
+    var topic = ""
+
     
     override func viewDidLoad() {
         
@@ -45,6 +38,13 @@ final class ArticleViewController: UIViewController {
         
         
         
+    }
+    
+    
+//    скрывает навигейшн на этом экране, чтобы наверху от СкроллВЬю не было белой полоски.
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        self.navigationController?.setNavigationBarHidden(true, animated: animated)
     }
     
     
@@ -188,6 +188,7 @@ final class ArticleViewController: UIViewController {
         ])
    
     }
+        // Functions of buttons
     
     @objc func bookmarkButtonTapped() {
         madeBookmark()
@@ -201,14 +202,14 @@ final class ArticleViewController: UIViewController {
     }
     
     @objc func goBack() {
-        self.navigationController?.pushViewController(BrowseViewController(), animated: true)
+        self.navigationController?.popViewController(animated: true)
     }
     
     @objc func shareTapped() {
         print("share")
         
-        //здесь можно поставить текст статьи
-        let activityVC = UIActivityViewController(activityItems: [articleLabel.text!], applicationActivities: nil)
+        //здесь можно поставить текст статьи + url
+        let activityVC = UIActivityViewController(activityItems: [titleLabel.text ?? ""], applicationActivities: nil)
         activityVC.popoverPresentationController?.sourceView = self.view
         
         self.present(activityVC, animated: true)
@@ -217,7 +218,8 @@ final class ArticleViewController: UIViewController {
         //пример текста, в будущем удалить
     let text = "Leads in individual states may change from one party to another as all the votes are counted. Select a state for detailed results, and select the Senate, House or Governor tabs to view those races. For more detailed state results click on the States A-Z links at the bottom of this page. Results source: NEP/Edison via Reuters. Leads in individual states may change from one party to another as all the votes are counted. Select a state for detailed results, and select the Senate, House or Governor tabs to view those races. For more detailed state results click on the States A-Z links at the bottom of this page Results source: NEP/Edison via Reuters.select the Senate, House or Governor tabs to view those races. For more detailed state results click on the States A-Z links at the bottom of this page. Results source: NEP/Edison via Reuters. Leads in individual states may change from one party to another as all the votes are counted. Select a state for detailed results, and select the Senate, House or Governor tabs to view those races. For more detailed state results click on the States A-Z links at the bottom of this page. Results source: NEP/Edison via Reuters."
     
-    private func madeBookmark(){
+    
+    func madeBookmark(){
         isBookmarked.toggle()
         
         let imgConfigBook = UIImage.SymbolConfiguration(pointSize: 20)
