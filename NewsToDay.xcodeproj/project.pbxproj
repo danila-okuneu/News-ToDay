@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		79BD6BB92CC84C5100B128B6 /* OnboardingCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79BD6BB82CC84C5100B128B6 /* OnboardingCollectionViewCell.swift */; };
 		DD6CDEC52CC5787300CE12B3 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD6CDEC42CC5787300CE12B3 /* AppDelegate.swift */; };
 		DD6CDEC72CC5787300CE12B3 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD6CDEC62CC5787300CE12B3 /* SceneDelegate.swift */; };
 		DD6CDECE2CC5787800CE12B3 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DD6CDECD2CC5787800CE12B3 /* Assets.xcassets */; };
@@ -20,6 +21,7 @@
 		F12911762CC57CC900DAC490 /* Adamina.ttf in Resources */ = {isa = PBXBuildFile; fileRef = F12911752CC57CC900DAC490 /* Adamina.ttf */; };
 		F12911792CC57D1700DAC490 /* ColorExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = F12911772CC57D1700DAC490 /* ColorExtension.swift */; };
 		F129117A2CC57D1700DAC490 /* FontExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = F12911782CC57D1700DAC490 /* FontExtension.swift */; };
+
 		F14EA7EA2CC8097100E10476 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F14EA7E92CC8097100E10476 /* ProfileViewController.swift */; };
 		F14EA7EF2CC80CD200E10476 /* TermsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F14EA7EE2CC80CCD00E10476 /* TermsViewController.swift */; };
 		F14EA7F12CC80E7000E10476 /* LanguageModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F14EA7F02CC80E6D00E10476 /* LanguageModel.swift */; };
@@ -29,9 +31,20 @@
 		F14EA8072CC83FD400E10476 /* LanguageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F14EA8062CC83FD100E10476 /* LanguageCell.swift */; };
 		F14EA8092CC93AAB00E10476 /* LanguageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F14EA8082CC93AA400E10476 /* LanguageManager.swift */; };
 		F14EA80B2CC9474800E10476 /* ProfileButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = F14EA80A2CC9474800E10476 /* ProfileButton.swift */; };
+
+		F326FA732CC7C6A7000FF0E2 /* NewsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F326FA722CC7C6A7000FF0E2 /* NewsManager.swift */; };
+		F326FA752CC7C6B3000FF0E2 /* NewsData.swift in Sources */ = {isa = PBXBuildFile; fileRef = F326FA742CC7C6B3000FF0E2 /* NewsData.swift */; };
+		F326FA772CC7DBB3000FF0E2 /* NewsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F326FA762CC7DBB3000FF0E2 /* NewsModel.swift */; };
+		FA192C4D2CC6A62900655769 /* TitlesBaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA192C4C2CC6A62200655769 /* TitlesBaseViewController.swift */; };
+		FA192C502CC6A6B100655769 /* TitlesBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA192C4F2CC6A69600655769 /* TitlesBarView.swift */; };
+		FA7095602CC7E857006D0F10 /* BookmarksCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA70955F2CC7E84B006D0F10 /* BookmarksCell.swift */; };
+		FA7095622CC7EE95006D0F10 /* Bookmark.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA7095612CC7EE94006D0F10 /* Bookmark.swift */; };
+		FA7095682CC80E85006D0F10 /* BookmarkEmptyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA7095672CC80E7F006D0F10 /* BookmarkEmptyView.swift */; };
+
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		79BD6BB82CC84C5100B128B6 /* OnboardingCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingCollectionViewCell.swift; sourceTree = "<group>"; };
 		DD6CDEC12CC5787300CE12B3 /* NewsToDay.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = NewsToDay.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DD6CDEC42CC5787300CE12B3 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		DD6CDEC62CC5787300CE12B3 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -46,6 +59,7 @@
 		F12911752CC57CC900DAC490 /* Adamina.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Adamina.ttf; sourceTree = "<group>"; };
 		F12911772CC57D1700DAC490 /* ColorExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorExtension.swift; sourceTree = "<group>"; };
 		F12911782CC57D1700DAC490 /* FontExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FontExtension.swift; sourceTree = "<group>"; };
+
 		F14EA7E92CC8097100E10476 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		F14EA7EE2CC80CCD00E10476 /* TermsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TermsViewController.swift; sourceTree = "<group>"; };
 		F14EA7F02CC80E6D00E10476 /* LanguageModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LanguageModel.swift; sourceTree = "<group>"; };
@@ -58,6 +72,16 @@
 		F14EA8062CC83FD100E10476 /* LanguageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LanguageCell.swift; sourceTree = "<group>"; };
 		F14EA8082CC93AA400E10476 /* LanguageManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LanguageManager.swift; sourceTree = "<group>"; };
 		F14EA80A2CC9474800E10476 /* ProfileButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileButton.swift; sourceTree = "<group>"; };
+
+		F326FA722CC7C6A7000FF0E2 /* NewsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsManager.swift; sourceTree = "<group>"; };
+		F326FA742CC7C6B3000FF0E2 /* NewsData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsData.swift; sourceTree = "<group>"; };
+		F326FA762CC7DBB3000FF0E2 /* NewsModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsModel.swift; sourceTree = "<group>"; };
+		FA192C4C2CC6A62200655769 /* TitlesBaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitlesBaseViewController.swift; sourceTree = "<group>"; };
+		FA192C4F2CC6A69600655769 /* TitlesBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitlesBarView.swift; sourceTree = "<group>"; };
+		FA70955F2CC7E84B006D0F10 /* BookmarksCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookmarksCell.swift; sourceTree = "<group>"; };
+		FA7095612CC7EE94006D0F10 /* Bookmark.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Bookmark.swift; sourceTree = "<group>"; };
+		FA7095672CC80E7F006D0F10 /* BookmarkEmptyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookmarkEmptyView.swift; sourceTree = "<group>"; };
+
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -123,6 +147,7 @@
 			children = (
 				F12911772CC57D1700DAC490 /* ColorExtension.swift */,
 				F12911782CC57D1700DAC490 /* FontExtension.swift */,
+				FA192C532CC6C4CF00655769 /* TitlesBaseViewController */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -131,6 +156,7 @@
 			isa = PBXGroup;
 			children = (
 				F129115F2CC57A5600DAC490 /* OnboardingViewController.swift */,
+				79BD6BB82CC84C5100B128B6 /* OnboardingCollectionViewCell.swift */,
 			);
 			path = OnboardingScreen;
 			sourceTree = "<group>";
@@ -156,6 +182,9 @@
 		F12911672CC57B3600DAC490 /* BookmarksScreen */ = {
 			isa = PBXGroup;
 			children = (
+				FA7095672CC80E7F006D0F10 /* BookmarkEmptyView.swift */,
+				FA7095612CC7EE94006D0F10 /* Bookmark.swift */,
+				FA70955F2CC7E84B006D0F10 /* BookmarksCell.swift */,
 				F12911682CC57B4500DAC490 /* BookmarksViewController.swift */,
 			);
 			path = BookmarksScreen;
@@ -174,10 +203,14 @@
 			children = (
 				DD6CDEC42CC5787300CE12B3 /* AppDelegate.swift */,
 				DD6CDEC62CC5787300CE12B3 /* SceneDelegate.swift */,
+				F326FA722CC7C6A7000FF0E2 /* NewsManager.swift */,
+				F326FA742CC7C6B3000FF0E2 /* NewsData.swift */,
+				F326FA762CC7DBB3000FF0E2 /* NewsModel.swift */,
 			);
 			path = App;
 			sourceTree = "<group>";
 		};
+ProfileScreen
 		F14EA7FC2CC8347F00E10476 /* Language */ = {
 			isa = PBXGroup;
 			children = (
@@ -195,6 +228,15 @@
 				F14EA7F22CC810E200E10476 /* LanguageViewController.swift */,
 			);
 			path = LanguageScreen;
+
+		FA192C532CC6C4CF00655769 /* TitlesBaseViewController */ = {
+			isa = PBXGroup;
+			children = (
+				FA192C4F2CC6A69600655769 /* TitlesBarView.swift */,
+				FA192C4C2CC6A62200655769 /* TitlesBaseViewController.swift */,
+			);
+			path = TitlesBaseViewController;
+
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -276,22 +318,43 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+
 				F14EA7EF2CC80CD200E10476 /* TermsViewController.swift in Sources */,
 				F12911692CC57B4C00DAC490 /* BookmarksViewController.swift in Sources */,
 				F129116D2CC57B9800DAC490 /* ArticleViewController.swift in Sources */,
 				F14EA8072CC83FD400E10476 /* LanguageCell.swift in Sources */,
 				F14EA8052CC83AC200E10476 /* LanguageButton.swift in Sources */,
+
+				F326FA772CC7DBB3000FF0E2 /* NewsModel.swift in Sources */,
+				F12911692CC57B4C00DAC490 /* BookmarksViewController.swift in Sources */,
+				F129116D2CC57B9800DAC490 /* ArticleViewController.swift in Sources */,
+				F12911662CC57AF800DAC490 /* ProfileViewController.swift in Sources */,
+				FA192C502CC6A6B100655769 /* TitlesBarView.swift in Sources */,
+				F326FA732CC7C6A7000FF0E2 /* NewsManager.swift in Sources */,
+
 				DD6CDEC52CC5787300CE12B3 /* AppDelegate.swift in Sources */,
+				FA7095622CC7EE95006D0F10 /* Bookmark.swift in Sources */,
 				DD6CDEC72CC5787300CE12B3 /* SceneDelegate.swift in Sources */,
 				F14EA7F12CC80E7000E10476 /* LanguageModel.swift in Sources */,
 				F14EA7EA2CC8097100E10476 /* ProfileViewController.swift in Sources */,
 				F12911792CC57D1700DAC490 /* ColorExtension.swift in Sources */,
 				F129117A2CC57D1700DAC490 /* FontExtension.swift in Sources */,
+
 				F14EA80B2CC9474800E10476 /* ProfileButton.swift in Sources */,
 				F14EA7F32CC810E700E10476 /* LanguageViewController.swift in Sources */,
+
+				79BD6BB92CC84C5100B128B6 /* OnboardingCollectionViewCell.swift in Sources */,
+
 				F12911602CC57A5F00DAC490 /* OnboardingViewController.swift in Sources */,
+				F326FA752CC7C6B3000FF0E2 /* NewsData.swift in Sources */,
 				F12911632CC57AC000DAC490 /* BrowseViewController.swift in Sources */,
+
 				F14EA8092CC93AAB00E10476 /* LanguageManager.swift in Sources */,
+
+				FA192C4D2CC6A62900655769 /* TitlesBaseViewController.swift in Sources */,
+				FA7095682CC80E85006D0F10 /* BookmarkEmptyView.swift in Sources */,
+				FA7095602CC7E857006D0F10 /* BookmarksCell.swift in Sources */,
+
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
