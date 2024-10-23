@@ -11,6 +11,9 @@
 		DD6CDEC72CC5787300CE12B3 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD6CDEC62CC5787300CE12B3 /* SceneDelegate.swift */; };
 		DD6CDECE2CC5787800CE12B3 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DD6CDECD2CC5787800CE12B3 /* Assets.xcassets */; };
 		DD6CDED12CC5787800CE12B3 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DD6CDECF2CC5787800CE12B3 /* LaunchScreen.storyboard */; };
+		DD76DB3F2CC94B2C007D741D /* SmallHCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD76DB3E2CC94B2C007D741D /* SmallHCollectionViewCell.swift */; };
+		DD76DB412CC99DD2007D741D /* BigCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD76DB402CC99DD2007D741D /* BigCollectionViewCell.swift */; };
+		DD76DB432CC9BEC2007D741D /* BigVerticalCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD76DB422CC9BEC2007D741D /* BigVerticalCollectionViewCell.swift */; };
 		F12911602CC57A5F00DAC490 /* OnboardingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F129115F2CC57A5600DAC490 /* OnboardingViewController.swift */; };
 		F12911632CC57AC000DAC490 /* BrowseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F12911622CC57AB700DAC490 /* BrowseViewController.swift */; };
 		F12911662CC57AF800DAC490 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F12911652CC57AF300DAC490 /* ProfileViewController.swift */; };
@@ -32,6 +35,9 @@
 		DD6CDECD2CC5787800CE12B3 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		DD6CDED02CC5787800CE12B3 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		DD6CDED22CC5787800CE12B3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		DD76DB3E2CC94B2C007D741D /* SmallHCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SmallHCollectionViewCell.swift; sourceTree = "<group>"; };
+		DD76DB402CC99DD2007D741D /* BigCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BigCollectionViewCell.swift; sourceTree = "<group>"; };
+		DD76DB422CC9BEC2007D741D /* BigVerticalCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BigVerticalCollectionViewCell.swift; sourceTree = "<group>"; };
 		F129115F2CC57A5600DAC490 /* OnboardingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingViewController.swift; sourceTree = "<group>"; };
 		F12911622CC57AB700DAC490 /* BrowseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrowseViewController.swift; sourceTree = "<group>"; };
 		F12911652CC57AF300DAC490 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
@@ -122,6 +128,9 @@
 			isa = PBXGroup;
 			children = (
 				F12911622CC57AB700DAC490 /* BrowseViewController.swift */,
+				DD76DB3E2CC94B2C007D741D /* SmallHCollectionViewCell.swift */,
+				DD76DB402CC99DD2007D741D /* BigCollectionViewCell.swift */,
+				DD76DB422CC9BEC2007D741D /* BigVerticalCollectionViewCell.swift */,
 			);
 			path = BrowseScreen;
 			sourceTree = "<group>";
@@ -213,7 +222,7 @@
 			);
 			mainGroup = DD6CDEB82CC5787300CE12B3;
 			packageReferences = (
-				F12911702CC57C5000DAC490 /* XCRemoteSwiftPackageReference "SnapKit" */,
+				DDAD85F62CC7AAA00056BBB3 /* XCRemoteSwiftPackageReference "SnapKit" */,
 			);
 			productRefGroup = DD6CDEC22CC5787300CE12B3 /* Products */;
 			projectDirPath = "";
@@ -244,10 +253,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				F12911692CC57B4C00DAC490 /* BookmarksViewController.swift in Sources */,
+				DD76DB412CC99DD2007D741D /* BigCollectionViewCell.swift in Sources */,
 				F129116D2CC57B9800DAC490 /* ArticleViewController.swift in Sources */,
+				DD76DB432CC9BEC2007D741D /* BigVerticalCollectionViewCell.swift in Sources */,
 				F12911662CC57AF800DAC490 /* ProfileViewController.swift in Sources */,
 				FA192C502CC6A6B100655769 /* TitlesBarView.swift in Sources */,
 				DD6CDEC52CC5787300CE12B3 /* AppDelegate.swift in Sources */,
+				DD76DB3F2CC94B2C007D741D /* SmallHCollectionViewCell.swift in Sources */,
 				DD6CDEC72CC5787300CE12B3 /* SceneDelegate.swift in Sources */,
 				F12911792CC57D1700DAC490 /* ColorExtension.swift in Sources */,
 				F129117A2CC57D1700DAC490 /* FontExtension.swift in Sources */,
@@ -468,6 +480,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		DDAD85F62CC7AAA00056BBB3 /* XCRemoteSwiftPackageReference "SnapKit" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/SnapKit/SnapKit.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.7.1;
+			};
+		};
 		F12911702CC57C5000DAC490 /* XCRemoteSwiftPackageReference "SnapKit" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/SnapKit/SnapKit.git";
