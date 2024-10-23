@@ -86,7 +86,7 @@ final class LanguageTableViewCell: UITableViewCell {
 		
 		self.language = language
 
-		languageLabel.text = language.value
+		languageLabel.text = language.name
 		
 		
 		updateButtonSelection(for: isSelected)

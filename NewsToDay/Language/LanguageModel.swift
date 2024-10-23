@@ -24,7 +24,7 @@ enum Language: String, CaseIterable {
 	case uk
 	case be
 	
-	var value: String {
+	var name: String {
 		switch self {
 		case .ru: return "Русский"
 		case .en: return "English"
