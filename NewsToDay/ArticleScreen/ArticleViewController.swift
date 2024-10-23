@@ -90,10 +90,12 @@ final class ArticleViewController: UIViewController {
         categoryLabel.translatesAutoresizingMaskIntoConstraints = false
         contentView.addSubview(categoryLabel)
         
-        titleLabel.text = "The latest situation in the presidential election"
+        titleLabel.text = "The latest situation in the presidential election The latest situation"
         titleLabel.textColor = .white
         titleLabel.font = UIFont.interFont(ofSize: 20, weight: .semibold)
-        titleLabel.numberOfLines = 3
+        titleLabel.adjustsFontSizeToFitWidth = true
+        titleLabel.minimumScaleFactor = 0.2
+        titleLabel.numberOfLines = 4
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
         contentView.addSubview(titleLabel)
         
@@ -162,7 +164,7 @@ final class ArticleViewController: UIViewController {
             
             titleLabel.leadingAnchor.constraint(equalTo: imageView.leadingAnchor, constant: 20),
             titleLabel.trailingAnchor.constraint(equalTo: imageView.trailingAnchor, constant: -20),
-            titleLabel.topAnchor.constraint(equalTo: categoryLabel.bottomAnchor, constant: 15),
+            titleLabel.topAnchor.constraint(equalTo: categoryLabel.bottomAnchor, constant: 10),
             
             articleLabel.topAnchor.constraint(equalTo: imageView.bottomAnchor, constant: 15),
             articleLabel.bottomAnchor.constraint(equalTo: contentView.safeAreaLayoutGuide.bottomAnchor, constant: -15),
@@ -175,7 +177,7 @@ final class ArticleViewController: UIViewController {
             
             authorConstLabel.leadingAnchor.constraint(equalTo: imageView.leadingAnchor, constant: 20),
             authorConstLabel.trailingAnchor.constraint(equalTo: imageView.trailingAnchor, constant: -20),
-            authorConstLabel.bottomAnchor.constraint(equalTo: imageView.bottomAnchor, constant: -30),
+            authorConstLabel.bottomAnchor.constraint(equalTo: imageView.bottomAnchor, constant: -15),
             
             stackView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 70),
             stackView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -25),
