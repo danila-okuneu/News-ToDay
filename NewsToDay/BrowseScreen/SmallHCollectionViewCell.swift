@@ -23,7 +23,6 @@ class SmallHCollectionViewCell: UICollectionViewCell {
     }
     
     private func setupCell() {
-        contentView.backgroundColor = .brown
         contentView.layer.cornerRadius = 16
         contentView.layer.masksToBounds = true
         setupLabel()
@@ -31,9 +30,9 @@ class SmallHCollectionViewCell: UICollectionViewCell {
     
     private func setupLabel() {
         contentView.addSubview(titleLabel)
-        
-        titleLabel.text = "Test text"
-        titleLabel.backgroundColor = .yellow
+        contentView.backgroundColor = UIColor.app(.greyLighter)
+        titleLabel.text = "Category"
+        titleLabel.font = UIFont.interFont(ofSize: 12, weight: .regular)
         
         titleLabel.snp.makeConstraints { make in
             make.centerX.equalTo(contentView.snp.centerX)

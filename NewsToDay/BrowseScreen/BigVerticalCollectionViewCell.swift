@@ -9,9 +9,36 @@ import UIKit
 
 class BigVerticalCollectionViewCell: UICollectionViewCell {
     
-    private let bookmarkImageView = UIImageView()
-    private let categoryLabel = UILabel()
-    private let discriptionLabel = UILabel()
+    let articleImageView: UIImageView = {
+        let imageView = UIImageView()
+        imageView.image = UIImage(named: "chinatown")
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        imageView.layer.cornerRadius = 12
+        imageView.clipsToBounds = true
+        imageView.contentMode = .scaleAspectFill
+        return imageView
+    }()
+    
+    let categoriesLabel: UILabel = {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.text = "UI/UX Design"
+        label.font = UIFont.interFont(ofSize: 14, weight: .regular)
+        label.textColor = UIColor.AppColor.greyPrimary.value
+        label.textAlignment = .left
+        return label
+    }()
+    
+    let descriptionLabel: UILabel = {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.font = UIFont.interFont(ofSize: 16, weight: .semibold)
+        label.textColor = UIColor.AppColor.blackPrimary.value
+        label.text = "A Simple Trick For Creating Color Palettes Quickly"
+        label.textAlignment = .left
+        label.numberOfLines = 3
+        return label
+    }()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -23,50 +50,31 @@ class BigVerticalCollectionViewCell: UICollectionViewCell {
     }
     
     private func setupCell() {
-        contentView.backgroundColor = .brown
         contentView.layer.cornerRadius = 12
         contentView.layer.masksToBounds = true
-        setupTitleLabel()
-        setupCategoryLabel()
-        setupDiscriptionLabel()
+        configureUI()
     }
     
-    private func setupTitleLabel() {
-        contentView.addSubview(bookmarkImageView)
-        bookmarkImageView.backgroundColor = .black
-        bookmarkImageView.image = UIImage(named: "bookmark 1")
-        bookmarkImageView.contentMode = .scaleAspectFit
-        
-        bookmarkImageView.snp.makeConstraints { make in
-            make.top.trailing.equalToSuperview().inset(24)
-            make.height.width.equalTo(24)
-        }
+    private func configureUI() {
+        addSubview(articleImageView)
+        addSubview(categoriesLabel)
+        addSubview(descriptionLabel)
+                
+        NSLayoutConstraint.activate([
+            articleImageView.centerYAnchor.constraint(equalTo: centerYAnchor),
+            articleImageView.leadingAnchor.constraint(equalTo: leadingAnchor),
+            articleImageView.heightAnchor.constraint(equalToConstant: 96),
+            articleImageView.widthAnchor.constraint(equalToConstant: 96),
+            
+            categoriesLabel.topAnchor.constraint(equalTo: articleImageView.topAnchor, constant: 5),
+            categoriesLabel.leadingAnchor.constraint(equalTo: articleImageView.trailingAnchor, constant: 16),
+            categoriesLabel.trailingAnchor.constraint(equalTo: trailingAnchor),
+            
+            descriptionLabel.topAnchor.constraint(equalTo: categoriesLabel.bottomAnchor, constant: 8),
+            descriptionLabel.leadingAnchor.constraint(equalTo: categoriesLabel.leadingAnchor),
+            descriptionLabel.trailingAnchor.constraint(equalTo: trailingAnchor),
+        ])
     }
     
-    private func setupCategoryLabel() {
-        contentView.addSubview(categoryLabel)
-        
-        categoryLabel.text = "CATEGORY"
-        categoryLabel.backgroundColor = .yellow
-        
-        categoryLabel.snp.makeConstraints { make in
-            make.leading.equalToSuperview().inset(5)
-            make.bottom.equalToSuperview().inset(70)
-        }
-    }
     
-    private func setupDiscriptionLabel() {
-        contentView.addSubview(discriptionLabel)
-        
-        discriptionLabel.text = "The discription of news. The discription of news."
-        discriptionLabel.numberOfLines = 0
-        discriptionLabel.backgroundColor = .yellow
-        
-        discriptionLabel.snp.makeConstraints { make in
-            make.top.equalTo(categoryLabel.snp.bottom).offset(5)
-            make.leading.equalToSuperview().inset(5)
-            make.trailing.equalToSuperview().inset(5)
-            make.bottom.equalToSuperview()
-        }
-    }
 }

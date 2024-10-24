@@ -12,7 +12,6 @@ final class BrowseViewController: TitlesBaseViewController {
     
     private let scrollView: UIScrollView = {
         let scrollView = UIScrollView()
-        scrollView.backgroundColor = .orange
         scrollView.translatesAutoresizingMaskIntoConstraints = false
         return scrollView
     }()
@@ -20,14 +19,15 @@ final class BrowseViewController: TitlesBaseViewController {
     private let containerStackView: UIStackView = {
         $0.axis = .vertical
         $0.distribution = .fill
-        $0.backgroundColor = .green
-        $0.spacing = 10
+        $0.spacing = 22
         return $0
     }(UIStackView())
     
     private let searchBar: UISearchBar = {
         let search = UISearchBar()
-        search.placeholder = "Search..."
+        search.setBackgroundImage(UIImage(), for: .any, barMetrics: .default)
+        search.searchTextField.font = UIFont.interFont(ofSize: 16, weight: .regular)
+        search.placeholder = "Search"
         return search
     }()
     
@@ -35,10 +35,11 @@ final class BrowseViewController: TitlesBaseViewController {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
         layout.minimumLineSpacing = 16
+        layout.sectionInset = UIEdgeInsets(top: 0, left: 20, bottom: 0, right: 0)
         let collection = UICollectionView(frame: .zero, collectionViewLayout: layout)
-        collection.backgroundColor = .black
         collection.register(SmallHCollectionViewCell.self, forCellWithReuseIdentifier: "SmallHCollectionViewCell")
         collection.tag = 1
+        collection.showsHorizontalScrollIndicator = false
         return collection
     }()
     
@@ -46,10 +47,11 @@ final class BrowseViewController: TitlesBaseViewController {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
         layout.minimumLineSpacing = 16
+        layout.sectionInset = UIEdgeInsets(top: 0, left: 20, bottom: 0, right: 0)
         let collection = UICollectionView(frame: .zero, collectionViewLayout: layout)
-        collection.backgroundColor = .black
         collection.register(BigCollectionViewCell.self, forCellWithReuseIdentifier: "BigCollectionViewCell")
         collection.tag = 2
+        collection.showsHorizontalScrollIndicator = false
         return collection
     }()
     
@@ -58,10 +60,10 @@ final class BrowseViewController: TitlesBaseViewController {
         layout.scrollDirection = .vertical
         layout.minimumLineSpacing = 16
         let collection = UICollectionView(frame: .zero, collectionViewLayout: layout)
-        collection.backgroundColor = .black
-        collection.register(BigCollectionViewCell.self, forCellWithReuseIdentifier: "BigCollectionViewCell")
+        collection.register(BigVerticalCollectionViewCell.self, forCellWithReuseIdentifier: "BigVerticalCollectionViewCell")
         collection.isScrollEnabled = false
         collection.tag = 3
+        collection.showsVerticalScrollIndicator = false
         return collection
     }()
     
@@ -77,7 +79,7 @@ final class BrowseViewController: TitlesBaseViewController {
     }
     
     private func setupUI() {
-        view.backgroundColor = .red
+        view.backgroundColor = .systemBackground
         setTitlesNavBar(title: "Browse", description: "Discover things of this world")
         scrollView.addSubview(containerStackView)
         
@@ -95,15 +97,15 @@ final class BrowseViewController: TitlesBaseViewController {
         bigCollectionH.dataSource = self
         bigCollectionV.dataSource = self
         bigCollectionV.delegate = self
-        customNavBar.backgroundColor = .magenta
         
         setupLayuot()
+
     }
     
     private func setupLayuot() {
         
         scrollView.snp.makeConstraints { make in
-            make.edges.equalToSuperview()
+            make.edges.equalTo(view.safeAreaLayoutGuide)
         }
         
         containerStackView.snp.makeConstraints { make in
@@ -113,11 +115,23 @@ final class BrowseViewController: TitlesBaseViewController {
         
         
         customNavBar.snp.makeConstraints { make in
-            make.height.equalTo(100)
+            make.height.equalTo(75)
+            make.top.equalToSuperview().inset(28)
         }
         
         searchBar.snp.makeConstraints { make in
-            make.height.equalTo(50)
+            make.height.equalTo(56)
+            make.leading.equalTo(view.snp.leading).inset(20)
+            make.trailing.equalTo(view.snp.trailing).inset(20)
+        }
+
+        // Настраиваем высоту текстового поля внутри UISearchBar
+        if let searchTextField = searchBar.value(forKey: "searchField") as? UITextField {
+            searchTextField.snp.makeConstraints { make in
+                make.height.equalTo(56)
+                make.leading.equalTo(view.snp.leading).inset(20)
+                make.trailing.equalTo(view.snp.trailing).inset(20)
+            }
         }
         
         smallCollectionH.snp.makeConstraints { make in
@@ -130,7 +144,8 @@ final class BrowseViewController: TitlesBaseViewController {
         
         bigCollectionV.snp.makeConstraints { make in
             make.height.equalTo(2000)
-            make.width.equalToSuperview()
+            make.leading.equalTo(view.snp.leading).inset(20)
+            make.trailing.equalToSuperview()
         }
         
     }
@@ -140,6 +155,7 @@ final class BrowseViewController: TitlesBaseViewController {
             make.height.equalTo(bigCollectionV.collectionViewLayout.collectionViewContentSize.height)
         }
     }
+    
 }
 
 extension BrowseViewController: UICollectionViewDelegate, UICollectionViewDataSource {
@@ -151,7 +167,7 @@ extension BrowseViewController: UICollectionViewDelegate, UICollectionViewDataSo
         case 2:
             return 30
         case 3:
-            return 5
+            return 30
         default:
             return 0
         }
@@ -166,7 +182,7 @@ extension BrowseViewController: UICollectionViewDelegate, UICollectionViewDataSo
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "BigCollectionViewCell", for: indexPath)
             return cell
         case 3:
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "BigCollectionViewCell", for: indexPath)
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "BigVerticalCollectionViewCell", for: indexPath)
             updateHeightCollection()
             return cell
         default:
@@ -186,7 +202,7 @@ extension BrowseViewController: UICollectionViewDelegateFlowLayout {
             return CGSize(width: 256, height: 256)
         case 3:
             let width = collectionView.bounds.width
-            let height = 130.0
+            let height = 96.0
             return CGSize(width: width, height: height)
         default:
             return CGSize(width: 0, height: 0)
