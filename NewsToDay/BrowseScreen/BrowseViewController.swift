@@ -25,10 +25,9 @@ final class BrowseViewController: TitlesBaseViewController {
         return $0
     }(UIStackView())
     
-    private let searchController: UISearchController = {
-        let search = UISearchController(searchResultsController: nil)
-        search.searchBar.placeholder = "Search..."
-        search.searchBar.translatesAutoresizingMaskIntoConstraints = false
+    private let searchBar: UISearchBar = {
+        let search = UISearchBar()
+        search.placeholder = "Search..."
         return search
     }()
     
@@ -72,13 +71,18 @@ final class BrowseViewController: TitlesBaseViewController {
         setupUI()
     }
     
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        
+    }
+    
     private func setupUI() {
         view.backgroundColor = .red
         setTitlesNavBar(title: "Browse", description: "Discover things of this world")
         scrollView.addSubview(containerStackView)
         
         containerStackView.addArrangedSubview(customNavBar)
-        containerStackView.addArrangedSubview(searchController.searchBar)
+        containerStackView.addArrangedSubview(searchBar)
         containerStackView.addArrangedSubview(smallCollectionH)
         containerStackView.addArrangedSubview(bigCollectionH)
         containerStackView.addArrangedSubview(bigCollectionV)
@@ -112,7 +116,7 @@ final class BrowseViewController: TitlesBaseViewController {
             make.height.equalTo(100)
         }
         
-        searchController.searchBar.snp.makeConstraints { make in
+        searchBar.snp.makeConstraints { make in
             make.height.equalTo(50)
         }
         
@@ -130,6 +134,12 @@ final class BrowseViewController: TitlesBaseViewController {
         }
         
     }
+    
+    private func updateHeightCollection() {
+        bigCollectionV.snp.updateConstraints { make in
+            make.height.equalTo(bigCollectionV.collectionViewLayout.collectionViewContentSize.height)
+        }
+    }
 }
 
 extension BrowseViewController: UICollectionViewDelegate, UICollectionViewDataSource {
@@ -141,7 +151,7 @@ extension BrowseViewController: UICollectionViewDelegate, UICollectionViewDataSo
         case 2:
             return 30
         case 3:
-            return 30
+            return 5
         default:
             return 0
         }
@@ -157,6 +167,7 @@ extension BrowseViewController: UICollectionViewDelegate, UICollectionViewDataSo
             return cell
         case 3:
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "BigCollectionViewCell", for: indexPath)
+            updateHeightCollection()
             return cell
         default:
             return UICollectionViewCell()
