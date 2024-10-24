@@ -14,7 +14,7 @@ class TitlesBarView: UIView {
     private let descriptionLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.font = UIFont.systemFont(ofSize: 14, weight: .regular)
+        label.font = UIFont.systemFont(ofSize: 16, weight: .regular)
         label.textColor = UIColor.AppColor.greyPrimary.value
         label.numberOfLines = 0
         return label
