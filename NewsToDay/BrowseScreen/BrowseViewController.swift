@@ -10,6 +10,13 @@ import SnapKit
 
 final class BrowseViewController: TitlesBaseViewController {
     
+    private let scrollView: UIScrollView = {
+        let scrollView = UIScrollView()
+        scrollView.backgroundColor = .orange
+        scrollView.translatesAutoresizingMaskIntoConstraints = false
+        return scrollView
+    }()
+    
     private let containerStackView: UIStackView = {
         $0.axis = .vertical
         $0.distribution = .fill
@@ -54,6 +61,7 @@ final class BrowseViewController: TitlesBaseViewController {
         let collection = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collection.backgroundColor = .black
         collection.register(BigCollectionViewCell.self, forCellWithReuseIdentifier: "BigCollectionViewCell")
+        collection.isScrollEnabled = false
         collection.tag = 3
         return collection
     }()
@@ -67,12 +75,16 @@ final class BrowseViewController: TitlesBaseViewController {
     private func setupUI() {
         view.backgroundColor = .red
         setTitlesNavBar(title: "Browse", description: "Discover things of this world")
-        view.addSubview(containerStackView)
+        scrollView.addSubview(containerStackView)
+        
         containerStackView.addArrangedSubview(customNavBar)
         containerStackView.addArrangedSubview(searchController.searchBar)
         containerStackView.addArrangedSubview(smallCollectionH)
         containerStackView.addArrangedSubview(bigCollectionH)
         containerStackView.addArrangedSubview(bigCollectionV)
+        
+        view.addSubview(scrollView)
+        
         smallCollectionH.delegate = self
         bigCollectionH.delegate = self
         smallCollectionH.dataSource = self
@@ -80,14 +92,21 @@ final class BrowseViewController: TitlesBaseViewController {
         bigCollectionV.dataSource = self
         bigCollectionV.delegate = self
         customNavBar.backgroundColor = .magenta
+        
         setupLayuot()
     }
     
     private func setupLayuot() {
         
-        containerStackView.snp.makeConstraints { make in
-            make.top.trailing.bottom.equalTo(view.safeAreaLayoutGuide)
+        scrollView.snp.makeConstraints { make in
+            make.edges.equalToSuperview()
         }
+        
+        containerStackView.snp.makeConstraints { make in
+            make.edges.equalToSuperview()
+            make.width.equalToSuperview()
+        }
+        
         
         customNavBar.snp.makeConstraints { make in
             make.height.equalTo(100)
@@ -106,7 +125,7 @@ final class BrowseViewController: TitlesBaseViewController {
         }
         
         bigCollectionV.snp.makeConstraints { make in
-            make.height.equalTo(256)
+            make.height.equalTo(2000)
             make.width.equalToSuperview()
         }
         

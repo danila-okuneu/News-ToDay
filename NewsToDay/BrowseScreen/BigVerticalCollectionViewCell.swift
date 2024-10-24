@@ -33,7 +33,7 @@ class BigVerticalCollectionViewCell: UICollectionViewCell {
     
     private func setupTitleLabel() {
         contentView.addSubview(bookmarkImageView)
-        bookmarkImageView.backgroundColor = .yellow
+        bookmarkImageView.backgroundColor = .black
         bookmarkImageView.image = UIImage(named: "bookmark 1")
         bookmarkImageView.contentMode = .scaleAspectFit
         
