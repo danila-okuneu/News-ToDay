@@ -112,7 +112,7 @@ final class ArticleViewController: UIViewController {
         authorConstLabel.translatesAutoresizingMaskIntoConstraints = false
         contentView.addSubview(authorConstLabel)
         
-        dateLabel.text = "22 October 2024"
+        dateLabel.text = ""
         dateLabel.textColor = .white
         dateLabel.textAlignment = .right
         dateLabel.font = UIFont.interFont(ofSize: 13, weight: .bold)
@@ -180,6 +180,7 @@ final class ArticleViewController: UIViewController {
             articleLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -20),
             
             authorLabel.leadingAnchor.constraint(equalTo: imageView.leadingAnchor, constant: 20),
+            authorLabel.trailingAnchor.constraint(equalTo: dateLabel.leadingAnchor, constant: -10),
             authorLabel.bottomAnchor.constraint(equalTo: authorConstLabel.topAnchor, constant: -3),
             
             dateLabel.trailingAnchor.constraint(equalTo: imageView.trailingAnchor, constant: -20),
@@ -253,13 +254,14 @@ extension ArticleViewController: NewsManagerDelegate {
         DispatchQueue.main.async {
             self.authorLabel.text = news.author
             self.titleLabel.text = news.title
-            self.articleLabel.text = news.content
+            self.articleLabel.text = news.content + "\n\nRead more at: \n" + news.urlArticle
             self.categoryLabel.text = self.topic
             
             let text = news.publishedAt
             self.dateLabel.text = text.makeDate()
             
-            // если есть юрл и фото, то грузим фото через didUpdateImage, если нет - то градиент
+            
+            // если есть юрл и фото, то грузим фото через didUpdateImage, если нет - то заглушка
             if let urlToImage = news.urlToImage {
                             self.didUpdateImage(from: urlToImage)
             } else {

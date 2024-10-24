@@ -56,23 +56,37 @@ struct NewsManager {
         
         do {
             let decodedData = try decoder.decode(NewsData.self, from: newsData)
-            let article = decodedData.articles.randomElement()!
-            let author = article.author ?? ""
-            let title = article.title ?? ""
-            let content = article.content ?? "Read the full article on the site of the publisher"
-            let urlToImage = article.urlToImage ?? ""
-            let publishedAt = article.publishedAt ?? ""
             
-            let news = NewsModel(
-                author: author,
-                title: title,
-                content: content,
-                urlToImage: urlToImage,
-                publishedAt: publishedAt
-            )
-                       return news
+            for article in decodedData.articles {
+                
+                if article.url == "https://removed.com" {
+                    print("Skipped removed content.")
+                    return nil
+                }
+                
+                
+                let author = article.author ?? ""
+                let title = article.title ?? ""
+                let content = article.content ?? "Read the full article on the site of the publisher"
+                let urlToImage = article.urlToImage ?? ""
+                let publishedAt = article.publishedAt ?? ""
+                let urlArticle = article.url
+                
+                let news = NewsModel(
+                    author: author,
+                    title: title,
+                    content: content,
+                    urlToImage: urlToImage,
+                    publishedAt: publishedAt,
+                    urlArticle: urlArticle
+                )
+                return news
+            }
+                  
+                    print("No valid articles found")
+                    return nil
             
-        } catch {
+            } catch {
             delegate?.didFailWithError(error: error)
             print(error)
             return nil

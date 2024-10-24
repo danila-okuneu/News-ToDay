@@ -13,6 +13,6 @@ struct NewsModel {
     let content: String
     let urlToImage: String?
     let publishedAt: String
-//    let url: String
+    let urlArticle: String
 
 }
