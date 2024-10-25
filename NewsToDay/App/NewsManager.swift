@@ -25,6 +25,14 @@ struct NewsManager {
         
     }
     
+    func fetchByKeyWord(keyWord: String) {
+        let urlString = "https://newsapi.org/v2/everything?q=\(keyWord)&apiKey=\(apiKey)"
+        print(urlString)
+        print("json \(keyWord)")
+        performRequest(with: urlString)
+        
+    }
+    
     func performRequest(with urlString: String) {
         if let url = URL(string: urlString) {
             let session = URLSession(configuration: .default)

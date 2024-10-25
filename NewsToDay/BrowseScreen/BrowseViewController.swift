@@ -10,6 +10,8 @@ import SnapKit
 
 final class BrowseViewController: TitlesBaseViewController {
     
+    var newsManager = NewsManager()
+    
     private let scrollView: UIScrollView = {
         let scrollView = UIScrollView()
         scrollView.translatesAutoresizingMaskIntoConstraints = false
@@ -74,7 +76,10 @@ final class BrowseViewController: TitlesBaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        searchBar.delegate = self
+        
         setupUI()
+        
     }
     
     override func viewDidLayoutSubviews() {
@@ -221,7 +226,31 @@ extension BrowseViewController: UICollectionViewDelegateFlowLayout {
     }
 }
 
+// MARK: UISearchBarDelegate
+
+extension BrowseViewController: UISearchBarDelegate {
+    
+    // поиск по кнопке энтер + закрывает клавиатуру
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        searchBar.endEditing(true)
+    }
+    
+    func searchBarTextDidEndEditing(_ searchBar: UISearchBar) {
+        
+        // fetch API + открыть новый вью контроллер.
+        
+        if let text = searchBar.text, !text.isEmpty {
+            print("fetching")
+            newsManager.fetchByKeyWord(keyWord: text)
+            
+            
+        }
+        
+    }
+}
+
 
 #Preview {
     BrowseViewController()
 }
+
