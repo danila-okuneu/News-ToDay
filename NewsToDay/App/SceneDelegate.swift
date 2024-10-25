@@ -18,7 +18,9 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 		
 		window = UIWindow(frame: windowScene.coordinateSpace.bounds)
 		window?.windowScene = windowScene
+
 		window?.rootViewController = UINavigationController(rootViewController: BrowseViewController())
+
 		window?.makeKeyAndVisible()
 		
         let backButtonImage = UIImage(systemName: "arrow.left")?.withRenderingMode(.alwaysOriginal)
