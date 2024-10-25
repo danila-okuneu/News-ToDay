@@ -1,8 +1,8 @@
 //
-//  OnboardingCollectionViewCell.swift
+//  OnboardingViewController.swift
 //  NewsToDay
 //
-//  Created by Максим Загрядский on 22.10.2024.
+//  Created by SM Team 6 on 20.10.24.
 //
 
 import UIKit
