@@ -72,7 +72,7 @@ class BigVerticalCollectionViewCell: UICollectionViewCell {
             
             descriptionLabel.topAnchor.constraint(equalTo: categoriesLabel.bottomAnchor, constant: 8),
             descriptionLabel.leadingAnchor.constraint(equalTo: categoriesLabel.leadingAnchor),
-            descriptionLabel.trailingAnchor.constraint(equalTo: trailingAnchor),
+            descriptionLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -15),
         ])
     }
     

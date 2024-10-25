@@ -13,6 +13,7 @@ final class BrowseViewController: TitlesBaseViewController {
     private let scrollView: UIScrollView = {
         let scrollView = UIScrollView()
         scrollView.translatesAutoresizingMaskIntoConstraints = false
+        scrollView.showsVerticalScrollIndicator = false
         return scrollView
     }()
     
@@ -27,6 +28,7 @@ final class BrowseViewController: TitlesBaseViewController {
         let search = UISearchBar()
         search.setBackgroundImage(UIImage(), for: .any, barMetrics: .default)
         search.searchTextField.font = UIFont.interFont(ofSize: 16, weight: .regular)
+        search.searchTextField.backgroundColor = UIColor.app(.greyLighter)
         search.placeholder = "Search"
         return search
     }()
@@ -54,6 +56,8 @@ final class BrowseViewController: TitlesBaseViewController {
         collection.showsHorizontalScrollIndicator = false
         return collection
     }()
+    
+    private let header = HeaderVerticalCollection()
     
     private lazy var bigCollectionV: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
@@ -87,6 +91,7 @@ final class BrowseViewController: TitlesBaseViewController {
         containerStackView.addArrangedSubview(searchBar)
         containerStackView.addArrangedSubview(smallCollectionH)
         containerStackView.addArrangedSubview(bigCollectionH)
+        containerStackView.addArrangedSubview(header)
         containerStackView.addArrangedSubview(bigCollectionV)
         
         view.addSubview(scrollView)
@@ -140,6 +145,12 @@ final class BrowseViewController: TitlesBaseViewController {
         
         bigCollectionH.snp.makeConstraints { make in
             make.height.equalTo(256)
+        }
+        
+        header.snp.makeConstraints { make in
+            make.leading.equalTo(view.snp.leading).inset(20)
+            make.trailing.equalTo(view.snp.trailing).inset(20)
+            make.height.equalTo(60)
         }
         
         bigCollectionV.snp.makeConstraints { make in
