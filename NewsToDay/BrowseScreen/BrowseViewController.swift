@@ -12,6 +12,7 @@ final class BrowseViewController: TitlesBaseViewController {
     
     var newsManager = NewsManager()
     
+    
     private let scrollView: UIScrollView = {
         let scrollView = UIScrollView()
         scrollView.translatesAutoresizingMaskIntoConstraints = false
@@ -59,7 +60,7 @@ final class BrowseViewController: TitlesBaseViewController {
         return collection
     }()
     
-    private let header = HeaderVerticalCollection()
+    private let header = HeaderVerticalCollection()           
     
     private lazy var bigCollectionV: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
@@ -77,6 +78,7 @@ final class BrowseViewController: TitlesBaseViewController {
         super.viewDidLoad()
         
         searchBar.delegate = self
+        newsManager.delegate = self
         
         setupUI()
         
@@ -236,19 +238,31 @@ extension BrowseViewController: UISearchBarDelegate {
     }
     
     func searchBarTextDidEndEditing(_ searchBar: UISearchBar) {
-        
-        // fetch API + открыть новый вью контроллер.
-        
+            
         if let text = searchBar.text, !text.isEmpty {
             print("fetching")
             newsManager.fetchByKeyWord(keyWord: text)
-            
-            
+ 
         }
         
     }
 }
+extension BrowseViewController: NewsManagerDelegate {
+    
+    func didUpdateNews(manager: NewsManager, news: [NewsModel]) {
+        DispatchQueue.main.async {
 
+            let recSearchVC = RecSearchViewController()
+            recSearchVC.articlesData = news
+            self.navigationController?.pushViewController(recSearchVC, animated: true)
+        }
+    }
+
+    
+    func didFailWithError(error: Error) {
+        print("Failed with error: \(error)")
+    }
+}
 
 #Preview {
     BrowseViewController()

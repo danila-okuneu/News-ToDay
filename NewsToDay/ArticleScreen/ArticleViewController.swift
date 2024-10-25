@@ -32,7 +32,7 @@ final class ArticleViewController: UIViewController {
         
         
         view.backgroundColor = .white
-        newsManager.delegate = self
+//        newsManager.delegate = self
 
         setupUI()
    
@@ -249,48 +249,48 @@ final class ArticleViewController: UIViewController {
 
 // MARK: - NewsManagerDelegate
 
-extension ArticleViewController: NewsManagerDelegate {
-    func didUpdateNews(manager: NewsManager,news: NewsModel) {
-        DispatchQueue.main.async {
-            self.authorLabel.text = news.author
-            self.titleLabel.text = news.title
-            self.articleLabel.text = news.content + "\n\nRead more at: \n" + news.urlArticle
-            self.categoryLabel.text = self.topic
-            
-            let text = news.publishedAt
-            self.dateLabel.text = text.makeDate()
-            
-            
-            // если есть юрл и фото, то грузим фото через didUpdateImage, если нет - то заглушка
-            if let urlToImage = news.urlToImage {
-                            self.didUpdateImage(from: urlToImage)
-            } else {
-                self.imageView.image = UIImage(named: "chinatown")
-            }
-        }
-    }
-    
-    func didFailWithError(error: any Error) {
-        func didFailWithError(error: any Error) {
-            print(error.localizedDescription)
-        }
-    }
-    
-    func didUpdateImage(from url: String) {
-            guard let imageUrl = URL(string: url) else { return }
-
-            URLSession.shared.dataTask(with: imageUrl) { data, response, error in
-                if let data = data, let image = UIImage(data: data) {
-                    DispatchQueue.main.async {
-                        self.imageView.image = image
-                    }
-                } else {
-                    print(error?.localizedDescription ?? "error")
-                }
-            }.resume()
-        }
-    
-}
+//extension ArticleViewController: NewsManagerDelegate {
+//    func didUpdateNews(manager: NewsManager,news: NewsModel) {
+//        DispatchQueue.main.async {
+//            self.authorLabel.text = news.author
+//            self.titleLabel.text = news.title
+//            self.articleLabel.text = news.content + "\n\nRead more at: \n" + news.urlArticle
+//            self.categoryLabel.text = self.topic
+//            
+//            let text = news.publishedAt
+//            self.dateLabel.text = text.makeDate()
+//            
+//            
+//            // если есть юрл и фото, то грузим фото через didUpdateImage, если нет - то заглушка
+//            if let urlToImage = news.urlToImage {
+//                            self.didUpdateImage(from: urlToImage)
+//            } else {
+//                self.imageView.image = UIImage(named: "chinatown")
+//            }
+//        }
+//    }
+//    
+//    func didFailWithError(error: any Error) {
+//        func didFailWithError(error: any Error) {
+//            print(error.localizedDescription)
+//        }
+//    }
+//    
+//    func didUpdateImage(from url: String) {
+//            guard let imageUrl = URL(string: url) else { return }
+//
+//            URLSession.shared.dataTask(with: imageUrl) { data, response, error in
+//                if let data = data, let image = UIImage(data: data) {
+//                    DispatchQueue.main.async {
+//                        self.imageView.image = image
+//                    }
+//                } else {
+//                    print(error?.localizedDescription ?? "error")
+//                }
+//            }.resume()
+//        }
+//    
+//}
 
 extension String {
     func makeDate() -> String? {

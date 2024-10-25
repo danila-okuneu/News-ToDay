@@ -45,6 +45,7 @@ class HeaderVerticalCollection: UITextField {
         viewAll.setTitle("See All", for: .normal)
         viewAll.titleLabel?.font = UIFont.interFont(ofSize: 14, weight: .regular)
         viewAll.setTitleColor(UIColor.app(.greyPrimary), for: .normal)
+        viewAll.addTarget(self, action: #selector(viewAllTapped), for: .touchUpInside)
         
         viewAll.snp.makeConstraints { make in
             make.trailing.equalToSuperview()
@@ -57,5 +58,9 @@ class HeaderVerticalCollection: UITextField {
         fatalError("init(coder:) has not been implemented")
     }
     
+    @objc func viewAllTapped() {
+        
+        
+    }
 }
 
