@@ -18,21 +18,15 @@ final class ArticleViewController: UIViewController {
     var articleLabel = UILabel()
     var titleLabel = UILabel()
     var authorLabel = UILabel()
+    var dateLabel = UILabel()
     let authorConstLabel = UILabel()
     let shareButton = UIButton()
     let bookmarkButton = UIButton()
     let backButton = UIButton()
     let stackView = UIStackView()
     var isBookmarked = false
-    
-    //это свойство формируется из рандома, для тестирования, удалить.
-    var topic = "sports"
-    
-//    скрывает навигейшн на этом экране, чтобы наверху от СкроллВЬю не было белой полоски.
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        self.navigationController?.setNavigationBarHidden(true, animated: animated)
-    }
+    var topic = ""
+
     
     override func viewDidLoad() {
         
@@ -40,12 +34,16 @@ final class ArticleViewController: UIViewController {
         view.backgroundColor = .white
         newsManager.delegate = self
 
-        
         setupUI()
-        
-        
-        
+   
     }
+    
+    
+//    скрывает навигейшн на этом экране, чтобы наверху от СкроллВЬю не было белой полоски.
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        self.navigationController?.setNavigationBarHidden(true, animated: animated)
+            }
     
     
     
@@ -70,8 +68,7 @@ final class ArticleViewController: UIViewController {
              ])
         
         
-        imageView.backgroundColor = .lightGray
-        imageView.image = UIImage(named: "image")
+        imageView.image = UIImage(named: "chinatown")
         imageView.contentMode = .scaleAspectFill
         imageView.clipsToBounds = true
         contentView.addSubview(imageView)
@@ -90,10 +87,16 @@ final class ArticleViewController: UIViewController {
         categoryLabel.translatesAutoresizingMaskIntoConstraints = false
         contentView.addSubview(categoryLabel)
         
-        titleLabel.text = "The latest situation in the presidential election"
+        titleLabel.text = "The latest situation in the presidential election The latest situation"
         titleLabel.textColor = .white
+        titleLabel.shadowColor = .black
+        titleLabel.shadowOffset = CGSize(width: 0, height: 0)
+        titleLabel.layer.shadowRadius = 9
+        titleLabel.layer.shadowOpacity = 0.9
         titleLabel.font = UIFont.interFont(ofSize: 20, weight: .semibold)
-        titleLabel.numberOfLines = 3
+        titleLabel.adjustsFontSizeToFitWidth = true
+        titleLabel.minimumScaleFactor = 0.2
+        titleLabel.numberOfLines = 4
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
         contentView.addSubview(titleLabel)
         
@@ -108,6 +111,13 @@ final class ArticleViewController: UIViewController {
         authorConstLabel.font = UIFont.interFont(ofSize: 12, weight: .regular)
         authorConstLabel.translatesAutoresizingMaskIntoConstraints = false
         contentView.addSubview(authorConstLabel)
+        
+        dateLabel.text = ""
+        dateLabel.textColor = .white
+        dateLabel.textAlignment = .right
+        dateLabel.font = UIFont.interFont(ofSize: 13, weight: .bold)
+        dateLabel.translatesAutoresizingMaskIntoConstraints = false
+        contentView.addSubview(dateLabel)
         
         articleLabel.text = text
         articleLabel.textColor = .black
@@ -162,7 +172,7 @@ final class ArticleViewController: UIViewController {
             
             titleLabel.leadingAnchor.constraint(equalTo: imageView.leadingAnchor, constant: 20),
             titleLabel.trailingAnchor.constraint(equalTo: imageView.trailingAnchor, constant: -20),
-            titleLabel.topAnchor.constraint(equalTo: categoryLabel.bottomAnchor, constant: 15),
+            titleLabel.topAnchor.constraint(equalTo: categoryLabel.bottomAnchor, constant: 10),
             
             articleLabel.topAnchor.constraint(equalTo: imageView.bottomAnchor, constant: 15),
             articleLabel.bottomAnchor.constraint(equalTo: contentView.safeAreaLayoutGuide.bottomAnchor, constant: -15),
@@ -170,12 +180,15 @@ final class ArticleViewController: UIViewController {
             articleLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -20),
             
             authorLabel.leadingAnchor.constraint(equalTo: imageView.leadingAnchor, constant: 20),
-            authorLabel.trailingAnchor.constraint(equalTo: imageView.trailingAnchor, constant: -20),
+            authorLabel.trailingAnchor.constraint(equalTo: dateLabel.leadingAnchor, constant: -10),
             authorLabel.bottomAnchor.constraint(equalTo: authorConstLabel.topAnchor, constant: -3),
+            
+            dateLabel.trailingAnchor.constraint(equalTo: imageView.trailingAnchor, constant: -20),
+            dateLabel.bottomAnchor.constraint(equalTo: authorConstLabel.topAnchor, constant: -3),
             
             authorConstLabel.leadingAnchor.constraint(equalTo: imageView.leadingAnchor, constant: 20),
             authorConstLabel.trailingAnchor.constraint(equalTo: imageView.trailingAnchor, constant: -20),
-            authorConstLabel.bottomAnchor.constraint(equalTo: imageView.bottomAnchor, constant: -30),
+            authorConstLabel.bottomAnchor.constraint(equalTo: imageView.bottomAnchor, constant: -15),
             
             stackView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 70),
             stackView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -25),
@@ -186,6 +199,7 @@ final class ArticleViewController: UIViewController {
         ])
    
     }
+        // Functions of buttons
     
     @objc func bookmarkButtonTapped() {
         madeBookmark()
@@ -199,14 +213,14 @@ final class ArticleViewController: UIViewController {
     }
     
     @objc func goBack() {
-        self.navigationController?.pushViewController(BrowseViewController(), animated: true)
+        self.navigationController?.popViewController(animated: true)
     }
     
     @objc func shareTapped() {
         print("share")
         
-        //здесь можно поставить текст статьи
-        let activityVC = UIActivityViewController(activityItems: [articleLabel.text!], applicationActivities: nil)
+        //здесь можно поставить текст статьи + url
+        let activityVC = UIActivityViewController(activityItems: [titleLabel.text ?? ""], applicationActivities: nil)
         activityVC.popoverPresentationController?.sourceView = self.view
         
         self.present(activityVC, animated: true)
@@ -215,7 +229,8 @@ final class ArticleViewController: UIViewController {
         //пример текста, в будущем удалить
     let text = "Leads in individual states may change from one party to another as all the votes are counted. Select a state for detailed results, and select the Senate, House or Governor tabs to view those races. For more detailed state results click on the States A-Z links at the bottom of this page. Results source: NEP/Edison via Reuters. Leads in individual states may change from one party to another as all the votes are counted. Select a state for detailed results, and select the Senate, House or Governor tabs to view those races. For more detailed state results click on the States A-Z links at the bottom of this page Results source: NEP/Edison via Reuters.select the Senate, House or Governor tabs to view those races. For more detailed state results click on the States A-Z links at the bottom of this page. Results source: NEP/Edison via Reuters. Leads in individual states may change from one party to another as all the votes are counted. Select a state for detailed results, and select the Senate, House or Governor tabs to view those races. For more detailed state results click on the States A-Z links at the bottom of this page. Results source: NEP/Edison via Reuters."
     
-    private func madeBookmark(){
+    
+    func madeBookmark(){
         isBookmarked.toggle()
         
         let imgConfigBook = UIImage.SymbolConfiguration(pointSize: 20)
@@ -239,10 +254,19 @@ extension ArticleViewController: NewsManagerDelegate {
         DispatchQueue.main.async {
             self.authorLabel.text = news.author
             self.titleLabel.text = news.title
-            self.articleLabel.text = news.content
+            self.articleLabel.text = news.content + "\n\nRead more at: \n" + news.urlArticle
             self.categoryLabel.text = self.topic
-            print(self.authorLabel.text!, self.titleLabel.text!, self.categoryLabel.text!)
             
+            let text = news.publishedAt
+            self.dateLabel.text = text.makeDate()
+            
+            
+            // если есть юрл и фото, то грузим фото через didUpdateImage, если нет - то заглушка
+            if let urlToImage = news.urlToImage {
+                            self.didUpdateImage(from: urlToImage)
+            } else {
+                self.imageView.image = UIImage(named: "chinatown")
+            }
         }
     }
     
@@ -252,8 +276,34 @@ extension ArticleViewController: NewsManagerDelegate {
         }
     }
     
+    func didUpdateImage(from url: String) {
+            guard let imageUrl = URL(string: url) else { return }
+
+            URLSession.shared.dataTask(with: imageUrl) { data, response, error in
+                if let data = data, let image = UIImage(data: data) {
+                    DispatchQueue.main.async {
+                        self.imageView.image = image
+                    }
+                } else {
+                    print(error?.localizedDescription ?? "error")
+                }
+            }.resume()
+        }
     
 }
 
+extension String {
+    func makeDate() -> String? {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZ"
+        
+        guard let date = dateFormatter.date(from: self) else { return nil }
+        
+        dateFormatter.dateStyle = .long
+        dateFormatter.timeStyle = .none
+        
+        return dateFormatter.string(from: date)
+    }
+}
 
 #Preview { ArticleViewController() }
