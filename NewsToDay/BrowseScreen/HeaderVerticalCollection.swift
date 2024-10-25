@@ -10,7 +10,7 @@ import SnapKit
 class HeaderVerticalCollection: UITextField {
     
     private let title = UILabel()
-    private let viewAll = UIButton()
+    let viewAll = UIButton()
     
     init() {
         super.init(frame: .zero)
@@ -57,5 +57,6 @@ class HeaderVerticalCollection: UITextField {
         fatalError("init(coder:) has not been implemented")
     }
     
+   
 }
 

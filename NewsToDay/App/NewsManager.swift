@@ -8,7 +8,7 @@
 import Foundation
 
 protocol NewsManagerDelegate {
-    func didUpdateNews(manager: NewsManager, news: NewsModel)
+    func didUpdateNews(manager: NewsManager, news: [NewsModel])
     func didFailWithError(error: Error)
 }
 struct NewsManager {
@@ -25,6 +25,14 @@ struct NewsManager {
         
     }
     
+    func fetchByKeyWord(keyWord: String) {
+        let urlString = "https://newsapi.org/v2/everything?q=\(keyWord)&apiKey=\(apiKey)"
+        print(urlString)
+        print("json \(keyWord)")
+        performRequest(with: urlString)
+        
+    }
+    
     func performRequest(with urlString: String) {
         if let url = URL(string: urlString) {
             let session = URLSession(configuration: .default)
@@ -36,9 +44,8 @@ struct NewsManager {
                 }
                 
                 if let safeData = data {
-                    if let news = self.parseJSON(safeData) {
-                        self.delegate?.didUpdateNews(manager: self, news: news)
-                        
+                    if let newsArray = self.parseJSON(safeData) {
+                        self.delegate?.didUpdateNews(manager: self, news: newsArray)
                     } else {
                         print("failed to parse data")
                     }
@@ -51,19 +58,19 @@ struct NewsManager {
         }
     }
     
-    func parseJSON(_ newsData: Data) -> NewsModel? {
+    func parseJSON(_ newsData: Data) -> [NewsModel]? {
         let decoder = JSONDecoder()
         
         do {
             let decodedData = try decoder.decode(NewsData.self, from: newsData)
             
+            var newsArray: [NewsModel] = []
             for article in decodedData.articles {
                 
                 if article.url == "https://removed.com" {
                     print("Skipped removed content.")
-                    return nil
+                    continue
                 }
-                
                 
                 let author = article.author ?? ""
                 let title = article.title ?? ""
@@ -80,11 +87,10 @@ struct NewsManager {
                     publishedAt: publishedAt,
                     urlArticle: urlArticle
                 )
-                return news
+                newsArray.append(news)
             }
-                  
-                    print("No valid articles found")
-                    return nil
+            
+            return newsArray
             
             } catch {
             delegate?.didFailWithError(error: error)

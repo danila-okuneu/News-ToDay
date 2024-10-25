@@ -10,6 +10,9 @@ import SnapKit
 
 final class BrowseViewController: TitlesBaseViewController {
     
+    var newsManager = NewsManager()
+    
+    
     private let scrollView: UIScrollView = {
         let scrollView = UIScrollView()
         scrollView.translatesAutoresizingMaskIntoConstraints = false
@@ -57,7 +60,9 @@ final class BrowseViewController: TitlesBaseViewController {
         return collection
     }()
     
-    private let header = HeaderVerticalCollection()
+    let header = HeaderVerticalCollection()
+    
+    
     
     private lazy var bigCollectionV: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
@@ -74,7 +79,13 @@ final class BrowseViewController: TitlesBaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        searchBar.delegate = self
+        newsManager.delegate = self
+        
         setupUI()
+        
+        header.viewAll.addTarget(self, action: #selector(viewAllTapped), for: .touchUpInside)
+        
     }
     
     override func viewDidLayoutSubviews() {
@@ -167,6 +178,10 @@ final class BrowseViewController: TitlesBaseViewController {
         }
     }
     
+    @objc func viewAllTapped() {
+        print("hello")
+    }
+    
 }
 
 extension BrowseViewController: UICollectionViewDelegate, UICollectionViewDataSource {
@@ -176,9 +191,9 @@ extension BrowseViewController: UICollectionViewDelegate, UICollectionViewDataSo
         case 1:
             return 30
         case 2:
-            return 30
+            return 5
         case 3:
-            return 30
+            return 5
         default:
             return 0
         }
@@ -221,7 +236,44 @@ extension BrowseViewController: UICollectionViewDelegateFlowLayout {
     }
 }
 
+// MARK: UISearchBarDelegate
+
+extension BrowseViewController: UISearchBarDelegate {
+    
+    // поиск по кнопке энтер + закрывает клавиатуру
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        searchBar.endEditing(true)
+    }
+    
+    func searchBarTextDidEndEditing(_ searchBar: UISearchBar) {
+            
+        if let text = searchBar.text, !text.isEmpty {
+            
+            newsManager.fetchByKeyWord(keyWord: text)
+            searchBar.text = ""
+        }
+        
+        
+    }
+}
+extension BrowseViewController: NewsManagerDelegate {
+    
+    func didUpdateNews(manager: NewsManager, news: [NewsModel]) {
+        DispatchQueue.main.async {
+
+            let recSearchVC = RecSearchViewController()
+            recSearchVC.articlesData = news
+            self.navigationController?.pushViewController(recSearchVC, animated: true)
+        }
+    }
+
+    
+    func didFailWithError(error: Error) {
+        print("Failed with error: \(error)")
+    }
+}
 
 #Preview {
     BrowseViewController()
 }
+

@@ -10,6 +10,7 @@ import UIKit
 final class ArticleViewController: UIViewController {
     
     var newsManager = NewsManager()
+    var article = NewsModel(author: "", title: "", content: "", urlToImage: "", publishedAt: "", urlArticle: "")
     
     let scrollView = UIScrollView()
     let contentView = UIView()
@@ -32,9 +33,12 @@ final class ArticleViewController: UIViewController {
         
         
         view.backgroundColor = .white
-        newsManager.delegate = self
+//        newsManager.delegate = self
 
         setupUI()
+        
+        displayArticleDetails()
+        
    
     }
     
@@ -75,7 +79,7 @@ final class ArticleViewController: UIViewController {
         
         imageView.translatesAutoresizingMaskIntoConstraints = false
         
-        categoryLabel.text = "Politics"
+        categoryLabel.text = topic
         categoryLabel.textColor = .white
         categoryLabel.backgroundColor = UIColor.app(.purplePrimary)
         categoryLabel.layer.masksToBounds = true
@@ -102,6 +106,10 @@ final class ArticleViewController: UIViewController {
         
         authorLabel.text = "John Doe"
         authorLabel.textColor = .white
+        authorLabel.shadowColor = .black
+        authorLabel.shadowOffset = CGSize(width: 0, height: 0)
+        authorLabel.layer.shadowRadius = 9
+        authorLabel.layer.shadowOpacity = 0.9
         authorLabel.font = UIFont.interFont(ofSize: 13, weight: .bold)
         authorLabel.translatesAutoresizingMaskIntoConstraints = false
         contentView.addSubview(authorLabel)
@@ -115,6 +123,10 @@ final class ArticleViewController: UIViewController {
         dateLabel.text = ""
         dateLabel.textColor = .white
         dateLabel.textAlignment = .right
+        dateLabel.shadowColor = .black
+        dateLabel.shadowOffset = CGSize(width: 0, height: 0)
+        dateLabel.layer.shadowRadius = 9
+        dateLabel.layer.shadowOpacity = 0.9
         dateLabel.font = UIFont.interFont(ofSize: 13, weight: .bold)
         dateLabel.translatesAutoresizingMaskIntoConstraints = false
         contentView.addSubview(dateLabel)
@@ -199,6 +211,7 @@ final class ArticleViewController: UIViewController {
         ])
    
     }
+    
         // Functions of buttons
     
     @objc func bookmarkButtonTapped() {
@@ -245,52 +258,71 @@ final class ArticleViewController: UIViewController {
         bookmarkButton.setImage(imageBook, for: .normal)
         
     }
+    
 }
 
 // MARK: - NewsManagerDelegate
 
-extension ArticleViewController: NewsManagerDelegate {
-    func didUpdateNews(manager: NewsManager,news: NewsModel) {
-        DispatchQueue.main.async {
-            self.authorLabel.text = news.author
-            self.titleLabel.text = news.title
-            self.articleLabel.text = news.content + "\n\nRead more at: \n" + news.urlArticle
-            self.categoryLabel.text = self.topic
-            
-            let text = news.publishedAt
-            self.dateLabel.text = text.makeDate()
-            
-            
-            // если есть юрл и фото, то грузим фото через didUpdateImage, если нет - то заглушка
-            if let urlToImage = news.urlToImage {
-                            self.didUpdateImage(from: urlToImage)
-            } else {
-                self.imageView.image = UIImage(named: "chinatown")
+//extension ArticleViewController: NewsManagerDelegate {
+//    func didUpdateNews(manager: NewsManager,news: NewsModel) {
+//        DispatchQueue.main.async {
+//            self.authorLabel.text = news.author
+//            self.titleLabel.text = news.title
+//            self.articleLabel.text = news.content + "\n\nRead more at: \n" + news.urlArticle
+//            self.categoryLabel.text = self.topic
+//            
+//            let text = news.publishedAt
+//            self.dateLabel.text = text.makeDate()
+//            
+//            
+//            // если есть юрл и фото, то грузим фото через didUpdateImage, если нет - то заглушка
+//            if let urlToImage = news.urlToImage {
+//                            self.didUpdateImage(from: urlToImage)
+//            } else {
+//                self.imageView.image = UIImage(named: "chinatown")
+//            }
+//        }
+//    }
+//    
+//    func didFailWithError(error: any Error) {
+//        func didFailWithError(error: any Error) {
+//            print(error.localizedDescription)
+//        }
+//    }
+//    
+
+
+extension ArticleViewController {
+        private func displayArticleDetails() {
+                
+                titleLabel.text = article.title
+                authorLabel.text = article.author
+                dateLabel.text = article.publishedAt.makeDate()
+                articleLabel.text = article.content + "\n\nRead more at: \n" + article.urlArticle
+
+                // Загрузка изображения, если оно доступно
+                if let urlToImage = article.urlToImage {
+                    didUpdateImage(from: urlToImage)
+                } else {
+                    imageView.image = UIImage(named: "chinatown")
+                }
+            }
+
+            private func didUpdateImage(from url: String) {
+                guard let imageUrl = URL(string: url) else { return }
+           
+                URLSession.shared.dataTask(with: imageUrl) { data, response, error in
+                    if let data = data, let image = UIImage(data: data) {
+                        DispatchQueue.main.async {
+                            self.imageView.image = image
+                        }
+                    } else {
+                        print(error?.localizedDescription ?? "error")
+                    }
+                }.resume()
             }
         }
-    }
     
-    func didFailWithError(error: any Error) {
-        func didFailWithError(error: any Error) {
-            print(error.localizedDescription)
-        }
-    }
-    
-    func didUpdateImage(from url: String) {
-            guard let imageUrl = URL(string: url) else { return }
-
-            URLSession.shared.dataTask(with: imageUrl) { data, response, error in
-                if let data = data, let image = UIImage(data: data) {
-                    DispatchQueue.main.async {
-                        self.imageView.image = image
-                    }
-                } else {
-                    print(error?.localizedDescription ?? "error")
-                }
-            }.resume()
-        }
-    
-}
 
 extension String {
     func makeDate() -> String? {
