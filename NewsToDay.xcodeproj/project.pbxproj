@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		792FCBF02CC988AC00636140 /* CategoriesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 792FCBEF2CC988AC00636140 /* CategoriesViewController.swift */; };
 		79BD6BB92CC84C5100B128B6 /* OnboardingCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79BD6BB82CC84C5100B128B6 /* OnboardingCollectionViewCell.swift */; };
 		DD6CDEC52CC5787300CE12B3 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD6CDEC42CC5787300CE12B3 /* AppDelegate.swift */; };
 		DD6CDEC72CC5787300CE12B3 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD6CDEC62CC5787300CE12B3 /* SceneDelegate.swift */; };
@@ -47,6 +48,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		792FCBEF2CC988AC00636140 /* CategoriesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoriesViewController.swift; sourceTree = "<group>"; };
 		79BD6BB82CC84C5100B128B6 /* OnboardingCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingCollectionViewCell.swift; sourceTree = "<group>"; };
 		DD6CDEC12CC5787300CE12B3 /* NewsToDay.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = NewsToDay.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DD6CDEC42CC5787300CE12B3 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -102,6 +104,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		792FCBEE2CC9887100636140 /* CategoriesScreen */ = {
+			isa = PBXGroup;
+			children = (
+				792FCBEF2CC988AC00636140 /* CategoriesViewController.swift */,
+			);
+			path = CategoriesScreen;
+			sourceTree = "<group>";
+		};
 		DD6CDEB82CC5787300CE12B3 = {
 			isa = PBXGroup;
 			children = (
@@ -126,6 +136,7 @@
 				F129115D2CC57A4600DAC490 /* OnboardingScreen */,
 				F326FABF2CCBCF7E000FF0E2 /* Rec & Search TableView */,
 				F12911612CC57AA300DAC490 /* BrowseScreen */,
+				792FCBEE2CC9887100636140 /* CategoriesScreen */,
 				F129116B2CC57B7F00DAC490 /* ArticleScreen */,
 				F12911672CC57B3600DAC490 /* BookmarksScreen */,
 				F12911642CC57AE400DAC490 /* ProfileScreen */,
@@ -361,6 +372,7 @@
 				F326FABE2CCBCE7E000FF0E2 /* RecSearchViewController.swift in Sources */,
 				F12911792CC57D1700DAC490 /* ColorExtension.swift in Sources */,
 				F1EBD60D2CC9767B00A63CF2 /* TermsViewController.swift in Sources */,
+				792FCBF02CC988AC00636140 /* CategoriesViewController.swift in Sources */,
 				F1EBD6132CC9769D00A63CF2 /* LanguageManager.swift in Sources */,
 				F1EBD6142CC9769D00A63CF2 /* LanguageModel.swift in Sources */,
 				F129117A2CC57D1700DAC490 /* FontExtension.swift in Sources */,
