@@ -3,7 +3,7 @@ import UIKit
 class TitlesBaseViewController: UIViewController {
     
     //MARK: - Properties
-    private let customNavBar = TitlesBarView()
+    let customNavBar = TitlesBarView()
     
     //MARK: - Life cycle
     override func viewDidLoad() {

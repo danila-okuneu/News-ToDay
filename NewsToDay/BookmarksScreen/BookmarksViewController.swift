@@ -111,3 +111,7 @@ extension BookmarksViewController: UITableViewDelegate, UITableViewDataSource {
         tableView.deleteRows(at: [indexPath], with: .left)
     }
 }
+
+#Preview {
+    BookmarksViewController()
+}
