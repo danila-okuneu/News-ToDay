@@ -235,15 +235,17 @@ extension BrowseViewController: UISearchBarDelegate {
     // поиск по кнопке энтер + закрывает клавиатуру
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         searchBar.endEditing(true)
+        searchBar.text = ""
     }
     
     func searchBarTextDidEndEditing(_ searchBar: UISearchBar) {
             
         if let text = searchBar.text, !text.isEmpty {
-            print("fetching")
+            
             newsManager.fetchByKeyWord(keyWord: text)
  
         }
+        
         
     }
 }

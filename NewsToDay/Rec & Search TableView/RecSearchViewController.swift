@@ -26,10 +26,12 @@ final class RecSearchViewController: TitlesBaseViewController {
 
         setupTableView()
         setupUI()
-        setupNavigationBar()
     }
 
-    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        self.navigationController?.setNavigationBarHidden(false, animated: animated)
+            }
     
     
     //MARK: - SetupUI
@@ -43,7 +45,7 @@ final class RecSearchViewController: TitlesBaseViewController {
     private func setupUI() {
         view.addSubview(tableView)
         
-        setTitlesNavBar(title: "This is what we found for you", description: "what we found for you")
+        setTitlesNavBar(title: "What we’ve found for you", description: "")
         view.backgroundColor = .systemBackground
         
         NSLayoutConstraint.activate([
@@ -54,15 +56,6 @@ final class RecSearchViewController: TitlesBaseViewController {
             
         ])
     }
-
-    private func setupNavigationBar() {
-         let backButton = UIBarButtonItem(title: "Назад", style: .plain, target: self, action: #selector(backButtonTapped))
-         navigationItem.leftBarButtonItem = backButton
-     }
-     
-     @objc private func backButtonTapped() {  
-         navigationController?.popViewController(animated: true)
-     }
         
          
     
@@ -89,8 +82,9 @@ extension RecSearchViewController: UITableViewDelegate, UITableViewDataSource {
         }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-            let _ = articlesData[indexPath.row]
+            let selectedArticle = articlesData[indexPath.row]
             let destVC = ArticleViewController()
+        destVC.article = selectedArticle
              
             navigationController?.pushViewController(destVC, animated: true)
             tableView.deselectRow(at: indexPath, animated: true)
