@@ -56,7 +56,7 @@ class RecSearchViewControllerCell: UITableViewCell {
         
             self.didUpdateImage(from: urlToImage)
         } else {
-            articleImageView.image = UIImage(named: "chainatown")
+            articleImageView.image = UIImage(named: "chinatown")
         }
     }
     

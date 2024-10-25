@@ -79,7 +79,7 @@ final class ArticleViewController: UIViewController {
         
         imageView.translatesAutoresizingMaskIntoConstraints = false
         
-        categoryLabel.text = "Politics"
+        categoryLabel.text = topic
         categoryLabel.textColor = .white
         categoryLabel.backgroundColor = UIColor.app(.purplePrimary)
         categoryLabel.layer.masksToBounds = true

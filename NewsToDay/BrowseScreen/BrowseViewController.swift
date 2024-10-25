@@ -60,7 +60,9 @@ final class BrowseViewController: TitlesBaseViewController {
         return collection
     }()
     
-    private let header = HeaderVerticalCollection()           
+    let header = HeaderVerticalCollection()
+    
+    
     
     private lazy var bigCollectionV: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
@@ -81,6 +83,8 @@ final class BrowseViewController: TitlesBaseViewController {
         newsManager.delegate = self
         
         setupUI()
+        
+        header.viewAll.addTarget(self, action: #selector(viewAllTapped), for: .touchUpInside)
         
     }
     
@@ -174,6 +178,10 @@ final class BrowseViewController: TitlesBaseViewController {
         }
     }
     
+    @objc func viewAllTapped() {
+        print("hello")
+    }
+    
 }
 
 extension BrowseViewController: UICollectionViewDelegate, UICollectionViewDataSource {
@@ -183,9 +191,9 @@ extension BrowseViewController: UICollectionViewDelegate, UICollectionViewDataSo
         case 1:
             return 30
         case 2:
-            return 30
+            return 5
         case 3:
-            return 30
+            return 5
         default:
             return 0
         }
@@ -235,7 +243,6 @@ extension BrowseViewController: UISearchBarDelegate {
     // поиск по кнопке энтер + закрывает клавиатуру
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         searchBar.endEditing(true)
-        searchBar.text = ""
     }
     
     func searchBarTextDidEndEditing(_ searchBar: UISearchBar) {
@@ -243,7 +250,7 @@ extension BrowseViewController: UISearchBarDelegate {
         if let text = searchBar.text, !text.isEmpty {
             
             newsManager.fetchByKeyWord(keyWord: text)
- 
+            searchBar.text = ""
         }
         
         
