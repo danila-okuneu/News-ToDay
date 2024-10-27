@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		791F1C6E2CCEB3E8008B9D22 /* TabController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 791F1C6D2CCEB3E8008B9D22 /* TabController.swift */; };
 		792FCBF02CC988AC00636140 /* CategoriesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 792FCBEF2CC988AC00636140 /* CategoriesViewController.swift */; };
 		79BD6BB92CC84C5100B128B6 /* OnboardingCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79BD6BB82CC84C5100B128B6 /* OnboardingCollectionViewCell.swift */; };
 		DD6CDEC52CC5787300CE12B3 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD6CDEC42CC5787300CE12B3 /* AppDelegate.swift */; };
@@ -48,6 +49,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		791F1C6D2CCEB3E8008B9D22 /* TabController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabController.swift; sourceTree = "<group>"; };
 		792FCBEF2CC988AC00636140 /* CategoriesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoriesViewController.swift; sourceTree = "<group>"; };
 		79BD6BB82CC84C5100B128B6 /* OnboardingCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingCollectionViewCell.swift; sourceTree = "<group>"; };
 		DD6CDEC12CC5787300CE12B3 /* NewsToDay.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = NewsToDay.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -104,6 +106,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		791F1C6C2CCEB3AE008B9D22 /* TabBar */ = {
+			isa = PBXGroup;
+			children = (
+				791F1C6D2CCEB3E8008B9D22 /* TabController.swift */,
+			);
+			path = TabBar;
+			sourceTree = "<group>";
+		};
 		792FCBEE2CC9887100636140 /* CategoriesScreen */ = {
 			isa = PBXGroup;
 			children = (
@@ -167,6 +177,7 @@
 				F12911772CC57D1700DAC490 /* ColorExtension.swift */,
 				F12911782CC57D1700DAC490 /* FontExtension.swift */,
 				FA192C532CC6C4CF00655769 /* TitlesBaseViewController */,
+				791F1C6C2CCEB3AE008B9D22 /* TabBar */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -360,6 +371,7 @@
 				F12911692CC57B4C00DAC490 /* BookmarksViewController.swift in Sources */,
 				DD76DB412CC99DD2007D741D /* BigCollectionViewCell.swift in Sources */,
 				DDE1FD0B2CCB10A600F0AACE /* HeaderVerticalCollection.swift in Sources */,
+				791F1C6E2CCEB3E8008B9D22 /* TabController.swift in Sources */,
 				F129116D2CC57B9800DAC490 /* ArticleViewController.swift in Sources */,
 				F1EBD60F2CC9768C00A63CF2 /* CustomButton.swift in Sources */,
 				DD76DB432CC9BEC2007D741D /* BigVerticalCollectionViewCell.swift in Sources */,
