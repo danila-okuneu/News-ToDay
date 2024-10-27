@@ -83,7 +83,7 @@ extension LanguageViewController: UITableViewDelegate, UITableViewDataSource {
 		
 		let language = Language.allCases[indexPath.row]
 				
-		let isSelected = language.rawValue == LanguageManager.preferedLanguage
+        let isSelected = language.rawValue == LanguageManager.shared.currentLanguage
 				
 			cell.configure(with: language, isSelected: isSelected)
 		if isSelected {
@@ -104,7 +104,7 @@ extension LanguageViewController: UITableViewDelegate, UITableViewDataSource {
 		let selectedCell = tableView.cellForRow(at: indexPath) as! LanguageTableViewCell
 		selectedCell.updateButtonSelection(for: true)
 		
-		LanguageManager.preferedLanguage = selectedCell.language?.rawValue ?? "en"
+        LanguageManager.shared.setLanguage(selectedCell.language?.rawValue ?? "en")
 		
 		title = "language".localized()
 		
