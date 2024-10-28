@@ -191,7 +191,7 @@ final class BrowseViewController: TitlesBaseViewController {
     // See All Recommendations
     
     @objc func viewAllTapped() {
-        
+        newsManager.fetchNews(topic: "business")
      
         }
         
@@ -292,9 +292,9 @@ extension BrowseViewController: NewsManagerDelegate {
     
     func didUpdateNews(manager: NewsManager, news: [NewsModel]) {
         DispatchQueue.main.async {
-                   if self.navigationController?.visibleViewController is RecSearchViewController {
-                       return
-                   }
+//                   if self.navigationController?.visibleViewController is RecSearchViewController {
+//                       return
+//                   }
  
             let recSearchVC = RecSearchViewController()
             recSearchVC.articlesData = news

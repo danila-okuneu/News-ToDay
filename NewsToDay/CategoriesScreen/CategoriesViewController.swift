@@ -177,6 +177,7 @@ final class CategoriesViewController: TitlesBaseViewController {
     }
     
     @objc private func nextButtonTapped(_ sender: UIButton) {
+        print("tapped next")
         let mainVC = BrowseViewController()
         mainVC.categories = selectedCategories
         navigationController?.pushViewController(mainVC, animated: true)
@@ -185,17 +186,21 @@ final class CategoriesViewController: TitlesBaseViewController {
     @objc private func topicButtonTapped(_ sender: UIButton) {
         guard let title = sender.title(for: .normal) else { return }
         
-        if selectedCategories.contains(title) {
-            selectedCategories.removeAll { $0 == title }
+        let cleanTitle = title.cleanCategory()
+        
+        if selectedCategories.contains(cleanTitle) {
+            selectedCategories.removeAll { $0 == cleanTitle }
             sender.backgroundColor = UIColor.app(.greyLighter)
             sender.setTitleColor(UIColor.app(.greyDark), for: .normal)
         } else {
-            selectedCategories.append(title)
+            selectedCategories.append(cleanTitle)
             sender.backgroundColor = UIColor.app(.purplePrimary)
             sender.setTitleColor(.white, for: .normal)
         }
         
-        print("выбранно: \(selectedCategories)")
+        print("выбрано: \(selectedCategories)")
+        print(selectedCategories)
+        
     }
            
     
@@ -240,6 +245,15 @@ final class CategoriesViewController: TitlesBaseViewController {
     }
   
     
+}
+
+// MARK: Extension - String formatter
+
+extension String {
+    func cleanCategory () -> String {
+        let cleanedTitle = self.replacingOccurrences(of: "^[\\W_]*|_categories_cell$", with: "", options: .regularExpression)
+        return cleanedTitle
+    }
 }
 
 
