@@ -28,16 +28,30 @@ class RecSearchViewControllerCell: UITableViewCell {
         return label
     }()
     
+    let categoriesLabel: UILabel = {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.font = UIFont.interFont(ofSize: 14, weight: .regular)
+        label.textColor = UIColor.AppColor.greyPrimary.value
+        label.textAlignment = .left
+        return label
+    }()
+    
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         contentView.addSubview(articleImageView)
         contentView.addSubview(descriptionLabel)
+        contentView.addSubview(categoriesLabel)
         
         NSLayoutConstraint.activate([
             articleImageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
             articleImageView.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
             articleImageView.widthAnchor.constraint(equalToConstant: 100),
             articleImageView.heightAnchor.constraint(equalToConstant: 100),
+            
+            categoriesLabel.topAnchor.constraint(equalTo: articleImageView.topAnchor, constant: 5),
+            categoriesLabel.leadingAnchor.constraint(equalTo: articleImageView.trailingAnchor, constant: 16),
+            categoriesLabel.trailingAnchor.constraint(equalTo: trailingAnchor),
             
             descriptionLabel.leadingAnchor.constraint(equalTo: articleImageView.trailingAnchor, constant: 10),
             descriptionLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
@@ -58,6 +72,12 @@ class RecSearchViewControllerCell: UITableViewCell {
         } else {
             articleImageView.image = UIImage(named: "chinatown")
         }
+        
+//        if categoriesLabel.text != nil {}
+            
+            
+        
+
     }
     
     func didUpdateImage(from url: String) {

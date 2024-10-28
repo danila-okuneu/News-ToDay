@@ -17,6 +17,47 @@ struct NewsManager {
     
     let apiKey = "30804caa0fa442909fd0a2999f25c04c"
     
+    func fetchRandom(categories: [String], completion: @escaping ([NewsModel]) -> Void) {
+        var newsArticles: [NewsModel] = []
+        let fetchGroup = DispatchGroup()
+        
+        categories.forEach { category in
+            fetchGroup.enter()
+
+            
+            let urlString = "https://newsapi.org/v2/top-headlines?category=\(category)&apiKey=\(apiKey)"
+            
+            if let url = URL(string: urlString) {
+                let session = URLSession(configuration: .default)
+                let task = session.dataTask(with: url) { (data, response, error) in
+                    defer { fetchGroup.leave() }
+                    if error != nil {
+                        print(error!.localizedDescription)
+                        self.delegate?.didFailWithError(error: error!)
+                        return
+                    }
+                    
+                    if let safeData = data {
+                        if let newsArray = self.parseJSON(safeData)  {
+                            newsArticles.append(contentsOf: newsArray)
+                            
+                        } else {
+                            print("failed to parse data")
+                        }
+                    } else {
+                        print("failed to fetch Data")
+                    }
+                }
+                
+                task.resume()
+            }
+        }
+        fetchGroup.notify(queue: .main) {
+                completion(newsArticles.shuffled()
+                )
+            }
+    }
+            
     func fetchNews(topic: String) {
         let urlString = "https://newsapi.org/v2/top-headlines?category=\(topic)&apiKey=\(apiKey)"
         print(urlString)
@@ -32,7 +73,7 @@ struct NewsManager {
         performRequest(with: urlString)
         
     }
-    
+       
     func performRequest(with urlString: String) {
         if let url = URL(string: urlString) {
             let session = URLSession(configuration: .default)

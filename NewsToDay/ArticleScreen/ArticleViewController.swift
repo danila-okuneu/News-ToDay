@@ -217,12 +217,7 @@ final class ArticleViewController: UIViewController {
     @objc func bookmarkButtonTapped() {
         madeBookmark()
         
-        let topics = ["business","entertainment","general","health","science","sports","technology"]
-        
-        topic = topics.randomElement()!
 
-        newsManager.fetchNews(topic: topic)
-        print("\(topic)")
     }
     
     @objc func goBack() {

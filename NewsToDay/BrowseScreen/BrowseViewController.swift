@@ -192,9 +192,11 @@ final class BrowseViewController: TitlesBaseViewController {
     
     @objc func viewAllTapped() {
         print(categories)
-        newsManager.fetchNews(topic: categories[0])
-     
+        newsManager.fetchRandom(categories: categories)  { articles in
+            self.didUpdateNews(manager: self.newsManager, news: articles)
+            }
         }
+        
         
     
     
@@ -282,7 +284,7 @@ extension BrowseViewController: UISearchBarDelegate {
             
         if let text = searchBar.text, !text.isEmpty {
             
-            newsManager.fetchByKeyWord(keyWord: text)
+//            newsManager.fetchByKeyWord(keyWord: text)
             searchBar.text = ""
         }
         
@@ -293,9 +295,6 @@ extension BrowseViewController: NewsManagerDelegate {
     
     func didUpdateNews(manager: NewsManager, news: [NewsModel]) {
         DispatchQueue.main.async {
-//                   if self.navigationController?.visibleViewController is RecSearchViewController {
-//                       return
-//                   }
  
             let recSearchVC = RecSearchViewController()
             recSearchVC.articlesData = news
