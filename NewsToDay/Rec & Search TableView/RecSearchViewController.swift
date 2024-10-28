@@ -32,6 +32,12 @@ final class RecSearchViewController: TitlesBaseViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
 //        self.navigationController?.setNavigationBarHidden(false, animated: animated)
+        addObserverForLocalization()
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        removeObserverForLocalization()
     }
     
     
@@ -46,7 +52,7 @@ final class RecSearchViewController: TitlesBaseViewController {
     private func setupUI() {
         view.addSubview(tableView)
         
-        setTitlesNavBar(title: "What we’ve found for you", description: "")
+        setTitlesNavBar(title: "recsearch_title_navbar".localized(), description: "")
         view.backgroundColor = .systemBackground
         
         
@@ -80,6 +86,21 @@ final class RecSearchViewController: TitlesBaseViewController {
     }
     @objc func goBack()  {
         self.navigationController?.popViewController(animated: true)
+    }
+    
+    //MARK: - Localization
+    private func addObserverForLocalization() {
+        NotificationCenter.default.addObserver(forName: LanguageManager.languageDidChangeNotification, object: nil, queue: .main) { [weak self] _ in
+            self?.updateLocalizedText()
+        }
+    }
+    
+    private func removeObserverForLocalization() {
+        NotificationCenter.default.removeObserver(self, name: LanguageManager.languageDidChangeNotification, object: nil)
+    }
+    
+    @objc private func updateLocalizedText() {
+        setTitlesNavBar(title: "recsearch_title_navbar".localized(), description: "")
     }
 }
 

@@ -65,7 +65,18 @@ final class CustomButton: UIButton {
 		backgroundColor = .app(.purpleDark)
 	}
 	
-	
+    func updateTitle(_ title: String) {
+        var config = self.configuration ?? UIButton.Configuration.filled()
+        config.attributedTitle = AttributedString(
+            title,
+            attributes: AttributeContainer(
+                [NSAttributedString.Key.font: UIFont.interFont(ofSize: 20, weight: .semibold)]
+            )
+        )
+        
+        config.baseForegroundColor = .app(.greyDark)
+        self.configuration = config
+    }
 }
 
 

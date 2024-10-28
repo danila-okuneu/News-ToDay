@@ -47,7 +47,7 @@ final class LanguageViewController: UIViewController {
 	
 	private func setupViews() {
 		
-		title = "language".localized()
+		title = "language_screen_title".localized()
 		
 		makeConstraints()
 	}
@@ -106,7 +106,7 @@ extension LanguageViewController: UITableViewDelegate, UITableViewDataSource {
 		
         LanguageManager.shared.setLanguage(selectedCell.language?.rawValue ?? "en")
 		
-		title = "language".localized()
+		title = "language_screen_title".localized()
 		
 		self.selectedIndexPath = indexPath
 	}

@@ -39,6 +39,12 @@ final class BookmarksViewController: TitlesBaseViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         updateUI(with: bookmarks)
+        addObserverForLocalization()
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        removeObserverForLocalization()
     }
     
     //MARK: - SetupUI
@@ -53,7 +59,7 @@ final class BookmarksViewController: TitlesBaseViewController {
         view.addSubview(tableView)
         view.addSubview(emptyView)
         
-        setTitlesNavBar(title: "Bookmarks", description: "Saved articles to the library")
+        setTitlesNavBar(title: "bookmarks_screen_title".localized(), description: "description_bookmarks_title".localized())
         view.backgroundColor = .systemBackground
         
         NSLayoutConstraint.activate([
@@ -78,6 +84,22 @@ final class BookmarksViewController: TitlesBaseViewController {
             self.bookmarks = bookmarks
             tableView.reloadData()
         }
+    }
+    
+    //MARK: - Localization
+    private func addObserverForLocalization() {
+        NotificationCenter.default.addObserver(forName: LanguageManager.languageDidChangeNotification, object: nil, queue: .main) { [weak self] _ in
+            self?.updateLocalizedText()
+        }
+    }
+    
+    private func removeObserverForLocalization() {
+        NotificationCenter.default.removeObserver(self, name: LanguageManager.languageDidChangeNotification, object: nil)
+    }
+    
+    @objc private func updateLocalizedText() {
+        setTitlesNavBar(title: "bookmarks_screen_title".localized(), description: "description_bookmarks_title".localized())
+        emptyView.updateEmptyText()
     }
 }
 

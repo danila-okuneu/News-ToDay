@@ -10,7 +10,12 @@
 "first_to_know_label" = "First to know";
 "description_label" = "All news in one place, be the first to know last news";
 "next_button" = "Next";
-"get_started_button" = "Get Started"; 
+"get_started_button" = "Get Started";
+
+// MARK: - Category Onboarding Screen
+"categories_onboard_screen_title" = "Select your favorite topics";
+"description_onboard_categories_title" = "Select some of your favorite topics to let us suggest better news for you.";
+"next_button_title" = "Next";
 
 // MARK: - Browse Screen
 "browse_screen_title" = "Browse";
@@ -21,13 +26,14 @@
 
 // MARK: - Category Screen
 "categories_screen_title" = "Categories";
-"business_categories_cell" = "Business";
-"entertainment_categories_cell" = "Entertainment";
-"general_categories_cell" = "General";
-"health_categories_cell" = "Health";
-"science_categories_cell" = "Science";
-"technology_categories_cell" = "Technology";
-"sports_categories_cell" = "Sports";
+"description_categories_title" = "Thousands of articles in each category";
+"business_categories_cell" = "💼 Business";
+"entertainment_categories_cell" = "🎭 Entertainment";
+"general_categories_cell" = "🌍 General";
+"health_categories_cell" = "🏥 Health";
+"science_categories_cell" = "🔬 Science";
+"technology_categories_cell" = "💻 Technology";
+"sports_categories_cell" = "⚽ Sports";
 
 // MARK: - Bookmarks Screen
 "bookmarks_screen_title" = "Bookmarks";
@@ -36,6 +42,9 @@
 
 // MARK: - Article Screen
 "results_article_label" = "Results";
+
+// MARK: - RecSearch Screen
+"recsearch_title_navbar" = "What we’ve found for you"; 
 
 // MARK: - Profile Screen
 "profile_screen_title" = "Profile";

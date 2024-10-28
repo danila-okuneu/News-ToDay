@@ -12,6 +12,11 @@
 "next_button" = "Далее";
 "get_started_button" = "Начать";
 
+// MARK: - Category Onboarding Screen
+"categories_onboard_screen_title" = "Выберите любимые темы";
+"description_onboard_categories_title" = "Выберите несколько любимых тем, чтобы мы могли предлагать вам лучшие новости";
+"next_button_title" = "Далее";
+
 // MARK: - Browse Screen
 "browse_screen_title" = "Обзор";
 "description_browse_title" = "Откройте для себя мир";
@@ -21,13 +26,14 @@
 
 // MARK: - Category Screen
 "categories_screen_title" = "Категории";
-"business_categories_cell" = "Бизнес";
-"entertainment_categories_cell" = "Развлечения";
-"general_categories_cell" = "Общее";
-"health_categories_cell" = "Здоровье";
-"science_categories_cell" = "Наука";
-"technology_categories_cell" = "Технологии";
-"sports_categories_cell" = "Спорт";
+"description_categories_title" = "Тысячи статей в каждой категории";
+"business_categories_cell" = "💼 Бизнес";
+"entertainment_categories_cell" = "🎭 Развлечения";
+"general_categories_cell" = "🌍 Общее";
+"health_categories_cell" = "🏥 Здоровье";
+"science_categories_cell" = "🔬 Наука";
+"technology_categories_cell" = "💻 Технологии";
+"sports_categories_cell" = "⚽ Спорт";
 
 // MARK: - Bookmarks Screen
 "bookmarks_screen_title" = "Избранное";
@@ -36,6 +42,9 @@
 
 // MARK: - Article Screen
 "results_article_label" = "Результаты";
+
+// MARK: - RecSearch Screen
+"recsearch_title_navbar" = "Что мы нашли для вас";
 
 // MARK: - Profile Screen
 "profile_screen_title" = "Профиль";
