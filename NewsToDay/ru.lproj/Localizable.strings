@@ -12,6 +12,12 @@
 "next_button" = "Далее";
 "get_started_button" = "Начать";
 
+// MARK: - TabBar Screen
+"tab_browse" = "Обзор";
+"tab_categories" = "Категории";
+"tab_bookmarks" = "Избранное";
+"tab_profile" = "Профиль";
+
 // MARK: - Category Onboarding Screen
 "categories_onboard_screen_title" = "Выберите любимые темы";
 "description_onboard_categories_title" = "Выберите несколько любимых тем, чтобы мы могли предлагать вам лучшие новости";
@@ -54,8 +60,6 @@
 
 // MARK: - Language Screen
 "language_screen_title" = "Язык";
-"english_language_cell" = "Английский";
-"russian_language_cell" = "Русский";
 
 // MARK: - Terms Screen
 "terms_screen_title" = "Условия и положения";

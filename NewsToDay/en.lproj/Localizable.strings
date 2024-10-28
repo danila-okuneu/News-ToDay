@@ -12,6 +12,12 @@
 "next_button" = "Next";
 "get_started_button" = "Get Started";
 
+// MARK: - TabBar Screen
+"tab_browse" = "Browse";
+"tab_categories" = "Categories";
+"tab_bookmarks" = "Bookmarks";
+"tab_profile" = "Profile";
+
 // MARK: - Category Onboarding Screen
 "categories_onboard_screen_title" = "Select your favorite topics";
 "description_onboard_categories_title" = "Select some of your favorite topics to let us suggest better news for you.";
@@ -54,8 +60,6 @@
 
 // MARK: - Language Screen
 "language_screen_title" = "Language";
-"english_language_cell" = "English";
-"russian_language_cell" = "Russian";
 
 // MARK: - Terms Screen
 "terms_screen_title" = "Terms & Conditions";
