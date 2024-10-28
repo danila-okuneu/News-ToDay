@@ -19,8 +19,8 @@ final class CategoriesViewController: TitlesBaseViewController {
                               "🎭 entertainment",
                               "🌍 general",
                               "🏥 health",
-                              "🔬 science",
-                              "⚽ sports",
+                              "science",
+                              "sports",
                               "💻 technology"
     ]
     private var selectedCategories: [String] = []
@@ -63,7 +63,6 @@ final class CategoriesViewController: TitlesBaseViewController {
         button.backgroundColor = UIColor.app(.purplePrimary)
         button.tintColor = .white
         button.layer.cornerRadius = 12
-        button.addTarget(self, action: #selector(nextButtonTapped), for: .touchUpInside)
         return button
     }()
     
@@ -73,6 +72,9 @@ final class CategoriesViewController: TitlesBaseViewController {
         super.viewDidLoad()
         setupUI()
         configureViewForSource()
+        
+        nextButton.addTarget(self, action: #selector(nextButtonTapped), for: .touchUpInside)
+
     }
     
     
@@ -159,7 +161,9 @@ final class CategoriesViewController: TitlesBaseViewController {
     }
     
     @objc private func nextButtonTapped(_ sender: UIButton) {
-        print("tapped next")
+        let mainVC = BrowseViewController()
+        mainVC.categories = selectedCategories
+        navigationController?.pushViewController(mainVC, animated: true)
     }
     
     @objc private func topicButtonTapped(_ sender: UIButton) {

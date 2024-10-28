@@ -53,7 +53,7 @@ class RecSearchViewControllerCell: UITableViewCell {
         descriptionLabel.text = article.title
         
         if let urlToImage = article.urlToImage {
-        
+            
             self.didUpdateImage(from: urlToImage)
         } else {
             articleImageView.image = UIImage(named: "chinatown")
@@ -61,16 +61,25 @@ class RecSearchViewControllerCell: UITableViewCell {
     }
     
     func didUpdateImage(from url: String) {
-               guard let imageUrl = URL(string: url) else { return }
-   
-               URLSession.shared.dataTask(with: imageUrl) { data, response, error in
-                   if let data = data, let image = UIImage(data: data) {
-                       DispatchQueue.main.async {
-                           self.articleImageView.image = image
-                       }
-                   } else {
-                       print(error?.localizedDescription ?? "error")
-                   }
-               }.resume()
-           }
+        
+        guard let imageUrl = URL(string: url) else {
+            DispatchQueue.main.async {
+                self.articleImageView.image = UIImage(named: "chinatown")
+            }
+            return
+        }
+        
+        URLSession.shared.dataTask(with: imageUrl) { data, response, error in
+            if let data = data, let image = UIImage(data: data) {
+                DispatchQueue.main.async {
+                    self.articleImageView.image = image
+                }
+            } else {
+                print(error?.localizedDescription ?? "error")
+                DispatchQueue.main.async {
+                    self.articleImageView.image = UIImage(named: "chinatown")
+                }
+            }
+        }.resume()
+    }
 }

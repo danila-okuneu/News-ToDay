@@ -11,7 +11,7 @@ import SnapKit
 final class BrowseViewController: TitlesBaseViewController {
     
     var newsManager = NewsManager()
-    
+    var categories: [String] = []
     
     private let scrollView: UIScrollView = {
         let scrollView = UIScrollView()
@@ -178,9 +178,14 @@ final class BrowseViewController: TitlesBaseViewController {
         }
     }
     
+    // See All Recommendations
+    
     @objc func viewAllTapped() {
-        print("hello")
-    }
+        
+     
+        }
+        
+    
     
 }
 
@@ -260,7 +265,10 @@ extension BrowseViewController: NewsManagerDelegate {
     
     func didUpdateNews(manager: NewsManager, news: [NewsModel]) {
         DispatchQueue.main.async {
-
+                   if self.navigationController?.visibleViewController is RecSearchViewController {
+                       return
+                   }
+ 
             let recSearchVC = RecSearchViewController()
             recSearchVC.articlesData = news
             self.navigationController?.pushViewController(recSearchVC, animated: true)
