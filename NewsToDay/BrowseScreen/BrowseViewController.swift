@@ -32,7 +32,7 @@ final class BrowseViewController: TitlesBaseViewController {
         search.setBackgroundImage(UIImage(), for: .any, barMetrics: .default)
         search.searchTextField.font = UIFont.interFont(ofSize: 16, weight: .regular)
         search.searchTextField.backgroundColor = UIColor.app(.greyLighter)
-        search.placeholder = "Search"
+        search.placeholder = "search_placeholder_textfield".localized()
         return search
     }()
     
@@ -88,6 +88,16 @@ final class BrowseViewController: TitlesBaseViewController {
         
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        addObserverForLocalization()
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        removeObserverForLocalization()
+    }
+    
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         
@@ -95,7 +105,7 @@ final class BrowseViewController: TitlesBaseViewController {
     
     private func setupUI() {
         view.backgroundColor = .systemBackground
-        setTitlesNavBar(title: "Browse", description: "Discover things of this world")
+        setTitlesNavBar(title: "browse_screen_title".localized(), description: "description_browse_title".localized())
         scrollView.addSubview(containerStackView)
         
         containerStackView.addArrangedSubview(customNavBar)
@@ -186,6 +196,23 @@ final class BrowseViewController: TitlesBaseViewController {
         }
         
     
+    
+    //MARK: - Localization
+    private func addObserverForLocalization() {
+        NotificationCenter.default.addObserver(forName: LanguageManager.languageDidChangeNotification, object: nil, queue: .main) { [weak self] _ in
+            self?.updateLocalizedText()
+        }
+    }
+    
+    private func removeObserverForLocalization() {
+        NotificationCenter.default.removeObserver(self, name: LanguageManager.languageDidChangeNotification, object: nil)
+    }
+    
+    @objc private func updateLocalizedText() {
+        searchBar.placeholder = "search_placeholder_textfield".localized()
+        setTitlesNavBar(title: "browse_screen_title".localized(), description: "description_browse_title".localized())
+        header.updateLocalizedText()
+    }
     
 }
 

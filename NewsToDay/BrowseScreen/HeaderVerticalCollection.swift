@@ -29,7 +29,7 @@ class HeaderVerticalCollection: UITextField {
     
     private func configureTitle() {
         addSubview(title)
-        title.text = "Recommended for you"
+        title.text = "recommended_section_title".localized()
         title.font = UIFont.interFont(ofSize: 20, weight: .semibold)
         title.textColor = .black
         
@@ -42,7 +42,7 @@ class HeaderVerticalCollection: UITextField {
     
     private func configureButton() {
         addSubview(viewAll)
-        viewAll.setTitle("See All", for: .normal)
+        viewAll.setTitle("see_all_section_button".localized(), for: .normal)
         viewAll.titleLabel?.font = UIFont.interFont(ofSize: 14, weight: .regular)
         viewAll.setTitleColor(UIColor.app(.greyPrimary), for: .normal)
         
@@ -57,6 +57,10 @@ class HeaderVerticalCollection: UITextField {
         fatalError("init(coder:) has not been implemented")
     }
     
+    func updateLocalizedText() {
+        title.text = "recommended_section_title".localized()
+        viewAll.setTitle("see_all_section_button".localized(), for: .normal)
+    }
    
 }
 
