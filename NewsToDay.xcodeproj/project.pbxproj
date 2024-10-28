@@ -143,6 +143,7 @@
 			children = (
 				F1EBD60B2CC9767000A63CF2 /* TermsScreen */,
 				F129116F2CC57C3E00DAC490 /* App */,
+				F326FAC42CD00847000FF0E2 /* NetworkingManager */,
 				F129115D2CC57A4600DAC490 /* OnboardingScreen */,
 				F326FABF2CCBCF7E000FF0E2 /* Rec & Search TableView */,
 				F12911612CC57AA300DAC490 /* BrowseScreen */,
@@ -236,9 +237,6 @@
 			children = (
 				DD6CDEC42CC5787300CE12B3 /* AppDelegate.swift */,
 				DD6CDEC62CC5787300CE12B3 /* SceneDelegate.swift */,
-				F326FA722CC7C6A7000FF0E2 /* NewsManager.swift */,
-				F326FA742CC7C6B3000FF0E2 /* NewsData.swift */,
-				F326FA762CC7DBB3000FF0E2 /* NewsModel.swift */,
 			);
 			path = App;
 			sourceTree = "<group>";
@@ -277,6 +275,16 @@
 				F326FAC02CCBD8F3000FF0E2 /* RecSearchViewControllerCell.swift */,
 			);
 			path = "Rec & Search TableView";
+			sourceTree = "<group>";
+		};
+		F326FAC42CD00847000FF0E2 /* NetworkingManager */ = {
+			isa = PBXGroup;
+			children = (
+				F326FA722CC7C6A7000FF0E2 /* NewsManager.swift */,
+				F326FA742CC7C6B3000FF0E2 /* NewsData.swift */,
+				F326FA762CC7DBB3000FF0E2 /* NewsModel.swift */,
+			);
+			path = NetworkingManager;
 			sourceTree = "<group>";
 		};
 		FA192C532CC6C4CF00655769 /* TitlesBaseViewController */ = {

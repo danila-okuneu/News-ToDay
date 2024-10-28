@@ -191,7 +191,8 @@ final class BrowseViewController: TitlesBaseViewController {
     // See All Recommendations
     
     @objc func viewAllTapped() {
-        newsManager.fetchNews(topic: "business")
+        print(categories)
+        newsManager.fetchNews(topic: categories[0])
      
         }
         

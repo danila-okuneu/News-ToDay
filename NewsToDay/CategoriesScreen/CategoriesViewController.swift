@@ -14,7 +14,7 @@ final class CategoriesViewController: TitlesBaseViewController {
 //    var sourceController: String?
     var sourceController: String? = "TopicsSelectionVC"
 //    var sourceController: String? = "MainCategoriesVC"
-    
+        
     private var categories: [String] {
         return [
             "business_categories_cell".localized(),
@@ -29,6 +29,8 @@ final class CategoriesViewController: TitlesBaseViewController {
     
     private var selectedCategories: [String] = []
     private var categoryButtons: [UIButton] = []
+    
+
     
     //MARK: - UI Elements
     
@@ -74,6 +76,8 @@ final class CategoriesViewController: TitlesBaseViewController {
     //MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        
         setupUI()
         configureViewForSource()
         
@@ -176,12 +180,7 @@ final class CategoriesViewController: TitlesBaseViewController {
         }
     }
     
-    @objc private func nextButtonTapped(_ sender: UIButton) {
-        print("tapped next")
-        let mainVC = BrowseViewController()
-        mainVC.categories = selectedCategories
-        navigationController?.pushViewController(mainVC, animated: true)
-    }
+
     
     @objc private func topicButtonTapped(_ sender: UIButton) {
         guard let title = sender.title(for: .normal) else { return }
@@ -198,9 +197,18 @@ final class CategoriesViewController: TitlesBaseViewController {
             sender.setTitleColor(.white, for: .normal)
         }
         
+
         print("выбрано: \(selectedCategories)")
         print(selectedCategories)
+    }
+    
+    @objc private func nextButtonTapped(_ sender: UIButton) {
+        print("tapped next")
         
+        let mainVC = BrowseViewController()
+        mainVC.categories = selectedCategories
+
+        navigationController?.pushViewController(mainVC, animated: true)
     }
            
     
