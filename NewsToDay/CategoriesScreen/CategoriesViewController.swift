@@ -15,16 +15,20 @@ final class CategoriesViewController: TitlesBaseViewController {
     var sourceController: String? = "TopicsSelectionVC"
 //    var sourceController: String? = "MainCategoriesVC"
     
-    private let categories = ["💼 business",
-                              "🎭 entertainment",
-                              "🌍 general",
-                              "🏥 health",
-                              "🔬 science",
-                              "⚽ sports",
-                              "💻 technology"
-    ]
-    private var selectedCategories: [String] = []
+    private var categories: [String] {
+        return [
+            "business_categories_cell".localized(),
+            "entertainment_categories_cell".localized(),
+            "general_categories_cell".localized(),
+            "health_categories_cell".localized(),
+            "science_categories_cell".localized(),
+            "technology_categories_cell".localized(),
+            "sports_categories_cell".localized()
+        ]
+    }
     
+    private var selectedCategories: [String] = []
+    private var categoryButtons: [UIButton] = []
     
     //MARK: - UI Elements
     
@@ -58,7 +62,7 @@ final class CategoriesViewController: TitlesBaseViewController {
     
     private let nextButton: UIButton = {
         let button = UIButton(type: .system)
-        button.setTitle("Next", for: .normal)
+        button.setTitle("next_button_title".localized(), for: .normal)
         button.titleLabel?.font = UIFont.interFont(ofSize: 16)
         button.backgroundColor = UIColor.app(.purplePrimary)
         button.tintColor = .white
@@ -73,6 +77,16 @@ final class CategoriesViewController: TitlesBaseViewController {
         super.viewDidLoad()
         setupUI()
         configureViewForSource()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        addObserverForLocalization()
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        removeObserverForLocalization()
     }
     
     
@@ -127,10 +141,12 @@ final class CategoriesViewController: TitlesBaseViewController {
     
     
     private func setupCategoriesButtons() {
+        categoryButtons.removeAll()
         var horizontalStack: UIStackView?
         
         for (index, category) in categories.enumerated() {
             let button = createCategoryButton(name: category)
+            categoryButtons.append(button)
             
             if index % 2 == 0 {
                 horizontalStack = UIStackView()
@@ -139,8 +155,8 @@ final class CategoriesViewController: TitlesBaseViewController {
                 horizontalStack?.distribution = .fillEqually
                 stackView.addArrangedSubview(horizontalStack!)
             }
-            
             horizontalStack?.addArrangedSubview(button)
+            //horizontalStack?.addArrangedSubview(categoryButtons[index])
             button.snp.makeConstraints { make in
                 make.height.equalTo(72)
             }
@@ -186,17 +202,37 @@ final class CategoriesViewController: TitlesBaseViewController {
         
         switch source {
         case "TopicsSelectionVC":
-            setTitlesNavBar(title: "Select your favorite topics", description: "Select some of your favorite topics to let us suggest better news for you.")
-            nextButton.setTitle("Next", for: .normal)
+            setTitlesNavBar(title: "categories_onboard_screen_title".localized(), description: "description_onboard_categories_title".localized())
+            nextButton.setTitle("next_button_title".localized(), for: .normal)
             
         case "MainCategoriesVC":
-            setTitlesNavBar(title: "Categories", description: "Thousands of articles in each category")
+            setTitlesNavBar(title: "categories_screen_title".localized(), description: "description_categories_title".localized())
             nextButton.setTitle("Back", for: .normal)
             nextButton.isHidden = true
 
         default:
             break
         }
+    }
+    
+    //MARK: - Localization
+    private func addObserverForLocalization() {
+        NotificationCenter.default.addObserver(forName: LanguageManager.languageDidChangeNotification, object: nil, queue: .main) { [weak self] _ in
+            self?.updateLocalizedText()
+        }
+    }
+    
+    private func removeObserverForLocalization() {
+        NotificationCenter.default.removeObserver(self, name: LanguageManager.languageDidChangeNotification, object: nil)
+    }
+    
+    @objc private func updateLocalizedText() {
+        for (index, button) in categoryButtons.enumerated() {
+            let localizedTitle = categories[index]
+            button.setTitle(localizedTitle, for: .normal)
+        }
+        
+        configureViewForSource()
     }
   
     

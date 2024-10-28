@@ -26,6 +26,8 @@ class TabController: UITabBarController {
             self.tabBar.standardAppearance = appearance
             self.tabBar.scrollEdgeAppearance = appearance
         }
+        
+        addObserverForLocalization()
     }
     
 
@@ -34,11 +36,11 @@ class TabController: UITabBarController {
     private func setupTabs() {
         
         
-        let browse = self.createNav(with: "Home", and: UIImage(systemName: "house"), vc: BrowseViewController())
+        let browse = self.createNav(with: "tab_browse".localized(), and: UIImage(systemName: "house"), vc: BrowseViewController())
         
-        let categories = self.createNav(with: "Categories", and: UIImage(systemName: "square.grid.2x2"), vc: CategoriesViewController())
-        let bookmarks = self.createNav(with: "Bookmarks", and: UIImage(systemName: "bookmark"), vc: BookmarksViewController())
-        let profile = self.createNav(with: "Profile", and: UIImage(systemName: "person"), vc: ProfileViewController())
+        let categories = self.createNav(with: "tab_categories".localized(), and: UIImage(systemName: "square.grid.2x2"), vc: CategoriesViewController())
+        let bookmarks = self.createNav(with: "tab_bookmarks".localized(), and: UIImage(systemName: "bookmark"), vc: BookmarksViewController())
+        let profile = self.createNav(with: "tab_profile".localized(), and: UIImage(systemName: "person"), vc: ProfileViewController())
 
      
         self.setViewControllers([browse,categories,bookmarks,profile], animated: true)
@@ -55,6 +57,39 @@ class TabController: UITabBarController {
         return nav
     }
     
+    //MARK: - Localization
+    private func addObserverForLocalization() {
+        NotificationCenter.default.addObserver(forName: LanguageManager.languageDidChangeNotification, object: nil, queue: .main) { [weak self] _ in
+            self?.updateLocalizedText()
+        }
+    }
+    
+    private func removeObserverForLocalization() {
+        NotificationCenter.default.removeObserver(self, name: LanguageManager.languageDidChangeNotification, object: nil)
+    }
+    
+    @objc private func updateLocalizedText() {
+        if let viewControllers = self.viewControllers {
+            for (index, vc) in viewControllers.enumerated() {
+                switch index {
+                case 0:
+                    vc.tabBarItem.title = "tab_browse".localized()
+                case 1:
+                    vc.tabBarItem.title = "tab_categories".localized()
+                case 2:
+                    vc.tabBarItem.title = "tab_bookmarks".localized()
+                case 3:
+                    vc.tabBarItem.title = "tab_profile".localized()
+                default:
+                    break
+                }
+            }
+        }
+    }
+    
+    deinit {
+        removeObserverForLocalization()
+    }
     
 }
 #Preview { TabController()}

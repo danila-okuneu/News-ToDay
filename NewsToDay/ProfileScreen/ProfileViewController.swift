@@ -57,9 +57,9 @@ final class ProfileViewController: UIViewController, UIImagePickerControllerDele
 		return button
 	}()
 	
-	private let languageButton = CustomButton(withTitle: "language".localized(), image: "chevron.right")
-	private let signOutButton = CustomButton(withTitle: "Sign Out", image: "iphone.and.arrow.forward")
-	private let termsButton = CustomButton(withTitle: "Terms & Conditions", image: "chevron.right")
+	private var languageButton = CustomButton(withTitle: "language_profile_cell".localized(), image: "chevron.right")
+	private let signOutButton = CustomButton(withTitle: "sign_out_profile_cell".localized(), image: "iphone.and.arrow.forward")
+	private let termsButton = CustomButton(withTitle: "terms_conditions_profile_cell".localized(), image: "chevron.right")
 	
 	
 	// MARK: - Lifecycle
@@ -74,12 +74,22 @@ final class ProfileViewController: UIViewController, UIImagePickerControllerDele
 	
 		
 	}
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        addObserverForLocalization()
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        removeObserverForLocalization()
+    }
 	
 	
 	// MARK: - Layout
 	private func setupViews() {
 		
-		title = "Profile"
+        title = "profile_screen_title".localized()
 
 		self.navigationController?.navigationBar.largeTitleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.app(.blackPrimary)]
 		
@@ -238,6 +248,24 @@ final class ProfileViewController: UIViewController, UIImagePickerControllerDele
 	@objc private func TermsButtonTapped() {
 		self.navigationController?.pushViewController(TermsViewController(), animated: true)
 	}
+    
+    //MARK: - Localization
+    private func addObserverForLocalization() {
+        NotificationCenter.default.addObserver(forName: LanguageManager.languageDidChangeNotification, object: nil, queue: .main) { [weak self] _ in
+            self?.updateLocalizedText()
+        }
+    }
+    
+    private func removeObserverForLocalization() {
+        NotificationCenter.default.removeObserver(self, name: LanguageManager.languageDidChangeNotification, object: nil)
+    }
+    
+    @objc func updateLocalizedText() {
+        title = "profile_screen_title".localized()
+        languageButton.updateTitle("language_profile_cell".localized())
+        termsButton.updateTitle("terms_conditions_profile_cell".localized())
+        signOutButton.updateTitle("sign_out_profile_cell".localized())
+    }
 }
 
 

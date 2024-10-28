@@ -6,7 +6,7 @@ class BookmarkEmptyView: UIView {
     let messageLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.text = "You haven't saved any articles yet. Start reading and bookmarking them now"
+        label.text = "empty_bookmarks_label".localized()
         label.font = UIFont.interFont(ofSize: 16, weight: .medium)
         label.textColor = UIColor.AppColor.blackPrimary.value
         label.numberOfLines = 0
@@ -68,5 +68,9 @@ class BookmarkEmptyView: UIView {
             bookImageView.widthAnchor.constraint(equalToConstant: 24),
             bookImageView.heightAnchor.constraint(equalToConstant: 24),
         ])
+    }
+    
+    func updateEmptyText() {
+        messageLabel.text = "empty_bookmarks_label".localized()
     }
 }

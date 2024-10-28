@@ -41,7 +41,7 @@ final class OnboardingViewController: UIViewController, UICollectionViewDelegate
     
     private let titleLabel: UILabel = {
         let label = UILabel()
-        label.text = "First to know"
+        label.text = "first_to_know_label".localized()
         label.font = UIFont.interFont(ofSize: 24, weight: .bold)
         label.textAlignment = .center
         label.textColor = UIColor.app(.blackPrimary)
@@ -50,7 +50,7 @@ final class OnboardingViewController: UIViewController, UICollectionViewDelegate
     
     private let descriptionLabel: UILabel = {
         let label = UILabel()
-        label.text = "All news in one place, be \nthe first to know last news"
+        label.text = "description_label".localized()
         label.font = UIFont.interFont(ofSize: 16)
         label.textColor = UIColor.app(.greyPrimary)
         label.textAlignment = .center
@@ -60,7 +60,7 @@ final class OnboardingViewController: UIViewController, UICollectionViewDelegate
     
     private let nextButton: UIButton = {
         let button = UIButton(type: .system)
-        button.setTitle("Next", for: .normal)
+        button.setTitle("next_button".localized(), for: .normal)
         button.titleLabel?.font = UIFont.interFont(ofSize: 16)
         button.backgroundColor = UIColor.app(.purplePrimary)
         button.tintColor = .white
@@ -124,7 +124,7 @@ final class OnboardingViewController: UIViewController, UICollectionViewDelegate
         onboardingCollectionView.scrollToItem(at: IndexPath(item: nextIndex, section: 0), at: .centeredHorizontally, animated: true)
         
         if nextIndex == imageNames.count - 1 {
-            nextButton.setTitle("Finish", for: .normal)
+            nextButton.setTitle("get_started_button".localized(), for: .normal)
         }
     }
     
@@ -158,13 +158,13 @@ final class OnboardingViewController: UIViewController, UICollectionViewDelegate
         pageControl.currentPage = currentPage
         
         if currentPage == imageNames.count - 1 {
-            nextButton.setTitle("Finish", for: .normal)
+            nextButton.setTitle("get_started_button".localized(), for: .normal)
             titleLabel.isHidden = true
         } else if currentPage == imageNames.count - 2 {
-            nextButton.setTitle("Next", for: .normal)
+            nextButton.setTitle("next_button".localized(), for: .normal)
             titleLabel.isHidden = true
         } else {
-            nextButton.setTitle("Next", for: .normal)
+            nextButton.setTitle("next_button".localized(), for: .normal)
             titleLabel.isHidden = false
         }
         // масштабирование относительно отдаления от центра
