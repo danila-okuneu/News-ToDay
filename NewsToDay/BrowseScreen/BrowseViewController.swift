@@ -11,6 +11,7 @@ import SnapKit
 final class BrowseViewController: TitlesBaseViewController {
     
     var newsManager = NewsManager()
+    let newsCategories = ["Random", "General", "Business", "Entertainment",  "Health", "Science", "Sports", "Technology"]
     
     
     private let scrollView: UIScrollView = {
@@ -216,7 +217,7 @@ extension BrowseViewController: UICollectionViewDelegate, UICollectionViewDataSo
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         switch collectionView.tag {
         case 1:
-            return 30
+            return newsCategories.count
         case 2:
             return 5
         case 3:
@@ -229,7 +230,8 @@ extension BrowseViewController: UICollectionViewDelegate, UICollectionViewDataSo
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         switch collectionView.tag {
         case 1:
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "SmallHCollectionViewCell", for: indexPath)
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "SmallHCollectionViewCell", for: indexPath) as! SmallHCollectionViewCell
+            cell.titleLabel.text = newsCategories[indexPath.item]
             return cell
         case 2:
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "BigCollectionViewCell", for: indexPath)
@@ -250,7 +252,16 @@ extension BrowseViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         switch collectionView.tag {
         case 1:
-            return CGSize(width: 80, height: 32)
+            let height: CGFloat = 32
+            let minimumWidth: CGFloat = 80
+            
+            let text = newsCategories[indexPath.item]
+            
+            let width: CGFloat = (text as NSString).size(withAttributes: [.font: UIFont.interFont(ofSize: 12)]).width + 16
+            
+            let cellWidth = max(minimumWidth, width)
+            
+            return CGSize(width: cellWidth, height: height)
         case 2:
             return CGSize(width: 256, height: 256)
         case 3:

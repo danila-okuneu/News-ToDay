@@ -10,7 +10,7 @@ import SnapKit
 
 class SmallHCollectionViewCell: UICollectionViewCell {
  
-    private let titleLabel = UILabel()
+    let titleLabel = UILabel()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -31,7 +31,6 @@ class SmallHCollectionViewCell: UICollectionViewCell {
     private func setupLabel() {
         contentView.addSubview(titleLabel)
         contentView.backgroundColor = UIColor.app(.greyLighter)
-        titleLabel.text = "Category"
         titleLabel.font = UIFont.interFont(ofSize: 12, weight: .regular)
         
         titleLabel.snp.makeConstraints { make in
