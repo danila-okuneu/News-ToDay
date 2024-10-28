@@ -12,6 +12,7 @@ final class BrowseViewController: TitlesBaseViewController {
     
     var newsManager = NewsManager()
     let newsCategories = ["Random", "General", "Business", "Entertainment",  "Health", "Science", "Sports", "Technology"]
+    var selectedIndexPath: IndexPath?
     
     
     private let scrollView: UIScrollView = {
@@ -45,6 +46,7 @@ final class BrowseViewController: TitlesBaseViewController {
         let collection = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collection.register(SmallHCollectionViewCell.self, forCellWithReuseIdentifier: "SmallHCollectionViewCell")
         collection.tag = 1
+        collection.allowsMultipleSelection = true
         collection.showsHorizontalScrollIndicator = false
         return collection
     }()
@@ -126,7 +128,7 @@ final class BrowseViewController: TitlesBaseViewController {
         bigCollectionV.delegate = self
         
         setupLayuot()
-
+        
     }
     
     private func setupLayuot() {
@@ -151,7 +153,7 @@ final class BrowseViewController: TitlesBaseViewController {
             make.leading.equalTo(view.snp.leading).inset(20)
             make.trailing.equalTo(view.snp.trailing).inset(20)
         }
-
+        
         // Настраиваем высоту текстового поля внутри UISearchBar
         if let searchTextField = searchBar.value(forKey: "searchField") as? UITextField {
             searchTextField.snp.makeConstraints { make in
@@ -246,6 +248,22 @@ extension BrowseViewController: UICollectionViewDelegate, UICollectionViewDataSo
         
     }
     
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        guard let cell = collectionView.cellForItem(at: indexPath) as? SmallHCollectionViewCell else { return }
+        if let selectedIndexPath {
+            if selectedIndexPath != indexPath {
+                collectionView.deselectItem(at: selectedIndexPath, animated: true)
+            }
+        }
+        selectedIndexPath = indexPath
+        print(cell.titleLabel.text)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
+        guard let cell = collectionView.cellForItem(at: indexPath) as? SmallHCollectionViewCell else { return }
+        print(cell.titleLabel.text)
+    }
+    
 }
 
 extension BrowseViewController: UICollectionViewDelegateFlowLayout {
@@ -284,7 +302,7 @@ extension BrowseViewController: UISearchBarDelegate {
     }
     
     func searchBarTextDidEndEditing(_ searchBar: UISearchBar) {
-            
+        
         if let text = searchBar.text, !text.isEmpty {
             
             newsManager.fetchByKeyWord(keyWord: text)
@@ -298,13 +316,13 @@ extension BrowseViewController: NewsManagerDelegate {
     
     func didUpdateNews(manager: NewsManager, news: [NewsModel]) {
         DispatchQueue.main.async {
-
+            
             let recSearchVC = RecSearchViewController()
             recSearchVC.articlesData = news
             self.navigationController?.pushViewController(recSearchVC, animated: true)
         }
     }
-
+    
     
     func didFailWithError(error: Error) {
         print("Failed with error: \(error)")

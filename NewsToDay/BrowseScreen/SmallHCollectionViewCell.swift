@@ -11,9 +11,15 @@ import SnapKit
 class SmallHCollectionViewCell: UICollectionViewCell {
  
     let titleLabel = UILabel()
+    override var isSelected: Bool {
+        didSet {
+            contentView.backgroundColor = isSelected ? UIColor.app(.purplePrimary) : UIColor.app(.greyLighter)
+        }
+    }
     
     override init(frame: CGRect) {
         super.init(frame: frame)
+        isSelected = false
         
         setupCell()
     }
