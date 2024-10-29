@@ -9,10 +9,10 @@ import UIKit
 
 class BigCollectionViewCell: UICollectionViewCell {
     
-    private let newsImageView = UIImageView()
-    private let bookmarkImageView = UIImageView()
-    private let categoryLabel = UILabel()
-    private let discriptionLabel = UILabel()
+    let newsImageView = UIImageView()
+    let bookmarkImageView = UIImageView()
+    let categoryLabel = UILabel()
+    let discriptionLabel = UILabel()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -35,7 +35,8 @@ class BigCollectionViewCell: UICollectionViewCell {
     private func setupNewsImage() {
         contentView.addSubview(newsImageView)
         
-        newsImageView.image = UIImage(resource: .chinatown)
+        newsImageView.image = UIImage()
+        newsImageView.contentMode = .scaleAspectFill
         
         newsImageView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
@@ -78,7 +79,41 @@ class BigCollectionViewCell: UICollectionViewCell {
             make.top.equalTo(categoryLabel.snp.bottom).offset(8)
             make.leading.equalToSuperview().inset(24)
             make.trailing.equalToSuperview().inset(5)
-           
+            
         }
+    }
+    
+    func set(article: NewsModel) {
+        newsImageView.image = UIImage()
+        discriptionLabel.text = article.description
+        
+        if let urlToImage = article.urlToImage {
+            
+            self.didUpdateImage(from: urlToImage)
+        } else {
+            newsImageView.image = UIImage(named: "chinatown")
+        }
+    }
+    
+    func didUpdateImage(from url: String) {
+        guard let imageUrl = URL(string: url) else { return }
+        
+        let activityIndicator = UIActivityIndicatorView(style: .medium)
+        activityIndicator.center = newsImageView.center
+        activityIndicator.hidesWhenStopped = true
+        newsImageView.addSubview(activityIndicator)
+        activityIndicator.startAnimating()
+        
+        
+        URLSession.shared.dataTask(with: imageUrl) { data, response, error in
+            if let data = data, let image = UIImage(data: data) {
+                DispatchQueue.main.async {
+                    activityIndicator.stopAnimating()
+                    self.newsImageView.image = image
+                }
+            } else {
+                print(error?.localizedDescription ?? "error")
+            }
+        }.resume()
     }
 }

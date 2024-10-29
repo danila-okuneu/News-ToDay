@@ -11,8 +11,10 @@ import SnapKit
 final class BrowseViewController: TitlesBaseViewController {
     
     var newsManager = NewsManager()
-    let newsCategories = ["Random", "General", "Business", "Entertainment",  "Health", "Science", "Sports", "Technology"]
+    let newsCategories = ["General", "Business", "Entertainment",  "Health", "Science", "Sports", "Technology"]
     var selectedIndexPath: IndexPath?
+    var currentCategory = "General"
+    var allNewsData: [NewsModel]?
     
     
     private let scrollView: UIScrollView = {
@@ -87,6 +89,7 @@ final class BrowseViewController: TitlesBaseViewController {
         
         setupUI()
         
+        newsManager.fetchByKeyWord(keyWord: currentCategory, isCategory: true)
         header.viewAll.addTarget(self, action: #selector(viewAllTapped), for: .touchUpInside)
         
     }
@@ -191,6 +194,10 @@ final class BrowseViewController: TitlesBaseViewController {
         }
     }
     
+    private func loadData() {
+        newsManager.fetchByKeyWord(keyWord: currentCategory, isCategory: true)
+    }
+    
     @objc func viewAllTapped() {
         print("hello")
     }
@@ -236,7 +243,14 @@ extension BrowseViewController: UICollectionViewDelegate, UICollectionViewDataSo
             cell.titleLabel.text = newsCategories[indexPath.item]
             return cell
         case 2:
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "BigCollectionViewCell", for: indexPath)
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "BigCollectionViewCell", for: indexPath) as! BigCollectionViewCell
+            if let allNewsData {
+                let displayedData = Array(allNewsData.prefix(5))
+                let article = displayedData[indexPath.row]
+                print(indexPath.row)
+                cell.set(article: article)
+                cell.categoryLabel.text = currentCategory
+            }
             return cell
         case 3:
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "BigVerticalCollectionViewCell", for: indexPath)
@@ -253,10 +267,13 @@ extension BrowseViewController: UICollectionViewDelegate, UICollectionViewDataSo
         if let selectedIndexPath {
             if selectedIndexPath != indexPath {
                 collectionView.deselectItem(at: selectedIndexPath, animated: true)
+                currentCategory = cell.titleLabel.text ?? "general"
             }
         }
         selectedIndexPath = indexPath
-        print(cell.titleLabel.text)
+        if let string = cell.titleLabel.text {
+            newsManager.fetchNews(topic: string, isCategory: true)
+        }
     }
     
     func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
@@ -314,12 +331,20 @@ extension BrowseViewController: UISearchBarDelegate {
 }
 extension BrowseViewController: NewsManagerDelegate {
     
-    func didUpdateNews(manager: NewsManager, news: [NewsModel]) {
-        DispatchQueue.main.async {
-            
-            let recSearchVC = RecSearchViewController()
-            recSearchVC.articlesData = news
-            self.navigationController?.pushViewController(recSearchVC, animated: true)
+    
+    func didUpdateNews(manager: NewsManager, news: [NewsModel], requestType: Bool?) {
+        if let requestType {
+            allNewsData = news
+            DispatchQueue.main.async {
+                self.bigCollectionH.reloadData()
+            }
+        } else {
+            DispatchQueue.main.async {
+                
+                let recSearchVC = RecSearchViewController()
+                recSearchVC.articlesData = news
+                self.navigationController?.pushViewController(recSearchVC, animated: true)
+            }
         }
     }
     

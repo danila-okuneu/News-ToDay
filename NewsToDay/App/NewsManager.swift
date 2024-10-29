@@ -6,9 +6,10 @@
 //
 
 import Foundation
+import UIKit
 
 protocol NewsManagerDelegate {
-    func didUpdateNews(manager: NewsManager, news: [NewsModel])
+    func didUpdateNews(manager: NewsManager, news: [NewsModel], requestType: Bool?)
     func didFailWithError(error: Error)
 }
 struct NewsManager {
@@ -17,23 +18,23 @@ struct NewsManager {
     
     let apiKey = "30804caa0fa442909fd0a2999f25c04c"
     
-    func fetchNews(topic: String) {
+    func fetchNews(topic: String, isCategory: Bool? = nil) {
         let urlString = "https://newsapi.org/v2/top-headlines?category=\(topic)&apiKey=\(apiKey)"
         print(urlString)
         print("json \(topic)")
-        performRequest(with: urlString)
+        performRequest(with: urlString, requestType: isCategory)
         
     }
     
-    func fetchByKeyWord(keyWord: String) {
+    func fetchByKeyWord(keyWord: String, isCategory: Bool? = nil) {
         let urlString = "https://newsapi.org/v2/everything?q=\(keyWord)&apiKey=\(apiKey)"
         print(urlString)
         print("json \(keyWord)")
-        performRequest(with: urlString)
+        performRequest(with: urlString, requestType: isCategory)
         
     }
     
-    func performRequest(with urlString: String) {
+    func performRequest(with urlString: String, requestType: Bool? = nil) {
         if let url = URL(string: urlString) {
             let session = URLSession(configuration: .default)
             let task = session.dataTask(with: url) { (data, response, error) in
@@ -45,7 +46,7 @@ struct NewsManager {
                 
                 if let safeData = data {
                     if let newsArray = self.parseJSON(safeData) {
-                        self.delegate?.didUpdateNews(manager: self, news: newsArray)
+                        self.delegate?.didUpdateNews(manager: self, news: newsArray, requestType: requestType)
                     } else {
                         print("failed to parse data")
                     }
@@ -78,6 +79,7 @@ struct NewsManager {
                 let urlToImage = article.urlToImage ?? ""
                 let publishedAt = article.publishedAt ?? ""
                 let urlArticle = article.url
+                let description = article.description?.description ?? ""
                 
                 let news = NewsModel(
                     author: author,
@@ -85,7 +87,8 @@ struct NewsManager {
                     content: content,
                     urlToImage: urlToImage,
                     publishedAt: publishedAt,
-                    urlArticle: urlArticle
+                    urlArticle: urlArticle,
+                    description: description
                 )
                 newsArray.append(news)
             }

@@ -14,6 +14,7 @@ class SmallHCollectionViewCell: UICollectionViewCell {
     override var isSelected: Bool {
         didSet {
             contentView.backgroundColor = isSelected ? UIColor.app(.purplePrimary) : UIColor.app(.greyLighter)
+            titleLabel.textColor = isSelected ? .white : UIColor.app(.greyPrimary)
         }
     }
     
@@ -37,7 +38,7 @@ class SmallHCollectionViewCell: UICollectionViewCell {
     private func setupLabel() {
         contentView.addSubview(titleLabel)
         contentView.backgroundColor = UIColor.app(.greyLighter)
-        titleLabel.font = UIFont.interFont(ofSize: 12, weight: .regular)
+        titleLabel.font = UIFont.interFont(ofSize: 12, weight: .semibold)
         
         titleLabel.snp.makeConstraints { make in
             make.centerX.equalTo(contentView.snp.centerX)

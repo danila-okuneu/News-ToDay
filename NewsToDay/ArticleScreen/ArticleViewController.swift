@@ -10,7 +10,15 @@ import UIKit
 final class ArticleViewController: UIViewController {
     
     var newsManager = NewsManager()
-    var article = NewsModel(author: "", title: "", content: "", urlToImage: "", publishedAt: "", urlArticle: "")
+    var article = NewsModel(
+        author: "",
+        title: "",
+        content: "",
+        urlToImage: "",
+        publishedAt: "",
+        urlArticle: "",
+        description: ""
+    )
     
     let scrollView = UIScrollView()
     let contentView = UIView()
