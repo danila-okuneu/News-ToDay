@@ -15,4 +15,5 @@ struct NewsModel {
     let publishedAt: String
     let urlArticle: String
     let category: String
+    let description: String
 }

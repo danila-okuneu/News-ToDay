@@ -12,6 +12,11 @@ final class BrowseViewController: TitlesBaseViewController {
     
     var newsManager = NewsManager()
     var categories: [String] = []
+    let newsCategories = ["General", "Business", "Entertainment",  "Health", "Science", "Sports", "Technology"]
+    var selectedIndexPath: IndexPath?
+    var currentCategory = "General"
+    var allNewsData: [NewsModel]?
+    
     
     private let scrollView: UIScrollView = {
         let scrollView = UIScrollView()
@@ -44,6 +49,7 @@ final class BrowseViewController: TitlesBaseViewController {
         let collection = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collection.register(SmallHCollectionViewCell.self, forCellWithReuseIdentifier: "SmallHCollectionViewCell")
         collection.tag = 1
+        collection.allowsMultipleSelection = true
         collection.showsHorizontalScrollIndicator = false
         return collection
     }()
@@ -84,6 +90,7 @@ final class BrowseViewController: TitlesBaseViewController {
         
         setupUI()
         
+        newsManager.fetchByKeyWord(keyWord: currentCategory, isCategory: true)
         header.viewAll.addTarget(self, action: #selector(viewAllTapped), for: .touchUpInside)
         
     }
@@ -125,7 +132,7 @@ final class BrowseViewController: TitlesBaseViewController {
         bigCollectionV.delegate = self
         
         setupLayuot()
-
+        
     }
     
     private func setupLayuot() {
@@ -150,7 +157,7 @@ final class BrowseViewController: TitlesBaseViewController {
             make.leading.equalTo(view.snp.leading).inset(20)
             make.trailing.equalTo(view.snp.trailing).inset(20)
         }
-
+        
         // Настраиваем высоту текстового поля внутри UISearchBar
         if let searchTextField = searchBar.value(forKey: "searchField") as? UITextField {
             searchTextField.snp.makeConstraints { make in
@@ -188,6 +195,9 @@ final class BrowseViewController: TitlesBaseViewController {
         }
     }
     
+    private func loadData() {
+        newsManager.fetchByKeyWord(keyWord: currentCategory, isCategory: true)
+    }
     // MARK: See All Recommendations method
     
     @objc func viewAllTapped() {
@@ -225,7 +235,7 @@ extension BrowseViewController: UICollectionViewDelegate, UICollectionViewDataSo
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         switch collectionView.tag {
         case 1:
-            return 30
+            return newsCategories.count
         case 2:
             return 5
         case 3:
@@ -238,10 +248,18 @@ extension BrowseViewController: UICollectionViewDelegate, UICollectionViewDataSo
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         switch collectionView.tag {
         case 1:
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "SmallHCollectionViewCell", for: indexPath)
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "SmallHCollectionViewCell", for: indexPath) as! SmallHCollectionViewCell
+            cell.titleLabel.text = newsCategories[indexPath.item]
             return cell
         case 2:
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "BigCollectionViewCell", for: indexPath)
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "BigCollectionViewCell", for: indexPath) as! BigCollectionViewCell
+            if let allNewsData {
+                let displayedData = Array(allNewsData.prefix(5))
+                let article = displayedData[indexPath.row]
+                print(indexPath.row)
+                cell.set(article: article)
+                cell.categoryLabel.text = currentCategory
+            }
             return cell
         case 3:
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "BigVerticalCollectionViewCell", for: indexPath)
@@ -253,13 +271,41 @@ extension BrowseViewController: UICollectionViewDelegate, UICollectionViewDataSo
         
     }
     
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        guard let cell = collectionView.cellForItem(at: indexPath) as? SmallHCollectionViewCell else { return }
+        if let selectedIndexPath {
+            if selectedIndexPath != indexPath {
+                collectionView.deselectItem(at: selectedIndexPath, animated: true)
+                currentCategory = cell.titleLabel.text ?? "general"
+            }
+        }
+        selectedIndexPath = indexPath
+        if let string = cell.titleLabel.text {
+            newsManager.fetchNews(topic: string, isCategory: true)
+        }
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
+        guard let cell = collectionView.cellForItem(at: indexPath) as? SmallHCollectionViewCell else { return }
+        print(cell.titleLabel.text)
+    }
+    
 }
 
 extension BrowseViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         switch collectionView.tag {
         case 1:
-            return CGSize(width: 80, height: 32)
+            let height: CGFloat = 32
+            let minimumWidth: CGFloat = 80
+            
+            let text = newsCategories[indexPath.item]
+            
+            let width: CGFloat = (text as NSString).size(withAttributes: [.font: UIFont.interFont(ofSize: 12)]).width + 16
+            
+            let cellWidth = max(minimumWidth, width)
+            
+            return CGSize(width: cellWidth, height: height)
         case 2:
             return CGSize(width: 256, height: 256)
         case 3:
@@ -282,7 +328,7 @@ extension BrowseViewController: UISearchBarDelegate {
     }
     
     func searchBarTextDidEndEditing(_ searchBar: UISearchBar) {
-            
+        
         if let text = searchBar.text, !text.isEmpty {
             
             newsManager.fetchByKeyWord(keyWord: text)
@@ -294,15 +340,23 @@ extension BrowseViewController: UISearchBarDelegate {
 }
 extension BrowseViewController: NewsManagerDelegate {
     
-    func didUpdateNews(manager: NewsManager, news: [NewsModel]) {
-        DispatchQueue.main.async {
- 
-            let recSearchVC = RecSearchViewController()
-            recSearchVC.articlesData = news
-            self.navigationController?.pushViewController(recSearchVC, animated: true)
+    
+    func didUpdateNews(manager: NewsManager, news: [NewsModel], requestType: Bool?) {
+        if let requestType {
+            allNewsData = news
+            DispatchQueue.main.async {
+                self.bigCollectionH.reloadData()
+            }
+        } else {
+            DispatchQueue.main.async {
+                
+                let recSearchVC = RecSearchViewController()
+                recSearchVC.articlesData = news
+                self.navigationController?.pushViewController(recSearchVC, animated: true)
+            }
         }
     }
-
+    
     
     func didFailWithError(error: Error) {
         print("Failed with error: \(error)")

@@ -6,9 +6,10 @@
 //
 
 import Foundation
+import UIKit
 
 protocol NewsManagerDelegate {
-    func didUpdateNews(manager: NewsManager, news: [NewsModel])
+    func didUpdateNews(manager: NewsManager, news: [NewsModel], requestType: Bool?)
     func didFailWithError(error: Error)
 }
 
@@ -61,19 +62,20 @@ struct NewsManager {
             }
     }
             
-    func fetchNews(topic: String) {
+   
+    func fetchNews(topic: String, isCategory: Bool? = nil) {
         let urlString = "https://newsapi.org/v2/top-headlines?category=\(topic)&apiKey=\(apiKey)"
         print(urlString)
         print("json \(topic)")
-        performRequest(with: urlString, category: topic)
+        performRequest(with: urlString, category: topic, requestType: isCategory)
         
     }
     
-    func fetchByKeyWord(keyWord: String) {
+    func fetchByKeyWord(keyWord: String, isCategory: Bool? = nil) {
         let urlString = "https://newsapi.org/v2/everything?q=\(keyWord)&apiKey=\(apiKey)"
         print(urlString)
         print("json \(keyWord)")
-        performRequest(with: urlString, category: "General")
+        performRequest(with: urlString, category: "General", requestType: isCategory)
         
     }
        
@@ -89,7 +91,7 @@ struct NewsManager {
                 
                 if let safeData = data {
                     if let newsArray = self.parseJSON(safeData, category: category) {
-                        self.delegate?.didUpdateNews(manager: self, news: newsArray)
+                        self.delegate?.didUpdateNews(manager: self, news: newsArray, requestType: requestType)
                     } else {
                         print("failed to parse data")
                     }
@@ -122,6 +124,7 @@ struct NewsManager {
                 let urlToImage = article.urlToImage ?? ""
                 let publishedAt = article.publishedAt ?? ""
                 let urlArticle = article.url
+                let description = article.description?.description ?? ""
                 
                 let news = NewsModel(
                     author: author,
@@ -131,6 +134,7 @@ struct NewsManager {
                     publishedAt: publishedAt,
                     urlArticle: urlArticle,
                     category: category
+                    description: description
                 )
                 newsArray.append(news)
             }
