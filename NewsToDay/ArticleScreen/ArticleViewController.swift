@@ -17,7 +17,9 @@ final class ArticleViewController: UIViewController {
         urlToImage: "",
         publishedAt: "",
         urlArticle: "",
+        category: "",
         description: ""
+        
     )
     
     let scrollView = UIScrollView()
@@ -99,7 +101,6 @@ final class ArticleViewController: UIViewController {
         categoryLabel.translatesAutoresizingMaskIntoConstraints = false
         contentView.addSubview(categoryLabel)
         
-        titleLabel.text = "The latest situation in the presidential election The latest situation"
         titleLabel.textColor = .white
         titleLabel.shadowColor = .black
         titleLabel.shadowOffset = CGSize(width: 0, height: 0)
@@ -112,7 +113,6 @@ final class ArticleViewController: UIViewController {
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
         contentView.addSubview(titleLabel)
         
-        authorLabel.text = "John Doe"
         authorLabel.textColor = .white
         authorLabel.shadowColor = .black
         authorLabel.shadowOffset = CGSize(width: 0, height: 0)
@@ -128,7 +128,6 @@ final class ArticleViewController: UIViewController {
         authorConstLabel.translatesAutoresizingMaskIntoConstraints = false
         contentView.addSubview(authorConstLabel)
         
-        dateLabel.text = ""
         dateLabel.textColor = .white
         dateLabel.textAlignment = .right
         dateLabel.shadowColor = .black
@@ -139,7 +138,6 @@ final class ArticleViewController: UIViewController {
         dateLabel.translatesAutoresizingMaskIntoConstraints = false
         contentView.addSubview(dateLabel)
         
-        articleLabel.text = text
         articleLabel.textColor = .black
         articleLabel.font = UIFont.interFont(ofSize: 18, weight: .regular)
         articleLabel.textColor = UIColor.app(.greyDark)
@@ -225,12 +223,7 @@ final class ArticleViewController: UIViewController {
     @objc func bookmarkButtonTapped() {
         madeBookmark()
         
-        let topics = ["business","entertainment","general","health","science","sports","technology"]
-        
-        topic = topics.randomElement()!
 
-        newsManager.fetchNews(topic: topic)
-        print("\(topic)")
     }
     
     @objc func goBack() {
@@ -246,9 +239,6 @@ final class ArticleViewController: UIViewController {
         
         self.present(activityVC, animated: true)
     }
-    
-        //пример текста, в будущем удалить
-    let text = "Leads in individual states may change from one party to another as all the votes are counted. Select a state for detailed results, and select the Senate, House or Governor tabs to view those races. For more detailed state results click on the States A-Z links at the bottom of this page. Results source: NEP/Edison via Reuters. Leads in individual states may change from one party to another as all the votes are counted. Select a state for detailed results, and select the Senate, House or Governor tabs to view those races. For more detailed state results click on the States A-Z links at the bottom of this page Results source: NEP/Edison via Reuters.select the Senate, House or Governor tabs to view those races. For more detailed state results click on the States A-Z links at the bottom of this page. Results source: NEP/Edison via Reuters. Leads in individual states may change from one party to another as all the votes are counted. Select a state for detailed results, and select the Senate, House or Governor tabs to view those races. For more detailed state results click on the States A-Z links at the bottom of this page. Results source: NEP/Edison via Reuters."
     
     
     func madeBookmark(){
@@ -304,6 +294,7 @@ extension ArticleViewController {
         private func displayArticleDetails() {
                 
                 titleLabel.text = article.title
+            categoryLabel.text = article.category
                 authorLabel.text = article.author
                 dateLabel.text = article.publishedAt.makeDate()
                 articleLabel.text = article.content + "\n\nRead more at: \n" + article.urlArticle

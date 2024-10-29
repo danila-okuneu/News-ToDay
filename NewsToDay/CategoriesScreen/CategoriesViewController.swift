@@ -14,7 +14,7 @@ final class CategoriesViewController: TitlesBaseViewController {
 //    var sourceController: String?
     var sourceController: String? = "TopicsSelectionVC"
 //    var sourceController: String? = "MainCategoriesVC"
-    
+        
     private var categories: [String] {
         return [
             "business_categories_cell".localized(),
@@ -29,6 +29,8 @@ final class CategoriesViewController: TitlesBaseViewController {
     
     private var selectedCategories: [String] = []
     private var categoryButtons: [UIButton] = []
+    
+
     
     //MARK: - UI Elements
     
@@ -67,7 +69,6 @@ final class CategoriesViewController: TitlesBaseViewController {
         button.backgroundColor = UIColor.app(.purplePrimary)
         button.tintColor = .white
         button.layer.cornerRadius = 12
-        button.addTarget(self, action: #selector(nextButtonTapped), for: .touchUpInside)
         return button
     }()
     
@@ -75,8 +76,13 @@ final class CategoriesViewController: TitlesBaseViewController {
     //MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        
         setupUI()
         configureViewForSource()
+        
+        nextButton.addTarget(self, action: #selector(nextButtonTapped), for: .touchUpInside)
+
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -174,24 +180,50 @@ final class CategoriesViewController: TitlesBaseViewController {
         }
     }
     
-    @objc private func nextButtonTapped(_ sender: UIButton) {
-        print("tapped next")
-    }
+
     
     @objc private func topicButtonTapped(_ sender: UIButton) {
         guard let title = sender.title(for: .normal) else { return }
         
-        if selectedCategories.contains(title) {
-            selectedCategories.removeAll { $0 == title }
+        let cleanTitle = title.cleanCategory()
+        
+        if selectedCategories.contains(cleanTitle) {
+            selectedCategories.removeAll { $0 == cleanTitle }
             sender.backgroundColor = UIColor.app(.greyLighter)
             sender.setTitleColor(UIColor.app(.greyDark), for: .normal)
         } else {
-            selectedCategories.append(title)
+            selectedCategories.append(cleanTitle)
             sender.backgroundColor = UIColor.app(.purplePrimary)
             sender.setTitleColor(.white, for: .normal)
         }
         
-        print("выбранно: \(selectedCategories)")
+
+        print("выбрано: \(selectedCategories)")
+        print(selectedCategories)
+    }
+    
+    @objc private func nextButtonTapped(_ sender: UIButton) {
+        print("tapped next")
+        
+        if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
+           let window = windowScene.windows.first,
+           let tabBarController = window.rootViewController as? TabController {
+            tabBarController.selectedIndex = 0
+            print("Selected Tab Index: \(tabBarController.selectedIndex)")
+
+            // Проверяем, какие контроллеры есть в tabBarController
+            if let navController = tabBarController.viewControllers?[0] as? UINavigationController,
+                       let browseVC = navController.viewControllers.first as? BrowseViewController {
+                        browseVC.categories = selectedCategories
+                        print("Selected Categories: \(selectedCategories)")
+                        browseVC.fetchRecomData()
+            } else {
+                print("BrowseViewController not found.")
+            }
+        } else {
+            print("Could not retrieve tab bar controller or window.")
+        
+        }
     }
            
     
@@ -236,6 +268,15 @@ final class CategoriesViewController: TitlesBaseViewController {
     }
   
     
+}
+
+// MARK: Extension - String formatter
+
+extension String {
+    func cleanCategory () -> String {
+        let cleanedTitle = self.replacingOccurrences(of: "^[\\W_]*|_categories_cell$", with: "", options: .regularExpression)
+        return cleanedTitle
+    }
 }
 
 

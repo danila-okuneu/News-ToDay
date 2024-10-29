@@ -21,7 +21,7 @@
 // MARK: - Category Onboarding Screen
 "categories_onboard_screen_title" = "Select your favorite topics";
 "description_onboard_categories_title" = "Select some of your favorite topics to let us suggest better news for you.";
-"next_button_title" = "Next";
+"next_button_title" = "Save";
 
 // MARK: - Browse Screen
 "browse_screen_title" = "Browse";

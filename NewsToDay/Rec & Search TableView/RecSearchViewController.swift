@@ -11,6 +11,7 @@ final class RecSearchViewController: TitlesBaseViewController {
     
     var articlesData: [NewsModel] = []
     let backButton = UIButton()
+    var selectedCategory: String?
     
     //MARK: - Properties
     private let tableView: UITableView = {
@@ -124,7 +125,6 @@ extension RecSearchViewController: UITableViewDelegate, UITableViewDataSource {
             let selectedArticle = articlesData[indexPath.row]
             let destVC = ArticleViewController()
         destVC.article = selectedArticle
-        destVC.topic = "General"
              
             navigationController?.pushViewController(destVC, animated: true)
             tableView.deselectRow(at: indexPath, animated: true)
