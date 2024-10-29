@@ -17,7 +17,9 @@ final class ArticleViewController: UIViewController {
         urlToImage: "",
         publishedAt: "",
         urlArticle: "",
+        category: "",
         description: ""
+        
     )
     
     let scrollView = UIScrollView()

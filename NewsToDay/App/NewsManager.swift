@@ -79,7 +79,7 @@ struct NewsManager {
         
     }
        
-    func performRequest(with urlString: String, category: String) {
+    func performRequest(with urlString: String, category: String, requestType: Bool? = nil ) {
         if let url = URL(string: urlString) {
             let session = URLSession(configuration: .default)
             let task = session.dataTask(with: url) { (data, response, error) in
@@ -133,7 +133,7 @@ struct NewsManager {
                     urlToImage: urlToImage,
                     publishedAt: publishedAt,
                     urlArticle: urlArticle,
-                    category: category
+                    category: category,
                     description: description
                 )
                 newsArray.append(news)
