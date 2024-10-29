@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		791F1C6E2CCEB3E8008B9D22 /* TabController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 791F1C6D2CCEB3E8008B9D22 /* TabController.swift */; };
+		791F1C712CCEBFB0008B9D22 /* CustomPageControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 791F1C702CCEBFB0008B9D22 /* CustomPageControl.swift */; };
 		792FCBF02CC988AC00636140 /* CategoriesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 792FCBEF2CC988AC00636140 /* CategoriesViewController.swift */; };
 		79BD6BB92CC84C5100B128B6 /* OnboardingCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79BD6BB82CC84C5100B128B6 /* OnboardingCollectionViewCell.swift */; };
 		DD6CDEC52CC5787300CE12B3 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD6CDEC42CC5787300CE12B3 /* AppDelegate.swift */; };
@@ -54,6 +55,7 @@
 
 /* Begin PBXFileReference section */
 		791F1C6D2CCEB3E8008B9D22 /* TabController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabController.swift; sourceTree = "<group>"; };
+		791F1C702CCEBFB0008B9D22 /* CustomPageControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomPageControl.swift; sourceTree = "<group>"; };
 		792FCBEF2CC988AC00636140 /* CategoriesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoriesViewController.swift; sourceTree = "<group>"; };
 		79BD6BB82CC84C5100B128B6 /* OnboardingCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingCollectionViewCell.swift; sourceTree = "<group>"; };
 		DD6CDEC12CC5787300CE12B3 /* NewsToDay.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = NewsToDay.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -195,6 +197,7 @@
 			children = (
 				F129115F2CC57A5600DAC490 /* OnboardingViewController.swift */,
 				79BD6BB82CC84C5100B128B6 /* OnboardingCollectionViewCell.swift */,
+				791F1C702CCEBFB0008B9D22 /* CustomPageControl.swift */,
 			);
 			path = OnboardingScreen;
 			sourceTree = "<group>";
@@ -409,6 +412,7 @@
 				F1EBD61D2CC97D9700A63CF2 /* ProfileViewController.swift in Sources */,
 				F1EBD61B2CC976AA00A63CF2 /* LanguageViewController.swift in Sources */,
 				FA7095602CC7E857006D0F10 /* BookmarksCell.swift in Sources */,
+				791F1C712CCEBFB0008B9D22 /* CustomPageControl.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
