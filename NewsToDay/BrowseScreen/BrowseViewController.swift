@@ -11,11 +11,12 @@ import SnapKit
 final class BrowseViewController: TitlesBaseViewController {
     
     var newsManager = NewsManager()
-    var categories: [String] = []
+    var categories: [String] = ["General", "Entertainment"]
     let newsCategories = ["General", "Business", "Entertainment",  "Health", "Science", "Sports", "Technology"]
     var selectedIndexPath: IndexPath?
     var currentCategory = "General"
     var allNewsData: [NewsModel]?
+    var recomNews:[NewsModel]?
     
     
     private let scrollView: UIScrollView = {
@@ -82,6 +83,7 @@ final class BrowseViewController: TitlesBaseViewController {
         return collection
     }()
     
+        // MARK: LifeCycle ViewDidLoad
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -91,6 +93,8 @@ final class BrowseViewController: TitlesBaseViewController {
         setupUI()
         
         newsManager.fetchByKeyWord(keyWord: currentCategory, isCategory: true)
+        fetchRecomData()
+        
         header.viewAll.addTarget(self, action: #selector(viewAllTapped), for: .touchUpInside)
         
     }
@@ -198,6 +202,18 @@ final class BrowseViewController: TitlesBaseViewController {
     private func loadData() {
         newsManager.fetchByKeyWord(keyWord: currentCategory, isCategory: true)
     }
+    
+    private func fetchRecomData() {
+        newsManager.fetchRandom(categories: categories) { [weak self] articles in
+            guard let self = self else { return }
+            self.didUpdateNews(manager: self.newsManager, news: articles, requestType: true)
+
+            self.recomNews = articles
+            DispatchQueue.main.async {
+                           self.bigCollectionV.reloadData()
+                       }
+        }
+    }
     // MARK: See All Recommendations method
     
     @objc func viewAllTapped() {
@@ -262,8 +278,17 @@ extension BrowseViewController: UICollectionViewDelegate, UICollectionViewDataSo
             }
             return cell
         case 3:
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "BigVerticalCollectionViewCell", for: indexPath)
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "BigVerticalCollectionViewCell", for: indexPath) as! BigVerticalCollectionViewCell
             updateHeightCollection()
+            if let allNewsData {
+                let displayedData = Array(allNewsData.prefix(10))
+                let article = displayedData[indexPath.row]
+                print(indexPath.row)
+                cell.set(article: article)
+//                cell.categoryLabel.text = currentCategory
+
+            }
+            
             return cell
         default:
             return UICollectionViewCell()
@@ -287,7 +312,7 @@ extension BrowseViewController: UICollectionViewDelegate, UICollectionViewDataSo
     
     func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
         guard let cell = collectionView.cellForItem(at: indexPath) as? SmallHCollectionViewCell else { return }
-        print(cell.titleLabel.text)
+//        print(cell.titleLabel.text)
     }
     
 }
@@ -344,8 +369,10 @@ extension BrowseViewController: NewsManagerDelegate {
     func didUpdateNews(manager: NewsManager, news: [NewsModel], requestType: Bool?) {
         if let requestType {
             allNewsData = news
+            
             DispatchQueue.main.async {
                 self.bigCollectionH.reloadData()
+
             }
         } else {
             DispatchQueue.main.async {
