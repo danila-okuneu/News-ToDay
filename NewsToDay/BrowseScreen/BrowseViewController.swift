@@ -203,7 +203,7 @@ final class BrowseViewController: TitlesBaseViewController {
         newsManager.fetchByKeyWord(keyWord: currentCategory, isCategory: true)
     }
     
-    private func fetchRecomData() {
+     func fetchRecomData() {
         newsManager.fetchRandom(categories: categories) { [weak self] articles in
             guard let self = self else { return }
             self.didUpdateNews(manager: self.newsManager, news: articles, requestType: true)
@@ -281,7 +281,7 @@ extension BrowseViewController: UICollectionViewDelegate, UICollectionViewDataSo
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "BigVerticalCollectionViewCell", for: indexPath) as! BigVerticalCollectionViewCell
             updateHeightCollection()
             if let allNewsData {
-                let displayedData = Array(allNewsData.prefix(10))
+                let displayedData = Array(allNewsData)
                 let article = displayedData[indexPath.row]
                 print(indexPath.row)
                 cell.set(article: article)

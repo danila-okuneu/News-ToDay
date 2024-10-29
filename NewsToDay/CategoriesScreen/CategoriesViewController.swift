@@ -205,10 +205,25 @@ final class CategoriesViewController: TitlesBaseViewController {
     @objc private func nextButtonTapped(_ sender: UIButton) {
         print("tapped next")
         
-        let mainVC = BrowseViewController()
-        mainVC.categories = selectedCategories
+        if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
+           let window = windowScene.windows.first,
+           let tabBarController = window.rootViewController as? TabController {
+            tabBarController.selectedIndex = 0
+            print("Selected Tab Index: \(tabBarController.selectedIndex)")
 
-        navigationController?.pushViewController(mainVC, animated: true)
+            // Проверяем, какие контроллеры есть в tabBarController
+            if let navController = tabBarController.viewControllers?[0] as? UINavigationController,
+                       let browseVC = navController.viewControllers.first as? BrowseViewController {
+                        browseVC.categories = selectedCategories
+                        print("Selected Categories: \(selectedCategories)")
+                        browseVC.fetchRecomData()
+            } else {
+                print("BrowseViewController not found.")
+            }
+        } else {
+            print("Could not retrieve tab bar controller or window.")
+        
+        }
     }
            
     
