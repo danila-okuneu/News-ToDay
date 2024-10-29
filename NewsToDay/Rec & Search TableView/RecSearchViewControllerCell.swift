@@ -50,7 +50,7 @@ class RecSearchViewControllerCell: UITableViewCell {
             articleImageView.heightAnchor.constraint(equalToConstant: 100),
             
             categoriesLabel.topAnchor.constraint(equalTo: articleImageView.topAnchor, constant: 5),
-            categoriesLabel.leadingAnchor.constraint(equalTo: articleImageView.trailingAnchor, constant: 16),
+            categoriesLabel.leadingAnchor.constraint(equalTo: articleImageView.trailingAnchor, constant: 10),
             categoriesLabel.trailingAnchor.constraint(equalTo: trailingAnchor),
             
             descriptionLabel.leadingAnchor.constraint(equalTo: articleImageView.trailingAnchor, constant: 10),
@@ -65,6 +65,7 @@ class RecSearchViewControllerCell: UITableViewCell {
     
     func set(article: NewsModel) {
         descriptionLabel.text = article.title
+        categoriesLabel.text = article.category
         
         if let urlToImage = article.urlToImage {
             
@@ -73,7 +74,7 @@ class RecSearchViewControllerCell: UITableViewCell {
             articleImageView.image = UIImage(named: "chinatown")
         }
         
-//        if categoriesLabel.text != nil {}
+
             
             
         

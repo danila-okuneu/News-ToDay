@@ -11,6 +11,7 @@ final class RecSearchViewController: TitlesBaseViewController {
     
     var articlesData: [NewsModel] = []
     let backButton = UIButton()
+    var selectedCategory: String?
     
     //MARK: - Properties
     private let tableView: UITableView = {

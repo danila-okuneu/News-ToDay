@@ -188,11 +188,12 @@ final class BrowseViewController: TitlesBaseViewController {
         }
     }
     
-    // See All Recommendations
+    // MARK: See All Recommendations method
     
     @objc func viewAllTapped() {
         print(categories)
-        newsManager.fetchRandom(categories: categories)  { articles in
+        newsManager.fetchRandom(categories: categories)  { [weak self] articles in
+            guard let self = self else { return }
             self.didUpdateNews(manager: self.newsManager, news: articles)
             }
         }
@@ -284,7 +285,7 @@ extension BrowseViewController: UISearchBarDelegate {
             
         if let text = searchBar.text, !text.isEmpty {
             
-//            newsManager.fetchByKeyWord(keyWord: text)
+            newsManager.fetchByKeyWord(keyWord: text)
             searchBar.text = ""
         }
         

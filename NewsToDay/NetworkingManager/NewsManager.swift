@@ -11,6 +11,7 @@ protocol NewsManagerDelegate {
     func didUpdateNews(manager: NewsManager, news: [NewsModel])
     func didFailWithError(error: Error)
 }
+
 struct NewsManager {
     
     var delegate: NewsManagerDelegate?
@@ -21,10 +22,10 @@ struct NewsManager {
         var newsArticles: [NewsModel] = []
         let fetchGroup = DispatchGroup()
         
-        categories.forEach { category in
+        categories.forEach { topic in
             fetchGroup.enter()
 
-            
+            let category = topic
             let urlString = "https://newsapi.org/v2/top-headlines?category=\(category)&apiKey=\(apiKey)"
             
             if let url = URL(string: urlString) {
@@ -38,18 +39,20 @@ struct NewsManager {
                     }
                     
                     if let safeData = data {
-                        if let newsArray = self.parseJSON(safeData)  {
+                        if let newsArray = self.parseJSON(safeData, category: topic)  {
                             newsArticles.append(contentsOf: newsArray)
                             
                         } else {
-                            print("failed to parse data")
+                            print("failed to parse data \(category)")
                         }
                     } else {
-                        print("failed to fetch Data")
+                        print("failed to fetch Data \(category) ")
                     }
                 }
                 
                 task.resume()
+            } else {
+                fetchGroup.leave()
             }
         }
         fetchGroup.notify(queue: .main) {
@@ -62,7 +65,7 @@ struct NewsManager {
         let urlString = "https://newsapi.org/v2/top-headlines?category=\(topic)&apiKey=\(apiKey)"
         print(urlString)
         print("json \(topic)")
-        performRequest(with: urlString)
+        performRequest(with: urlString, category: topic)
         
     }
     
@@ -70,11 +73,11 @@ struct NewsManager {
         let urlString = "https://newsapi.org/v2/everything?q=\(keyWord)&apiKey=\(apiKey)"
         print(urlString)
         print("json \(keyWord)")
-        performRequest(with: urlString)
+        performRequest(with: urlString, category: "General")
         
     }
        
-    func performRequest(with urlString: String) {
+    func performRequest(with urlString: String, category: String) {
         if let url = URL(string: urlString) {
             let session = URLSession(configuration: .default)
             let task = session.dataTask(with: url) { (data, response, error) in
@@ -85,7 +88,7 @@ struct NewsManager {
                 }
                 
                 if let safeData = data {
-                    if let newsArray = self.parseJSON(safeData) {
+                    if let newsArray = self.parseJSON(safeData, category: category) {
                         self.delegate?.didUpdateNews(manager: self, news: newsArray)
                     } else {
                         print("failed to parse data")
@@ -99,7 +102,7 @@ struct NewsManager {
         }
     }
     
-    func parseJSON(_ newsData: Data) -> [NewsModel]? {
+    func parseJSON(_ newsData: Data, category: String) -> [NewsModel]? {
         let decoder = JSONDecoder()
         
         do {
@@ -126,7 +129,8 @@ struct NewsManager {
                     content: content,
                     urlToImage: urlToImage,
                     publishedAt: publishedAt,
-                    urlArticle: urlArticle
+                    urlArticle: urlArticle,
+                    category: category
                 )
                 newsArray.append(news)
             }
@@ -142,23 +146,3 @@ struct NewsManager {
     
 }
 
-extension NewsManager {
-    
-    // получить дату за сегодня
-    func getToday() -> String {
-        let date = Date()
-        let formatter = DateFormatter()
-        formatter.dateFormat = "yyyy-MM-dd"
-        
-        let today = formatter.string(from: date)
-        return today
-    }
-    
-    //получить дату за ВЧЕРА
-    var date: String {
-        let yesterday = Calendar.current.date(byAdding: .day, value: -1, to: Date())!
-        let formatter = DateFormatter()
-        formatter.dateFormat = "yyyy-MM-dd"
-        return formatter.string(from: yesterday)
-    }
-}

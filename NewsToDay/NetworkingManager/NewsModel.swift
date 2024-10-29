@@ -14,5 +14,5 @@ struct NewsModel {
     let urlToImage: String?
     let publishedAt: String
     let urlArticle: String
-
+    let category: String
 }
