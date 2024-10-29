@@ -11,10 +11,20 @@ import SnapKit
 final class BrowseViewController: TitlesBaseViewController {
     
     var newsManager = NewsManager()
-    let newsCategories = ["General", "Business", "Entertainment",  "Health", "Science", "Sports", "Technology"]
+    let newsCategories = [
+        "Random",
+        "General",
+        "Business",
+        "Entertainment",
+        "Health",
+        "Science",
+        "Sports",
+        "Technology"
+    ]
     var selectedIndexPath: IndexPath?
     var currentCategory = "General"
     var allNewsData: [NewsModel]?
+    var displayedData: [NewsModel] = []
     
     
     private let scrollView: UIScrollView = {
@@ -46,7 +56,10 @@ final class BrowseViewController: TitlesBaseViewController {
         layout.minimumLineSpacing = 16
         layout.sectionInset = UIEdgeInsets(top: 0, left: 20, bottom: 0, right: 0)
         let collection = UICollectionView(frame: .zero, collectionViewLayout: layout)
-        collection.register(SmallHCollectionViewCell.self, forCellWithReuseIdentifier: "SmallHCollectionViewCell")
+        collection.register(
+            SmallHCollectionViewCell.self,
+            forCellWithReuseIdentifier: "SmallHCollectionViewCell"
+        )
         collection.tag = 1
         collection.allowsMultipleSelection = true
         collection.showsHorizontalScrollIndicator = false
@@ -59,7 +72,10 @@ final class BrowseViewController: TitlesBaseViewController {
         layout.minimumLineSpacing = 16
         layout.sectionInset = UIEdgeInsets(top: 0, left: 20, bottom: 0, right: 0)
         let collection = UICollectionView(frame: .zero, collectionViewLayout: layout)
-        collection.register(BigCollectionViewCell.self, forCellWithReuseIdentifier: "BigCollectionViewCell")
+        collection.register(
+            BigCollectionViewCell.self,
+            forCellWithReuseIdentifier: "BigCollectionViewCell"
+        )
         collection.tag = 2
         collection.showsHorizontalScrollIndicator = false
         return collection
@@ -74,7 +90,10 @@ final class BrowseViewController: TitlesBaseViewController {
         layout.scrollDirection = .vertical
         layout.minimumLineSpacing = 16
         let collection = UICollectionView(frame: .zero, collectionViewLayout: layout)
-        collection.register(BigVerticalCollectionViewCell.self, forCellWithReuseIdentifier: "BigVerticalCollectionViewCell")
+        collection.register(
+            BigVerticalCollectionViewCell.self,
+            forCellWithReuseIdentifier: "BigVerticalCollectionViewCell"
+        )
         collection.isScrollEnabled = false
         collection.tag = 3
         collection.showsVerticalScrollIndicator = false
@@ -111,7 +130,10 @@ final class BrowseViewController: TitlesBaseViewController {
     
     private func setupUI() {
         view.backgroundColor = .systemBackground
-        setTitlesNavBar(title: "browse_screen_title".localized(), description: "description_browse_title".localized())
+        setTitlesNavBar(
+            title: "browse_screen_title".localized(),
+            description: "description_browse_title".localized()
+        )
         scrollView.addSubview(containerStackView)
         
         containerStackView.addArrangedSubview(customNavBar)
@@ -194,6 +216,16 @@ final class BrowseViewController: TitlesBaseViewController {
         }
     }
     
+    private func animationForTuchCollection(for cell: UICollectionViewCell) {
+        UIView.animate(withDuration: 0.1, animations: {
+               cell.alpha = 0.3 // Устанавливаем низкую прозрачность
+           }) { _ in
+               UIView.animate(withDuration: 0.1) {
+                   cell.alpha = 1.0 // Возвращаем к полной непрозрачности
+               }
+           }
+    }
+    
     private func loadData() {
         newsManager.fetchByKeyWord(keyWord: currentCategory, isCategory: true)
     }
@@ -204,18 +236,29 @@ final class BrowseViewController: TitlesBaseViewController {
     
     //MARK: - Localization
     private func addObserverForLocalization() {
-        NotificationCenter.default.addObserver(forName: LanguageManager.languageDidChangeNotification, object: nil, queue: .main) { [weak self] _ in
+        NotificationCenter.default.addObserver(
+            forName: LanguageManager.languageDidChangeNotification,
+            object: nil,
+            queue: .main
+        ) { [weak self] _ in
             self?.updateLocalizedText()
         }
     }
     
     private func removeObserverForLocalization() {
-        NotificationCenter.default.removeObserver(self, name: LanguageManager.languageDidChangeNotification, object: nil)
+        NotificationCenter.default.removeObserver(
+            self,
+            name: LanguageManager.languageDidChangeNotification,
+            object: nil
+        )
     }
     
     @objc private func updateLocalizedText() {
         searchBar.placeholder = "search_placeholder_textfield".localized()
-        setTitlesNavBar(title: "browse_screen_title".localized(), description: "description_browse_title".localized())
+        setTitlesNavBar(
+            title: "browse_screen_title".localized(),
+            description: "description_browse_title".localized()
+        )
         header.updateLocalizedText()
     }
     
@@ -223,7 +266,10 @@ final class BrowseViewController: TitlesBaseViewController {
 
 extension BrowseViewController: UICollectionViewDelegate, UICollectionViewDataSource {
     
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+    func collectionView(
+        _ collectionView: UICollectionView,
+        numberOfItemsInSection section: Int
+    ) -> Int {
         switch collectionView.tag {
         case 1:
             return newsCategories.count
@@ -236,16 +282,25 @@ extension BrowseViewController: UICollectionViewDelegate, UICollectionViewDataSo
         }
     }
     
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+    func collectionView(
+        _ collectionView: UICollectionView,
+        cellForItemAt indexPath: IndexPath
+    ) -> UICollectionViewCell {
         switch collectionView.tag {
         case 1:
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "SmallHCollectionViewCell", for: indexPath) as! SmallHCollectionViewCell
+            let cell = collectionView.dequeueReusableCell(
+                withReuseIdentifier: "SmallHCollectionViewCell",
+                for: indexPath
+            ) as! SmallHCollectionViewCell
             cell.titleLabel.text = newsCategories[indexPath.item]
             return cell
         case 2:
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "BigCollectionViewCell", for: indexPath) as! BigCollectionViewCell
+            let cell = collectionView.dequeueReusableCell(
+                withReuseIdentifier: "BigCollectionViewCell",
+                for: indexPath
+            ) as! BigCollectionViewCell
             if let allNewsData {
-                let displayedData = Array(allNewsData.prefix(5))
+                displayedData = Array(allNewsData.prefix(5))
                 let article = displayedData[indexPath.row]
                 print(indexPath.row)
                 cell.set(article: article)
@@ -253,7 +308,10 @@ extension BrowseViewController: UICollectionViewDelegate, UICollectionViewDataSo
             }
             return cell
         case 3:
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "BigVerticalCollectionViewCell", for: indexPath)
+            let cell = collectionView.dequeueReusableCell(
+                withReuseIdentifier: "BigVerticalCollectionViewCell",
+                for: indexPath
+            )
             updateHeightCollection()
             return cell
         default:
@@ -263,28 +321,63 @@ extension BrowseViewController: UICollectionViewDelegate, UICollectionViewDataSo
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        guard let cell = collectionView.cellForItem(at: indexPath) as? SmallHCollectionViewCell else { return }
-        if let selectedIndexPath {
-            if selectedIndexPath != indexPath {
-                collectionView.deselectItem(at: selectedIndexPath, animated: true)
-                currentCategory = cell.titleLabel.text ?? "general"
+
+        if let cell = collectionView.cellForItem(at: indexPath) as?
+            SmallHCollectionViewCell {
+            currentCategory = cell.titleLabel.text ?? "general"
+            if let selectedIndexPath {
+                if selectedIndexPath != indexPath {
+                    collectionView.deselectItem(at: selectedIndexPath, animated: true)
+                }
             }
-        }
-        selectedIndexPath = indexPath
-        if let string = cell.titleLabel.text {
-            newsManager.fetchNews(topic: string, isCategory: true)
+            selectedIndexPath = indexPath
+            if let string = cell.titleLabel.text {
+                if string.lowercased() == "random" {
+                    let randomCategories = [
+                        "General",
+                        "Business",
+                        "Entertainment",
+                        "Health",
+                        "Science",
+                        "Sports",
+                        "Technology"
+                    ]
+                    newsManager.getRandomNews(for: randomCategories) { news in
+                        self.allNewsData = news
+                        DispatchQueue.main.async {
+                            self.bigCollectionH.reloadData()
+                        }
+                    }
+                } else {
+                    newsManager.fetchNews(topic: string, isCategory: true)
+                }
+            }
+        } else if let cell = collectionView.cellForItem(at: indexPath) as? BigCollectionViewCell {
+            animationForTuchCollection(for: cell)
+            currentCategory = cell.categoryLabel.text!
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) { [weak self] in
+                guard let self else {return}
+                let articleVC = ArticleViewController()
+                articleVC.article = self.displayedData[indexPath.row] 
+                articleVC.topic = currentCategory
+                self.navigationController?.pushViewController(articleVC, animated: true)
+            }
         }
     }
     
     func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
-        guard let cell = collectionView.cellForItem(at: indexPath) as? SmallHCollectionViewCell else { return }
-        print(cell.titleLabel.text)
+        guard let cell = collectionView.cellForItem(at: indexPath) as? 
+                SmallHCollectionViewCell else { return }
     }
     
 }
 
 extension BrowseViewController: UICollectionViewDelegateFlowLayout {
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+    func collectionView(
+        _ collectionView: UICollectionView,
+        layout collectionViewLayout: UICollectionViewLayout,
+        sizeForItemAt indexPath: IndexPath
+    ) -> CGSize {
         switch collectionView.tag {
         case 1:
             let height: CGFloat = 32
@@ -292,7 +385,9 @@ extension BrowseViewController: UICollectionViewDelegateFlowLayout {
             
             let text = newsCategories[indexPath.item]
             
-            let width: CGFloat = (text as NSString).size(withAttributes: [.font: UIFont.interFont(ofSize: 12)]).width + 16
+            let width: CGFloat = (text as NSString).size(
+                withAttributes: [.font: UIFont.interFont(ofSize: 12)]
+            ).width + 16
             
             let cellWidth = max(minimumWidth, width)
             
@@ -333,7 +428,7 @@ extension BrowseViewController: NewsManagerDelegate {
     
     
     func didUpdateNews(manager: NewsManager, news: [NewsModel], requestType: Bool?) {
-        if let requestType {
+        if requestType != nil {
             allNewsData = news
             DispatchQueue.main.async {
                 self.bigCollectionH.reloadData()

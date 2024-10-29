@@ -12,11 +12,12 @@ protocol NewsManagerDelegate {
     func didUpdateNews(manager: NewsManager, news: [NewsModel], requestType: Bool?)
     func didFailWithError(error: Error)
 }
+
 struct NewsManager {
     
     var delegate: NewsManagerDelegate?
     
-    let apiKey = "30804caa0fa442909fd0a2999f25c04c"
+    let apiKey = "fab4adf6e44443e492c247e2dd606cd9"
     
     func fetchNews(topic: String, isCategory: Bool? = nil) {
         let urlString = "https://newsapi.org/v2/top-headlines?category=\(topic)&apiKey=\(apiKey)"
@@ -122,5 +123,43 @@ extension NewsManager {
         let formatter = DateFormatter()
         formatter.dateFormat = "yyyy-MM-dd"
         return formatter.string(from: yesterday)
+    }
+}
+
+extension NewsManager {
+    
+    func getRandomNews(for categories: [String], completion: @escaping ([NewsModel]) -> Void) {
+        var results: [NewsModel] = []
+        
+        let dispatchGroup = DispatchGroup()
+        
+        for category in categories {
+            dispatchGroup.enter()
+            
+            let urlString = "https://newsapi.org/v2/everything?q=\(category)&apiKey=\(apiKey)"
+            guard let url = URL(string: urlString) else {
+                dispatchGroup.leave()
+                continue
+            }
+            
+            URLSession.shared.dataTask(with: url) { data, _, error in
+                defer { dispatchGroup.leave() }
+                
+                if let error {
+                    self.delegate?.didFailWithError(error: error)
+                    return
+                }
+                
+                if let data {
+                    if let newsArray = parseJSON(data) {
+                        results.append(newsArray.randomElement()!)
+                    }
+                }
+            }
+            .resume()
+        }
+        dispatchGroup.notify(queue: .main) {
+            completion(results)
+        }
     }
 }
