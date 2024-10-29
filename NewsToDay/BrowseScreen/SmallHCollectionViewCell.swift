@@ -10,10 +10,17 @@ import SnapKit
 
 class SmallHCollectionViewCell: UICollectionViewCell {
  
-    private let titleLabel = UILabel()
+    let titleLabel = UILabel()
+    override var isSelected: Bool {
+        didSet {
+            contentView.backgroundColor = isSelected ? UIColor.app(.purplePrimary) : UIColor.app(.greyLighter)
+            titleLabel.textColor = isSelected ? .white : UIColor.app(.greyPrimary)
+        }
+    }
     
     override init(frame: CGRect) {
         super.init(frame: frame)
+        isSelected = false
         
         setupCell()
     }
@@ -31,8 +38,7 @@ class SmallHCollectionViewCell: UICollectionViewCell {
     private func setupLabel() {
         contentView.addSubview(titleLabel)
         contentView.backgroundColor = UIColor.app(.greyLighter)
-        titleLabel.text = "Category"
-        titleLabel.font = UIFont.interFont(ofSize: 12, weight: .regular)
+        titleLabel.font = UIFont.interFont(ofSize: 12, weight: .semibold)
         
         titleLabel.snp.makeConstraints { make in
             make.centerX.equalTo(contentView.snp.centerX)
