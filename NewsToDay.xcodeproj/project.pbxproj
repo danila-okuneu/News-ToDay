@@ -237,6 +237,9 @@
 			children = (
 				DD6CDEC42CC5787300CE12B3 /* AppDelegate.swift */,
 				DD6CDEC62CC5787300CE12B3 /* SceneDelegate.swift */,
+				F326FA722CC7C6A7000FF0E2 /* NewsManager.swift */,
+				F326FA742CC7C6B3000FF0E2 /* NewsData.swift */,
+				F326FA762CC7DBB3000FF0E2 /* NewsModel.swift */,
 			);
 			path = App;
 			sourceTree = "<group>";
@@ -280,9 +283,6 @@
 		F326FAC42CD00847000FF0E2 /* NetworkingManager */ = {
 			isa = PBXGroup;
 			children = (
-				F326FA722CC7C6A7000FF0E2 /* NewsManager.swift */,
-				F326FA742CC7C6B3000FF0E2 /* NewsData.swift */,
-				F326FA762CC7DBB3000FF0E2 /* NewsModel.swift */,
 			);
 			path = NetworkingManager;
 			sourceTree = "<group>";
