@@ -19,11 +19,17 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 		DefaultsManager.loadData()
 		
 		window = UIWindow(frame: windowScene.coordinateSpace.bounds)
+		
+		let tabController = TabController()
 		window?.windowScene = windowScene
-
-        window?.rootViewController = TabController()
-
+		window?.rootViewController = tabController
 		window?.makeKeyAndVisible()
+		
+//		if DefaultsManager.isFirstOpen {
+//			let onboardingVC = OnboardingViewController()
+//			onboardingVC.modalPresentationStyle = .fullScreen
+//			tabController.present(onboardingVC, animated: false)
+//		}
 		
         let backButtonImage = UIImage(systemName: "arrow.left")?.withRenderingMode(.alwaysOriginal)
         

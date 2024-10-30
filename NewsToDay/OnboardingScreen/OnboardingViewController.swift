@@ -133,7 +133,7 @@ final class OnboardingViewController: UIViewController, UICollectionViewDelegate
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: OnboardingCollectionViewCell.reuseId, for: indexPath) as! OnboardingCollectionViewCell
-        cell.mainImageView.image = UIImage(named: imageNames[indexPath.item])
+        cell.imageView.image = UIImage(named: imageNames[indexPath.item])
         return cell
     }
     

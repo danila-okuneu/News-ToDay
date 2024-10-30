@@ -10,10 +10,10 @@ struct DefaultsManager {
 	
 	static var isFirstOpen: Bool {
 		get {
-			UserDefaults.standard.bool(forKey: "isFirstOpen")
+			return !UserDefaults.standard.bool(forKey: "isFirstOpen")
 		}
 		set {
-			UserDefaults.standard.set(newValue, forKey: "isFirstOpen")
+			return UserDefaults.standard.set(newValue, forKey: "isFirstOpen")
 		}
 	}
 	static var bookmarks: [NewsModel] {
