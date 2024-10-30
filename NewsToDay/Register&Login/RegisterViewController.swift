@@ -6,6 +6,9 @@
 //
 
 import UIKit
+import FirebaseCore
+import FirebaseFirestore
+import FirebaseAuth
 
 class RegisterViewController: TitlesBaseViewController {
     
@@ -54,6 +57,7 @@ class RegisterViewController: TitlesBaseViewController {
         passwordField.delegate = self
         confirmField.delegate = self
         
+        
     }
     
     
@@ -72,6 +76,7 @@ class RegisterViewController: TitlesBaseViewController {
         passwordField.configurePasswordField(placeholder: "Password")
         confirmField.configurePasswordField(placeholder: "Repeat Password")
         
+        emailField.textContentType = .emailAddress
         
         let stackView = UIStackView(arrangedSubviews: [usernameField, emailField, passwordField, confirmField, signUpButton])
         stackView.axis = .vertical
@@ -93,21 +98,55 @@ class RegisterViewController: TitlesBaseViewController {
         
     }
     
-    @objc func signUpPressed() {
-        if passwordField.text == confirmField.text {
-            
-        } else {
-            print("dont match")
-            passwordAlert()
-            passwordField.text = "" 
-            confirmField.text = ""
-        }
-    }
+        // MARK: signUP Method & Firebase
     
-    private func passwordAlert() {
-        let alert = UIAlertController(title: "Passwords don't match", message: "Try again", preferredStyle: .alert)
+    @objc func signUpPressed() {
+        print("signUpPressed called")
+
+        if let username = usernameField.text, !username.isEmpty,
+           let email = emailField.text, !email.isEmpty {
+            
+            if passwordField.text == confirmField.text {
+                
+                if let password = passwordField.text {
+                    Auth.auth().createUser(withEmail: email, password: password) { authResult, error in
+                        if let e = error {
+                            print(e.localizedDescription)
+                        } else {
+                            print("go to screen")
+                            DispatchQueue.main.async {
+                                let tabController = TabController()
+                                if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
+                                   let window = windowScene.windows.first {
+                                    window.rootViewController = tabController
+                                    window.makeKeyAndVisible()
+                                }
+                            }
+                             
+                                    //                            browseVC.fetchRecomData()
+                                
+                            }
+                        }
+                    }
+                    
+                    
+                } else {
+                    print("dont match")
+                    passwordAlert(title: "Passwords don't match")
+                }
+        } else {
+            
+            print("enter your name and email")
+            passwordAlert(title: "Enter your name and email")
+        }
+        }
+    
+    func passwordAlert(title: String) {
+        let alert = UIAlertController(title: title, message: "Try again", preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "ОК", style: .default, handler: nil))
-        present(alert, animated: true, completion: nil)
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+                self.present(alert, animated: true, completion: nil)
+            }
     }
     
     @objc func loginPressed() {
