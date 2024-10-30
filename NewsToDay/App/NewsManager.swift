@@ -151,3 +151,61 @@ struct NewsManager {
     
 }
 
+extension NewsManager {
+    
+    // получить дату за сегодня
+    func getToday() -> String {
+        let date = Date()
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy-MM-dd"
+        
+        let today = formatter.string(from: date)
+        return today
+    }
+    
+    //получить дату за ВЧЕРА
+    var date: String {
+        let yesterday = Calendar.current.date(byAdding: .day, value: -1, to: Date())!
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy-MM-dd"
+        return formatter.string(from: yesterday)
+    }
+}
+
+extension NewsManager {
+    
+    func getRandomNews(for categories: [String], completion: @escaping ([NewsModel]) -> Void) {
+        var results: [NewsModel] = []
+        
+        let dispatchGroup = DispatchGroup()
+        
+        for category in categories {
+            dispatchGroup.enter()
+            
+            let urlString = "https://newsapi.org/v2/everything?q=\(category)&apiKey=\(apiKey)"
+            guard let url = URL(string: urlString) else {
+                dispatchGroup.leave()
+                continue
+            }
+            
+            URLSession.shared.dataTask(with: url) { data, _, error in
+                defer { dispatchGroup.leave() }
+                
+                if let error {
+                    self.delegate?.didFailWithError(error: error)
+                    return
+                }
+                
+                if let data {
+                    if let newsArray = parseJSON(data, category: category) {
+                        results.append(newsArray.randomElement()!)
+                    }
+                }
+            }
+            .resume()
+        }
+        dispatchGroup.notify(queue: .main) {
+            completion(results)
+        }
+    }
+}

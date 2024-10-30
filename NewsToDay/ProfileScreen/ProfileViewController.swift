@@ -9,7 +9,7 @@ import UIKit
 
 final class ProfileViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
 	
-	private let avatar: UIImageView = {
+	private lazy var avatar: UIImageView = {
 		let imageView = UIImageView()
 		imageView.layer.cornerRadius = Constants.avatarHeight / 2
 		imageView.backgroundColor = .red
@@ -56,6 +56,12 @@ final class ProfileViewController: UIViewController, UIImagePickerControllerDele
 		button.imageView?.contentMode = .scaleAspectFit
 		return button
 	}()
+    
+    
+    let imagePicker = ImagePicker()
+        
+    
+    
 	
 	private var languageButton = CustomButton(withTitle: "language_profile_cell".localized(), image: "chevron.right")
 	private let signOutButton = CustomButton(withTitle: "sign_out_profile_cell".localized(), image: "iphone.and.arrow.forward")
@@ -226,12 +232,11 @@ final class ProfileViewController: UIViewController, UIImagePickerControllerDele
 	
 	@objc private func pickImage() {
 		
-		print("Tapped")
-		let imagePicker = UIImagePickerController()
-		imagePicker.allowsEditing = true
-		imagePicker.delegate = self
-		imagePicker.cameraCaptureMode = .photo
-		present(imagePicker, animated: true)
+//		print("Tapped")
+        imagePicker.showImagePicker(in: self) { image in
+            self.avatar.image = image
+        }
+        
 		
 	}
 	

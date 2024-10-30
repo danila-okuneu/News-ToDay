@@ -8,7 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		791F1C6E2CCEB3E8008B9D22 /* TabController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 791F1C6D2CCEB3E8008B9D22 /* TabController.swift */; };
+		791F1C712CCEBFB0008B9D22 /* CustomPageControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 791F1C702CCEBFB0008B9D22 /* CustomPageControl.swift */; };
 		792FCBF02CC988AC00636140 /* CategoriesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 792FCBEF2CC988AC00636140 /* CategoriesViewController.swift */; };
+		7970C5472CD16F2900C836D6 /* ImagePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7970C5462CD16F2900C836D6 /* ImagePicker.swift */; };
 		79BD6BB92CC84C5100B128B6 /* OnboardingCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79BD6BB82CC84C5100B128B6 /* OnboardingCollectionViewCell.swift */; };
 		DD6CDEC52CC5787300CE12B3 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD6CDEC42CC5787300CE12B3 /* AppDelegate.swift */; };
 		DD6CDEC72CC5787300CE12B3 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD6CDEC62CC5787300CE12B3 /* SceneDelegate.swift */; };
@@ -18,6 +20,7 @@
 		DD76DB412CC99DD2007D741D /* BigCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD76DB402CC99DD2007D741D /* BigCollectionViewCell.swift */; };
 		DD76DB432CC9BEC2007D741D /* BigVerticalCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD76DB422CC9BEC2007D741D /* BigVerticalCollectionViewCell.swift */; };
 		DDE1FD0B2CCB10A600F0AACE /* HeaderVerticalCollection.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDE1FD0A2CCB10A600F0AACE /* HeaderVerticalCollection.swift */; };
+		F10D3F202CD18D0D0040C132 /* DefaultsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F10D3F1F2CD18D070040C132 /* DefaultsManager.swift */; };
 		F12911602CC57A5F00DAC490 /* OnboardingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F129115F2CC57A5600DAC490 /* OnboardingViewController.swift */; };
 		F12911632CC57AC000DAC490 /* BrowseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F12911622CC57AB700DAC490 /* BrowseViewController.swift */; };
 		F12911692CC57B4C00DAC490 /* BookmarksViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F12911682CC57B4500DAC490 /* BookmarksViewController.swift */; };
@@ -57,7 +60,9 @@
 
 /* Begin PBXFileReference section */
 		791F1C6D2CCEB3E8008B9D22 /* TabController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabController.swift; sourceTree = "<group>"; };
+		791F1C702CCEBFB0008B9D22 /* CustomPageControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomPageControl.swift; sourceTree = "<group>"; };
 		792FCBEF2CC988AC00636140 /* CategoriesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoriesViewController.swift; sourceTree = "<group>"; };
+		7970C5462CD16F2900C836D6 /* ImagePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePicker.swift; sourceTree = "<group>"; };
 		79BD6BB82CC84C5100B128B6 /* OnboardingCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingCollectionViewCell.swift; sourceTree = "<group>"; };
 		DD6CDEC12CC5787300CE12B3 /* NewsToDay.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = NewsToDay.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DD6CDEC42CC5787300CE12B3 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -69,6 +74,7 @@
 		DD76DB402CC99DD2007D741D /* BigCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BigCollectionViewCell.swift; sourceTree = "<group>"; };
 		DD76DB422CC9BEC2007D741D /* BigVerticalCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BigVerticalCollectionViewCell.swift; sourceTree = "<group>"; };
 		DDE1FD0A2CCB10A600F0AACE /* HeaderVerticalCollection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeaderVerticalCollection.swift; sourceTree = "<group>"; };
+		F10D3F1F2CD18D070040C132 /* DefaultsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultsManager.swift; sourceTree = "<group>"; };
 		F129115F2CC57A5600DAC490 /* OnboardingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingViewController.swift; sourceTree = "<group>"; };
 		F12911622CC57AB700DAC490 /* BrowseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrowseViewController.swift; sourceTree = "<group>"; };
 		F12911682CC57B4500DAC490 /* BookmarksViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookmarksViewController.swift; sourceTree = "<group>"; };
@@ -203,6 +209,7 @@
 			children = (
 				F129115F2CC57A5600DAC490 /* OnboardingViewController.swift */,
 				79BD6BB82CC84C5100B128B6 /* OnboardingCollectionViewCell.swift */,
+				791F1C702CCEBFB0008B9D22 /* CustomPageControl.swift */,
 			);
 			path = OnboardingScreen;
 			sourceTree = "<group>";
@@ -224,6 +231,7 @@
 			children = (
 				F1EBD60E2CC9768C00A63CF2 /* CustomButton.swift */,
 				F1EBD61C2CC97D9700A63CF2 /* ProfileViewController.swift */,
+				7970C5462CD16F2900C836D6 /* ImagePicker.swift */,
 			);
 			path = ProfileScreen;
 			sourceTree = "<group>";
@@ -250,6 +258,7 @@
 		F129116F2CC57C3E00DAC490 /* App */ = {
 			isa = PBXGroup;
 			children = (
+				F10D3F1F2CD18D070040C132 /* DefaultsManager.swift */,
 				DD6CDEC42CC5787300CE12B3 /* AppDelegate.swift */,
 				DD6CDEC62CC5787300CE12B3 /* SceneDelegate.swift */,
 				F326FA722CC7C6A7000FF0E2 /* NewsManager.swift */,
@@ -394,6 +403,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				F326FA772CC7DBB3000FF0E2 /* NewsModel.swift in Sources */,
+				F10D3F202CD18D0D0040C132 /* DefaultsManager.swift in Sources */,
 				F12911692CC57B4C00DAC490 /* BookmarksViewController.swift in Sources */,
 				DD76DB412CC99DD2007D741D /* BigCollectionViewCell.swift in Sources */,
 				DDE1FD0B2CCB10A600F0AACE /* HeaderVerticalCollection.swift in Sources */,
@@ -412,6 +422,7 @@
 				F3257DC52CD1802300097509 /* RegisterViewController.swift in Sources */,
 				F1EBD60D2CC9767B00A63CF2 /* TermsViewController.swift in Sources */,
 				F3257DC72CD1A42A00097509 /* ViewExtension.swift in Sources */,
+				7970C5472CD16F2900C836D6 /* ImagePicker.swift in Sources */,
 				792FCBF02CC988AC00636140 /* CategoriesViewController.swift in Sources */,
 				F1EBD6132CC9769D00A63CF2 /* LanguageManager.swift in Sources */,
 				F1EBD6142CC9769D00A63CF2 /* LanguageModel.swift in Sources */,
@@ -429,6 +440,7 @@
 				F1EBD61D2CC97D9700A63CF2 /* ProfileViewController.swift in Sources */,
 				F1EBD61B2CC976AA00A63CF2 /* LanguageViewController.swift in Sources */,
 				FA7095602CC7E857006D0F10 /* BookmarksCell.swift in Sources */,
+				791F1C712CCEBFB0008B9D22 /* CustomPageControl.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -586,6 +598,8 @@
 				DEVELOPMENT_TEAM = 3V899K3TN7;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = NewsToDay/Info.plist;
+				INFOPLIST_KEY_NSCameraUsageDescription = "For the avatar";
+				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "For the avatar";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
@@ -617,6 +631,8 @@
 				DEVELOPMENT_TEAM = 3V899K3TN7;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = NewsToDay/Info.plist;
+				INFOPLIST_KEY_NSCameraUsageDescription = "For the avatar";
+				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "For the avatar";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
