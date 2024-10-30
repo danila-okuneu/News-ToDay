@@ -279,6 +279,18 @@ final class BrowseViewController: TitlesBaseViewController {
         )
     }
     
+    func imageTapped(for image: UIImageView, isSelected: inout Bool) {
+        isSelected.toggle()
+        
+        if isSelected {
+            image.image = UIImage(systemName: "bookmark.fill")
+            image.tintColor = .white
+        } else {
+            image.image = UIImage(systemName: "bookmark")
+            image.tintColor = .white
+        }
+    }
+    
     @objc private func updateLocalizedText() {
         searchBar.placeholder = "search_placeholder_textfield".localized()
         setTitlesNavBar(
@@ -385,6 +397,11 @@ extension BrowseViewController: UICollectionViewDelegate, UICollectionViewDataSo
                 }
             }
         } else if let cell = collectionView.cellForItem(at: indexPath) as? BigCollectionViewCell {
+            let touchLocation = collectionView.panGestureRecognizer.location(in: cell)
+            if cell.bookmarkImageView.frame.contains(touchLocation) {
+                imageTapped(for: cell.bookmarkImageView, isSelected: &cell.isBookmarked)
+                return
+            }
             animationForTuchCollection(for: cell)
             currentCategory = cell.categoryLabel.text!
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) { [weak self] in
