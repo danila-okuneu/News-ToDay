@@ -76,5 +76,40 @@ class BigVerticalCollectionViewCell: UICollectionViewCell {
         ])
     }
     
+    func set(article: NewsModel) {
+        articleImageView.image = UIImage()
+        descriptionLabel.text = article.description
+        categoriesLabel.text = article.category
+        
+        if let urlToImage = article.urlToImage {
+            
+            self.didUpdateImage(from: urlToImage)
+        } else {
+            articleImageView.image = UIImage(named: "chinatown")
+        }
+    }
+    
+    func didUpdateImage(from url: String) {
+        guard let imageUrl = URL(string: url) else { return }
+        
+        let activityIndicator = UIActivityIndicatorView(style: .medium)
+        activityIndicator.center = articleImageView.center
+        activityIndicator.hidesWhenStopped = true
+        articleImageView.addSubview(activityIndicator)
+        activityIndicator.startAnimating()
+        
+        
+        URLSession.shared.dataTask(with: imageUrl) { data, response, error in
+            if let data = data, let image = UIImage(data: data) {
+                DispatchQueue.main.async {
+                    activityIndicator.stopAnimating()
+                    self.articleImageView.image = image
+                }
+            } else {
+                print(error?.localizedDescription ?? "error")
+            }
+        }.resume()
+    }
+    
     
 }

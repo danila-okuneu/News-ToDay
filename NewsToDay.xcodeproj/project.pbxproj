@@ -143,6 +143,7 @@
 			children = (
 				F1EBD60B2CC9767000A63CF2 /* TermsScreen */,
 				F129116F2CC57C3E00DAC490 /* App */,
+				F326FAC42CD00847000FF0E2 /* NetworkingManager */,
 				F129115D2CC57A4600DAC490 /* OnboardingScreen */,
 				F326FABF2CCBCF7E000FF0E2 /* Rec & Search TableView */,
 				F12911612CC57AA300DAC490 /* BrowseScreen */,
@@ -277,6 +278,13 @@
 				F326FAC02CCBD8F3000FF0E2 /* RecSearchViewControllerCell.swift */,
 			);
 			path = "Rec & Search TableView";
+			sourceTree = "<group>";
+		};
+		F326FAC42CD00847000FF0E2 /* NetworkingManager */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = NetworkingManager;
 			sourceTree = "<group>";
 		};
 		FA192C532CC6C4CF00655769 /* TitlesBaseViewController */ = {
@@ -568,9 +576,13 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.okuneu.NewsToDay;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -595,9 +607,13 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.okuneu.NewsToDay;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};

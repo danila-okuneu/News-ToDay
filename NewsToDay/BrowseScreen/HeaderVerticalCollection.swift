@@ -45,6 +45,7 @@ class HeaderVerticalCollection: UITextField {
         viewAll.setTitle("see_all_section_button".localized(), for: .normal)
         viewAll.titleLabel?.font = UIFont.interFont(ofSize: 14, weight: .regular)
         viewAll.setTitleColor(UIColor.app(.greyPrimary), for: .normal)
+        viewAll.addTarget(self, action: #selector(seeAllTapped), for: .touchUpInside)
         
         viewAll.snp.makeConstraints { make in
             make.trailing.equalToSuperview()
@@ -60,6 +61,10 @@ class HeaderVerticalCollection: UITextField {
     func updateLocalizedText() {
         title.text = "recommended_section_title".localized()
         viewAll.setTitle("see_all_section_button".localized(), for: .normal)
+    }
+    
+    @objc func seeAllTapped() {
+        print("hello")
     }
    
 }

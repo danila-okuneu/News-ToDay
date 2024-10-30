@@ -28,16 +28,30 @@ class RecSearchViewControllerCell: UITableViewCell {
         return label
     }()
     
+    let categoriesLabel: UILabel = {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.font = UIFont.interFont(ofSize: 14, weight: .regular)
+        label.textColor = UIColor.AppColor.greyPrimary.value
+        label.textAlignment = .left
+        return label
+    }()
+    
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         contentView.addSubview(articleImageView)
         contentView.addSubview(descriptionLabel)
+        contentView.addSubview(categoriesLabel)
         
         NSLayoutConstraint.activate([
             articleImageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
             articleImageView.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
             articleImageView.widthAnchor.constraint(equalToConstant: 100),
             articleImageView.heightAnchor.constraint(equalToConstant: 100),
+            
+            categoriesLabel.topAnchor.constraint(equalTo: articleImageView.topAnchor, constant: 5),
+            categoriesLabel.leadingAnchor.constraint(equalTo: articleImageView.trailingAnchor, constant: 10),
+            categoriesLabel.trailingAnchor.constraint(equalTo: trailingAnchor),
             
             descriptionLabel.leadingAnchor.constraint(equalTo: articleImageView.trailingAnchor, constant: 10),
             descriptionLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
@@ -51,26 +65,42 @@ class RecSearchViewControllerCell: UITableViewCell {
     
     func set(article: NewsModel) {
         descriptionLabel.text = article.title
+        categoriesLabel.text = article.category
         
         if let urlToImage = article.urlToImage {
-        
+            
             self.didUpdateImage(from: urlToImage)
         } else {
             articleImageView.image = UIImage(named: "chinatown")
         }
+        
+
+            
+            
+        
+
     }
     
     func didUpdateImage(from url: String) {
-               guard let imageUrl = URL(string: url) else { return }
-   
-               URLSession.shared.dataTask(with: imageUrl) { data, response, error in
-                   if let data = data, let image = UIImage(data: data) {
-                       DispatchQueue.main.async {
-                           self.articleImageView.image = image
-                       }
-                   } else {
-                       print(error?.localizedDescription ?? "error")
-                   }
-               }.resume()
-           }
+        
+        guard let imageUrl = URL(string: url) else {
+            DispatchQueue.main.async {
+                self.articleImageView.image = UIImage(named: "chinatown")
+            }
+            return
+        }
+        
+        URLSession.shared.dataTask(with: imageUrl) { data, response, error in
+            if let data = data, let image = UIImage(data: data) {
+                DispatchQueue.main.async {
+                    self.articleImageView.image = image
+                }
+            } else {
+                print(error?.localizedDescription ?? "error")
+                DispatchQueue.main.async {
+                    self.articleImageView.image = UIImage(named: "chinatown")
+                }
+            }
+        }.resume()
+    }
 }
