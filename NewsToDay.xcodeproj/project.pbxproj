@@ -43,6 +43,10 @@
 		F1F24B7C2CD153AE00A95F7C /* FirebaseCore in Frameworks */ = {isa = PBXBuildFile; productRef = F1F24B7B2CD153AE00A95F7C /* FirebaseCore */; };
 		F1F24B7E2CD153AE00A95F7C /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = F1F24B7D2CD153AE00A95F7C /* FirebaseFirestore */; };
 		F1F24B802CD153AE00A95F7C /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = F1F24B7F2CD153AE00A95F7C /* FirebaseStorage */; };
+		F3257DC32CD1800600097509 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3257DC22CD1800600097509 /* LoginViewController.swift */; };
+		F3257DC52CD1802300097509 /* RegisterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3257DC42CD1802300097509 /* RegisterViewController.swift */; };
+		F3257DC72CD1A42A00097509 /* ViewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3257DC62CD1A42A00097509 /* ViewExtension.swift */; };
+		F3257DC92CD2DD4600097509 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = F3257DC82CD2DD4600097509 /* GoogleService-Info.plist */; };
 		F326FA732CC7C6A7000FF0E2 /* NewsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F326FA722CC7C6A7000FF0E2 /* NewsManager.swift */; };
 		F326FA752CC7C6B3000FF0E2 /* NewsData.swift in Sources */ = {isa = PBXBuildFile; fileRef = F326FA742CC7C6B3000FF0E2 /* NewsData.swift */; };
 		F326FA772CC7DBB3000FF0E2 /* NewsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F326FA762CC7DBB3000FF0E2 /* NewsModel.swift */; };
@@ -92,6 +96,10 @@
 		F1EBD6162CC976AA00A63CF2 /* LanguageButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LanguageButton.swift; sourceTree = "<group>"; };
 		F1EBD6172CC976AA00A63CF2 /* LanguageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LanguageViewController.swift; sourceTree = "<group>"; };
 		F1EBD61C2CC97D9700A63CF2 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
+		F3257DC22CD1800600097509 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
+		F3257DC42CD1802300097509 /* RegisterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterViewController.swift; sourceTree = "<group>"; };
+		F3257DC62CD1A42A00097509 /* ViewExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewExtension.swift; sourceTree = "<group>"; };
+		F3257DC82CD2DD4600097509 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		F326FA722CC7C6A7000FF0E2 /* NewsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsManager.swift; sourceTree = "<group>"; };
 		F326FA742CC7C6B3000FF0E2 /* NewsData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsData.swift; sourceTree = "<group>"; };
 		F326FA762CC7DBB3000FF0E2 /* NewsModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsModel.swift; sourceTree = "<group>"; };
@@ -163,6 +171,7 @@
 				792FCBEE2CC9887100636140 /* CategoriesScreen */,
 				F129116B2CC57B7F00DAC490 /* ArticleScreen */,
 				F12911672CC57B3600DAC490 /* BookmarksScreen */,
+				F3257DC12CD17FE700097509 /* Register&Login */,
 				F12911642CC57AE400DAC490 /* ProfileScreen */,
 				F1EBD6182CC976AA00A63CF2 /* LanguageScreen */,
 				F1EBD6122CC9769D00A63CF2 /* Language */,
@@ -171,6 +180,7 @@
 				DD6CDECD2CC5787800CE12B3 /* Assets.xcassets */,
 				DD6CDECF2CC5787800CE12B3 /* LaunchScreen.storyboard */,
 				DD6CDED22CC5787800CE12B3 /* Info.plist */,
+				F3257DC82CD2DD4600097509 /* GoogleService-Info.plist */,
 				F1EBD6092CC9765E00A63CF2 /* Localizable.strings */,
 			);
 			path = NewsToDay;
@@ -188,6 +198,7 @@
 		F129115C2CC57A3E00DAC490 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
+				F3257DC62CD1A42A00097509 /* ViewExtension.swift */,
 				F12911772CC57D1700DAC490 /* ColorExtension.swift */,
 				F12911782CC57D1700DAC490 /* FontExtension.swift */,
 				FA192C532CC6C4CF00655769 /* TitlesBaseViewController */,
@@ -287,6 +298,15 @@
 			path = LanguageScreen;
 			sourceTree = "<group>";
 		};
+		F3257DC12CD17FE700097509 /* Register&Login */ = {
+			isa = PBXGroup;
+			children = (
+				F3257DC22CD1800600097509 /* LoginViewController.swift */,
+				F3257DC42CD1802300097509 /* RegisterViewController.swift */,
+			);
+			path = "Register&Login";
+			sourceTree = "<group>";
+		};
 		F326FABF2CCBCF7E000FF0E2 /* Rec & Search TableView */ = {
 			isa = PBXGroup;
 			children = (
@@ -375,6 +395,7 @@
 				DD6CDECE2CC5787800CE12B3 /* Assets.xcassets in Resources */,
 				F12911762CC57CC900DAC490 /* Adamina.ttf in Resources */,
 				F12911742CC57CB500DAC490 /* InterVariable.ttf in Resources */,
+				F3257DC92CD2DD4600097509 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -402,7 +423,9 @@
 				DD6CDEC72CC5787300CE12B3 /* SceneDelegate.swift in Sources */,
 				F326FABE2CCBCE7E000FF0E2 /* RecSearchViewController.swift in Sources */,
 				F12911792CC57D1700DAC490 /* ColorExtension.swift in Sources */,
+				F3257DC52CD1802300097509 /* RegisterViewController.swift in Sources */,
 				F1EBD60D2CC9767B00A63CF2 /* TermsViewController.swift in Sources */,
+				F3257DC72CD1A42A00097509 /* ViewExtension.swift in Sources */,
 				7970C5472CD16F2900C836D6 /* ImagePicker.swift in Sources */,
 				792FCBF02CC988AC00636140 /* CategoriesViewController.swift in Sources */,
 				F1EBD6132CC9769D00A63CF2 /* LanguageManager.swift in Sources */,
@@ -417,6 +440,7 @@
 				FA7095682CC80E85006D0F10 /* BookmarkEmptyView.swift in Sources */,
 				F1EBD6192CC976AA00A63CF2 /* LanguageCell.swift in Sources */,
 				F1EBD61A2CC976AA00A63CF2 /* LanguageButton.swift in Sources */,
+				F3257DC32CD1800600097509 /* LoginViewController.swift in Sources */,
 				F1EBD61D2CC97D9700A63CF2 /* ProfileViewController.swift in Sources */,
 				F1EBD61B2CC976AA00A63CF2 /* LanguageViewController.swift in Sources */,
 				FA7095602CC7E857006D0F10 /* BookmarksCell.swift in Sources */,

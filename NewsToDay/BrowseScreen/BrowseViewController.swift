@@ -25,7 +25,7 @@ final class BrowseViewController: TitlesBaseViewController {
     var currentCategory = "General"
     var allNewsData: [NewsModel]?
     var displayedData: [NewsModel] = []
-    var categories: [String] = ["General", "Entertainment"]
+    var categories: [String] = ["Science", "Entertainment"]
     var recomNews:[NewsModel]?
     
     
