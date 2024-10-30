@@ -122,9 +122,6 @@ class RegisterViewController: TitlesBaseViewController {
                                     window.makeKeyAndVisible()
                                 }
                             }
-                             
-                                    //                            browseVC.fetchRecomData()
-                                
                             }
                         }
                     }

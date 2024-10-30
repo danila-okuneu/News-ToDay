@@ -6,6 +6,9 @@
 //
 
 import UIKit
+import FirebaseCore
+import FirebaseFirestore
+import FirebaseAuth
 
 class LoginViewController: TitlesBaseViewController {
 
@@ -88,8 +91,35 @@ class LoginViewController: TitlesBaseViewController {
       
     }
     
+    //MARK: Login via Firebase
+    
     @objc func signUpPressed() {
-        print("hello")
+        print("sign in pressed")
+        
+        if let password = passwordField.text, !password.isEmpty,
+           let email = emailField.text, !email.isEmpty {
+            
+            Auth.auth().signIn(withEmail: email, password: password) { authResult, error in
+                if let e = error {
+                    print(e.localizedDescription)
+                    self.passwordAlert(title: "Wrong email or password")
+                } else {
+                    print("go to screen")
+                    DispatchQueue.main.async {
+                        let tabController = TabController()
+                        if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
+                           let window = windowScene.windows.first {
+                            window.rootViewController = tabController
+                            window.makeKeyAndVisible()
+                        }
+                    }
+                }
+            }
+        } else {
+            print("enter email or pass")
+            passwordAlert(title: "Please, enter email and password")
+        }
+        
     }
     
     @objc func registerPressed() {
@@ -98,6 +128,13 @@ class LoginViewController: TitlesBaseViewController {
           self.present(loginVC, animated: true, completion: nil)
     }
     
+    func passwordAlert(title: String) {
+        let alert = UIAlertController(title: title, message: "Try again", preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "ОК", style: .default, handler: nil))
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+                self.present(alert, animated: true, completion: nil)
+            }
+    }
     
     
 }
