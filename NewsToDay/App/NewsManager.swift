@@ -17,7 +17,7 @@ struct NewsManager {
     
     var delegate: NewsManagerDelegate?
     
-    let apiKey = "57420ecd8c544522a97e09f00b8f979d"
+    let apiKey = "fab4adf6e44443e492c247e2dd606cd9"
 //    30804caa0fa442909fd0a2999f25c04c
     
     func fetchRandom(categories: [String], completion: @escaping ([NewsModel]) -> Void) {

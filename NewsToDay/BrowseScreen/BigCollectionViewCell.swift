@@ -13,6 +13,7 @@ class BigCollectionViewCell: UICollectionViewCell {
     let bookmarkImageView = UIImageView()
     let categoryLabel = UILabel()
     let discriptionLabel = UILabel()
+    var isBookmarked = false
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -45,7 +46,8 @@ class BigCollectionViewCell: UICollectionViewCell {
     
     private func setupTitleLabel() {
         contentView.addSubview(bookmarkImageView)
-        bookmarkImageView.image = UIImage(named: "bookmark 1")
+        bookmarkImageView.image = UIImage(systemName: "bookmark")
+        bookmarkImageView.tintColor = .white
         bookmarkImageView.contentMode = .scaleAspectFit
         bookmarkImageView.isUserInteractionEnabled = true
         

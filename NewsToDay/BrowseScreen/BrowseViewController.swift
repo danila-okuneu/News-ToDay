@@ -27,7 +27,6 @@ final class BrowseViewController: TitlesBaseViewController {
     var displayedData: [NewsModel] = []
     var categories: [String] = ["General", "Entertainment"]
     var recomNews:[NewsModel]?
-    var isBookmarked = false
     
     
     private let scrollView: UIScrollView = {
@@ -280,10 +279,10 @@ final class BrowseViewController: TitlesBaseViewController {
         )
     }
     
-    func imageTapped(for image: UIImageView) {
-        isBookmarked.toggle()
+    func imageTapped(for image: UIImageView, isSelected: inout Bool) {
+        isSelected.toggle()
         
-        if isBookmarked {
+        if isSelected {
             image.image = UIImage(systemName: "bookmark.fill")
             image.tintColor = .white
         } else {
@@ -400,7 +399,7 @@ extension BrowseViewController: UICollectionViewDelegate, UICollectionViewDataSo
         } else if let cell = collectionView.cellForItem(at: indexPath) as? BigCollectionViewCell {
             let touchLocation = collectionView.panGestureRecognizer.location(in: cell)
             if cell.bookmarkImageView.frame.contains(touchLocation) {
-                imageTapped(for: cell.bookmarkImageView)
+                imageTapped(for: cell.bookmarkImageView, isSelected: &cell.isBookmarked)
                 return
             }
             animationForTuchCollection(for: cell)
