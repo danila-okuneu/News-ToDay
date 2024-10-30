@@ -393,6 +393,16 @@ extension BrowseViewController: UICollectionViewDelegate, UICollectionViewDataSo
                 articleVC.topic = currentCategory
                 self.navigationController?.pushViewController(articleVC, animated: true)
             }
+        } else if let cell = collectionView.cellForItem(at: indexPath) as? BigVerticalCollectionViewCell {
+            animationForTuchCollection(for: cell)
+            currentCategory = cell.categoriesLabel.text!
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) { [weak self] in
+                guard let self else {return}
+                let articleVC = ArticleViewController()
+                articleVC.article = self.displayedData[indexPath.row]
+                articleVC.topic = currentCategory
+                self.navigationController?.pushViewController(articleVC, animated: true)
+            }
         }
     }
     

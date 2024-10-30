@@ -197,7 +197,7 @@ extension NewsManager {
                 }
                 
                 if let data {
-                    if let newsArray = parseJSON(data) {
+                    if let newsArray = parseJSON(data, category: category) {
                         results.append(newsArray.randomElement()!)
                     }
                 }
