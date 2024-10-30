@@ -23,7 +23,7 @@ class RegisterViewController: TitlesBaseViewController {
         button.titleLabel?.font = UIFont.interFont(ofSize: 16)
         button.heightAnchor.constraint(equalToConstant: 56).isActive = true
         button.translatesAutoresizingMaskIntoConstraints = false
-
+        
         return button
     }()
     
@@ -34,7 +34,7 @@ class RegisterViewController: TitlesBaseViewController {
         button.titleLabel?.font = UIFont.interFont(ofSize: 16)
         button.heightAnchor.constraint(equalToConstant: 56).isActive = true
         button.translatesAutoresizingMaskIntoConstraints = false
-
+        
         return button
     }()
     
@@ -47,7 +47,7 @@ class RegisterViewController: TitlesBaseViewController {
         setupUI()
         signUpButton.addTarget(self, action: #selector(signUpPressed), for: .touchUpInside)
         loginButton.addTarget(self, action: #selector(loginPressed), for: .touchUpInside)
-
+        
         
         usernameField.delegate = self
         emailField.delegate = self
@@ -90,15 +90,28 @@ class RegisterViewController: TitlesBaseViewController {
             loginButton.centerXAnchor.constraint(equalTo: view.centerXAnchor)
         ])
         
-      
+        
     }
     
     @objc func signUpPressed() {
-        print("hello")
+        if passwordField.text == confirmField.text {
+            
+        } else {
+            print("dont match")
+            passwordAlert()
+            passwordField.text = "" 
+            confirmField.text = ""
+        }
+    }
+    
+    private func passwordAlert() {
+        let alert = UIAlertController(title: "Passwords don't match", message: "Try again", preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "ОК", style: .default, handler: nil))
+        present(alert, animated: true, completion: nil)
     }
     
     @objc func loginPressed() {
-      
+        
         let loginVC = LoginViewController()
         loginVC.modalPresentationStyle = .overFullScreen
         self.present(loginVC, animated: true, completion: nil)
