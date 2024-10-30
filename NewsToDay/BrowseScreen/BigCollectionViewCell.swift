@@ -47,6 +47,8 @@ class BigCollectionViewCell: UICollectionViewCell {
         contentView.addSubview(bookmarkImageView)
         bookmarkImageView.image = UIImage(named: "bookmark 1")
         bookmarkImageView.contentMode = .scaleAspectFit
+        bookmarkImageView.isUserInteractionEnabled = true
+        
         
         bookmarkImageView.snp.makeConstraints { make in
             make.top.trailing.equalToSuperview().inset(24)
