@@ -12,31 +12,43 @@ class OnboardingCollectionViewCell: UICollectionViewCell {
     
     static let reuseId = "OnboardingCollectionViewCell"
     
-    let mainImageView: UIImageView = {
+    let imageView: UIImageView = {
         let imageView = UIImageView()
         imageView.backgroundColor = UIColor.app(.blackDark)
-        imageView.layer.cornerRadius = 16
-        imageView.clipsToBounds = true
         imageView.contentMode = .scaleAspectFill
         
         return imageView
     }()
     
     
+	// MARK: - Initializers
     override init(frame: CGRect) {
         super.init(frame: frame)
-        
-        addSubview(mainImageView)
-        mainImageView.snp.makeConstraints { make in
-            make.leading.trailing.top.bottom.equalToSuperview()
 
-            
-        }
+		setupViews()
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    
+	
+	// MARK: - Layout
+	private func setupViews() {
+		
+		contentView.clipsToBounds = true
+		contentView.layer.cornerRadius = 16
+	
+		contentView.addSubview(imageView)
+		
+		makeConstraints()
+	}
+	
+	private func makeConstraints() {
+		
+		imageView.snp.makeConstraints { make in
+			make.edges.equalToSuperview()
+		}
+		
+	}
 }

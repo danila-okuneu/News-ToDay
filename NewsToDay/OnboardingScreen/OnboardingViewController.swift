@@ -19,10 +19,10 @@ final class OnboardingViewController: UIViewController, UICollectionViewDelegate
     private lazy var onboardingCollectionView : UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
-        layout.minimumLineSpacing = 24
+        layout.minimumLineSpacing = 22
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.backgroundColor = .white
-		collectionView.isPagingEnabled = true
+        collectionView.isPagingEnabled = true
         collectionView.delegate = self
         collectionView.dataSource = self
         collectionView.register(OnboardingCollectionViewCell.self, forCellWithReuseIdentifier: OnboardingCollectionViewCell.reuseId)
@@ -30,15 +30,13 @@ final class OnboardingViewController: UIViewController, UICollectionViewDelegate
         return collectionView
     }()
     
-    private lazy var pageControl: UIPageControl = {
-        let control = UIPageControl()
-        control.numberOfPages = imageNames.count
-        control.currentPage = 0
-        control.pageIndicatorTintColor = UIColor.app(.greyLighter)
-        control.currentPageIndicatorTintColor = UIColor.app(.purplePrimary)
-        return control
+    private var customPageControl : CustomPageControl = {
+        let pageControl = CustomPageControl()
+        pageControl.numberOfPages = 3
+        pageControl.currentPage = 0
+        return pageControl
     }()
-    
+   
     private let titleLabel: UILabel = {
         let label = UILabel()
         label.text = "first_to_know_label".localized()
@@ -82,7 +80,7 @@ final class OnboardingViewController: UIViewController, UICollectionViewDelegate
         view.backgroundColor = .white
         
         view.addSubview(onboardingCollectionView)
-        view.addSubview(pageControl)
+        view.addSubview(customPageControl)
         view.addSubview(titleLabel)
         view.addSubview(descriptionLabel)
         view.addSubview(nextButton)
@@ -96,10 +94,11 @@ final class OnboardingViewController: UIViewController, UICollectionViewDelegate
             make.height.equalTo(336)
         }
         
-        pageControl.snp.makeConstraints { make in
-            make.top.equalTo(onboardingCollectionView.snp.bottom).offset(20)
+        customPageControl.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
-            make.height.equalTo(20)
+            make.top.equalTo(onboardingCollectionView.snp.bottom).offset(20)
+            make.height.equalTo(8)
+            make.width.equalTo(56)
         }
         
         nextButton.snp.makeConstraints { make in
@@ -127,17 +126,14 @@ final class OnboardingViewController: UIViewController, UICollectionViewDelegate
             nextButton.setTitle("get_started_button".localized(), for: .normal)
         }
     }
-    
-    //MARK: - UIPageViewControllerDataSource
-    
-    
+      
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return imageNames.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: OnboardingCollectionViewCell.reuseId, for: indexPath) as! OnboardingCollectionViewCell
-        cell.mainImageView.image = UIImage(named: imageNames[indexPath.item])
+        cell.imageView.image = UIImage(named: imageNames[indexPath.item])
         return cell
     }
     
@@ -152,10 +148,9 @@ final class OnboardingViewController: UIViewController, UICollectionViewDelegate
     }
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        
-        let widthImageAndSpacing = onboardingCollectionView.frame.width * 0.7 + 24
+        let widthImageAndSpacing = onboardingCollectionView.frame.width * 0.7 + 44
         let currentPage = Int((scrollView.contentOffset.x + onboardingCollectionView.frame.width / 2) / widthImageAndSpacing)
-        pageControl.currentPage = currentPage
+        customPageControl.currentPage = currentPage
         
         if currentPage == imageNames.count - 1 {
             nextButton.setTitle("get_started_button".localized(), for: .normal)

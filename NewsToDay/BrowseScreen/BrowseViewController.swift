@@ -408,7 +408,7 @@ extension BrowseViewController: UICollectionViewDelegate, UICollectionViewDataSo
     
     func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
         guard let cell = collectionView.cellForItem(at: indexPath) as? SmallHCollectionViewCell else { return }
-//        print(cell.titleLabel.text)
+        print(cell.titleLabel.text ?? "")
     }
     
 }

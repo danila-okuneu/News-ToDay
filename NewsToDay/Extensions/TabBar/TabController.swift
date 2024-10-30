@@ -12,12 +12,8 @@ class TabController: UITabBarController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.setupTabs()
-        
-
         self.tabBar.tintColor = UIColor.app(.purplePrimary)
         self.tabBar.unselectedItemTintColor = UIColor.app(.greyLight)
-        
-        
         if #available(iOS 15.0, *) {
             let appearance = UITabBarAppearance()
             appearance.configureWithOpaqueBackground()
@@ -27,10 +23,11 @@ class TabController: UITabBarController {
             self.tabBar.scrollEdgeAppearance = appearance
         }
         
+
         addObserverForLocalization()
     }
-    
-
+	
+	
     //MARK: - Tab Setup
 
     private func setupTabs() {
