@@ -7,7 +7,7 @@
 
 import UIKit
 import SnapKit
-class HeaderVerticalCollection: UITextField {
+class HeaderVerticalCollection: UIView {
     
     private let title = UILabel()
     let viewAll = UIButton()

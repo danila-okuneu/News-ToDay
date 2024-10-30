@@ -112,6 +112,7 @@ final class BrowseViewController: TitlesBaseViewController {
         setupUI()
         
         newsManager.fetchByKeyWord(keyWord: currentCategory, isCategory: true)
+        newsManager.fetchNews(topic: currentCategory, isCategory: true)
         fetchRecomData()
         
         header.viewAll.addTarget(self, action: #selector(viewAllTapped), for: .touchUpInside)
@@ -336,7 +337,7 @@ extension BrowseViewController: UICollectionViewDelegate, UICollectionViewDataSo
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "BigVerticalCollectionViewCell", for: indexPath) as! BigVerticalCollectionViewCell
             updateHeightCollection()
             if let allNewsData {
-                let displayedData = Array(allNewsData)
+                displayedData = Array(allNewsData.prefix(5))
                 let article = displayedData[indexPath.row]
                 print(indexPath.row)
                 cell.set(article: article)
@@ -399,7 +400,7 @@ extension BrowseViewController: UICollectionViewDelegate, UICollectionViewDataSo
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) { [weak self] in
                 guard let self else {return}
                 let articleVC = ArticleViewController()
-                articleVC.article = self.displayedData[indexPath.row]
+                articleVC.article = self.recomNews![indexPath.row]
                 articleVC.topic = currentCategory
                 self.navigationController?.pushViewController(articleVC, animated: true)
             }
