@@ -87,7 +87,7 @@ class BigCollectionViewCell: UICollectionViewCell {
         }
     }
     
-    func set(article: NewsModel) {
+    func set(article: NewsModel, isBookmarked: Bool) {
         newsImageView.image = UIImage()
         discriptionLabel.text = article.description
         
@@ -96,6 +96,14 @@ class BigCollectionViewCell: UICollectionViewCell {
             self.didUpdateImage(from: urlToImage)
         } else {
             newsImageView.image = UIImage(named: "chinatown")
+        }
+        
+        if isBookmarked {
+            bookmarkImageView.image = UIImage(systemName: "bookmark.fill")
+            bookmarkImageView.tintColor = .white
+        } else {
+            bookmarkImageView.image = UIImage(systemName: "bookmark")
+            bookmarkImageView.tintColor = .white
         }
     }
     

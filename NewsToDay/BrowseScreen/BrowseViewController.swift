@@ -122,6 +122,7 @@ final class BrowseViewController: TitlesBaseViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         addObserverForLocalization()
+        bigCollectionH.reloadData()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -279,18 +280,6 @@ final class BrowseViewController: TitlesBaseViewController {
         )
     }
     
-    func imageTapped(for image: UIImageView, isSelected: inout Bool) {
-        isSelected.toggle()
-        
-        if isSelected {
-            image.image = UIImage(systemName: "bookmark.fill")
-            image.tintColor = .white
-        } else {
-            image.image = UIImage(systemName: "bookmark")
-            image.tintColor = .white
-        }
-    }
-    
     @objc private func updateLocalizedText() {
         searchBar.placeholder = "search_placeholder_textfield".localized()
         setTitlesNavBar(
@@ -298,6 +287,28 @@ final class BrowseViewController: TitlesBaseViewController {
             description: "description_browse_title".localized()
         )
         header.updateLocalizedText()
+    }
+    
+    //MARK: - Bookmark functionality
+    private func imageTapped(for image: UIImageView, isSelected: inout Bool) {
+        isSelected.toggle()
+        
+        if isSelected {
+            image.image = UIImage(systemName: "bookmark.fill")
+        } else {
+            image.image = UIImage(systemName: "bookmark")
+        }
+        image.tintColor = .white
+    }
+    
+    private func checkBookmark(for article: NewsModel) -> Bool {
+        var state = false
+        PersistenceManager.isBookmarked(article) { [weak self] isBookmarked in
+            guard let _ = self else { return }
+            state = isBookmarked
+        }
+        
+        return state
     }
     
 }
@@ -340,8 +351,9 @@ extension BrowseViewController: UICollectionViewDelegate, UICollectionViewDataSo
             if let allNewsData {
                 displayedData = Array(allNewsData.prefix(5))
                 let article = displayedData[indexPath.row]
+                let isBookmarked = checkBookmark(for: article)
                 print(indexPath.row)
-                cell.set(article: article)
+                cell.set(article: article, isBookmarked: isBookmarked)
                 cell.categoryLabel.text = currentCategory
             }
             return cell
@@ -399,7 +411,20 @@ extension BrowseViewController: UICollectionViewDelegate, UICollectionViewDataSo
         } else if let cell = collectionView.cellForItem(at: indexPath) as? BigCollectionViewCell {
             let touchLocation = collectionView.panGestureRecognizer.location(in: cell)
             if cell.bookmarkImageView.frame.contains(touchLocation) {
+                let article = displayedData[indexPath.row]
+                let isBookmarked = checkBookmark(for: article)
+                let actionType: PersistenceActionType = isBookmarked ? .remove : .add
+                
+                PersistenceManager.updateWith(bookmark: article, actionType: actionType) { [weak self] error in
+                    guard let _ = self else { return }
+                    guard error == nil else {
+                        print(error ?? "Something wrong")
+                        return
+                    }
+                }
+                
                 imageTapped(for: cell.bookmarkImageView, isSelected: &cell.isBookmarked)
+                
                 return
             }
             animationForTuchCollection(for: cell)
