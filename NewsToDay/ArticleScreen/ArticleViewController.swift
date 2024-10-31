@@ -57,7 +57,8 @@ final class ArticleViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.navigationController?.setNavigationBarHidden(true, animated: animated)
-            }
+        updateBookmarkButtonState()
+    }
     
     
     
@@ -221,7 +222,7 @@ final class ArticleViewController: UIViewController {
         // Functions of buttons
     
     @objc func bookmarkButtonTapped() {
-        madeBookmark()
+        toggleBookmark()
         
 
     }
@@ -240,21 +241,39 @@ final class ArticleViewController: UIViewController {
         self.present(activityVC, animated: true)
     }
     
-    
-    func madeBookmark(){
-        isBookmarked.toggle()
-        
-        let imgConfigBook = UIImage.SymbolConfiguration(pointSize: 20)
-        let imageBook: UIImage
-        
-        if isBookmarked {
-            imageBook = UIImage(systemName: "bookmark.fill", withConfiguration: imgConfigBook)!
-        } else {
-            imageBook = UIImage(systemName: "bookmark", withConfiguration: imgConfigBook)!
+    private func updateBookmarkButtonState() {
+        PersistenceManager.isBookmarked(article) { [weak self] isBookmarked in
+            guard let self = self else { return }
+            
+            self.isBookmarked = isBookmarked
+            
+            let imgConfigBook = UIImage.SymbolConfiguration(pointSize: 20)
+            let imageBook: UIImage
+            
+            if isBookmarked {
+                imageBook = UIImage(systemName: "bookmark.fill", withConfiguration: imgConfigBook)!
+            } else {
+                imageBook = UIImage(systemName: "bookmark", withConfiguration: imgConfigBook)!
+            }
+            
+            DispatchQueue.main.async {
+                self.bookmarkButton.setImage(imageBook, for: .normal)
+            }
         }
+    }
+    
+    private func toggleBookmark(){
+        let actionType: PersistenceActionType = isBookmarked ? .remove : .add
         
-        bookmarkButton.setImage(imageBook, for: .normal)
-        
+        PersistenceManager.updateWith(bookmark: article, actionType: actionType) { [weak self] error in
+            guard let self = self else { return }
+            guard error == nil else {
+                print(error ?? "Something wrong")
+                return
+            }
+            //print(actionType == .add ? "ARTICLE SAVED" : "ARTICLE REMOVED")
+            self.updateBookmarkButtonState()
+        }
     }
     
 }
