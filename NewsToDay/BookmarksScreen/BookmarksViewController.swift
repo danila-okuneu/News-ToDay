@@ -25,8 +25,10 @@ final class BookmarksViewController: TitlesBaseViewController {
     }()
     
     //TEST DATA
-    private var bookmarks = BookmarksTests.data
+    //private var bookmarks = BookmarksTests.data
     //private var bookmarks = [Bookmark]()
+    
+    private var bookmarks = [NewsModel]()
     
     //MARK: - Life cycle
     override func viewDidLoad() {
@@ -38,7 +40,7 @@ final class BookmarksViewController: TitlesBaseViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        updateUI(with: bookmarks)
+        getBookmarks()
         addObserverForLocalization()
     }
     
@@ -76,13 +78,31 @@ final class BookmarksViewController: TitlesBaseViewController {
     }
     
     //MARK: - Methods
-    func updateUI(with bookmarks: [Bookmark]) {
+    private func getBookmarks() {
+        PersistenceManager.retrieveBookmarks { [weak self] result in
+            guard let self = self else { return }
+            switch result {
+            case .success(let bookmarks):
+                DispatchQueue.main.async {
+                    self.updateUI(with: bookmarks)
+                }
+            case .failure(let error):
+                print(error)
+            }
+        }
+    }
+    
+    private func updateUI(with bookmarks: [NewsModel]) {
         if bookmarks.isEmpty {
             emptyView.isHidden = false
         } else {
             emptyView.isHidden = true
             self.bookmarks = bookmarks
-            tableView.reloadData()
+            DispatchQueue.main.async {
+                self.tableView.reloadData()
+                //if we have before empty state, show tableview exactly
+                self.view.bringSubviewToFront(self.tableView)
+            }
         }
     }
     
@@ -119,8 +139,9 @@ extension BookmarksViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let _ = bookmarks[indexPath.row]
+        let bookmark = bookmarks[indexPath.row]
         let destVC = ArticleViewController()
+        destVC.article = bookmark
         
         navigationController?.pushViewController(destVC, animated: true)
         tableView.deselectRow(at: indexPath, animated: true)
@@ -129,8 +150,16 @@ extension BookmarksViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         guard editingStyle == .delete else { return }
         
-        bookmarks.remove(at: indexPath.row)
-        tableView.deleteRows(at: [indexPath], with: .left)
+        PersistenceManager.updateWith(bookmark: bookmarks[indexPath.row], actionType: .remove) { [weak self] error in
+            guard let self = self else { return }
+            guard let error = error else {
+                //update favorites only if we have success persistence update
+                bookmarks.remove(at: indexPath.row)
+                tableView.deleteRows(at: [indexPath], with: .left)
+                return
+            }
+            print(error)
+        }
     }
 }
 

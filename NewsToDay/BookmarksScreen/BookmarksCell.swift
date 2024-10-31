@@ -43,10 +43,27 @@ class BookmarksCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func set(bookmark: Bookmark) {
-        articleImageView.image = UIImage(named: bookmark.articleImage)
-        categoriesLabel.text = bookmark.categories
-        descriptionLabel.text = bookmark.description
+    func set(bookmark: NewsModel) {
+        categoriesLabel.text = bookmark.category
+        descriptionLabel.text = bookmark.title
+        
+        if let urlToImage = bookmark.urlToImage, let imageUrl = URL(string: urlToImage) {
+            URLSession.shared.dataTask(with: imageUrl) { [weak self] data, _, error in
+                if let error = error {
+                    print("Ошибка загрузки изображения: \(error.localizedDescription)")
+                    return
+                }
+                
+                if let data = data, let image = UIImage(data: data) {
+                    DispatchQueue.main.async {
+                        guard let self = self else { return }
+                        self.articleImageView.image = image
+                    }
+                }
+            }.resume()
+        } else {
+            articleImageView.image = UIImage(named: "chinatown")
+        }
     }
     
     //MARK: - Setup UI

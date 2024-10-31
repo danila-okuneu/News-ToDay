@@ -52,6 +52,8 @@
 		F326FA772CC7DBB3000FF0E2 /* NewsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F326FA762CC7DBB3000FF0E2 /* NewsModel.swift */; };
 		F326FABE2CCBCE7E000FF0E2 /* RecSearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F326FABD2CCBCE7E000FF0E2 /* RecSearchViewController.swift */; };
 		F326FAC12CCBD8F3000FF0E2 /* RecSearchViewControllerCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F326FAC02CCBD8F3000FF0E2 /* RecSearchViewControllerCell.swift */; };
+		FA0F69F62CD2FA6A00AB6ED4 /* PersistenceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA0F69F52CD2FA6400AB6ED4 /* PersistenceManager.swift */; };
+		FA0F69F82CD2FAED00AB6ED4 /* ErrorMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA0F69F72CD2FAE800AB6ED4 /* ErrorMessage.swift */; };
 		FA192C4D2CC6A62900655769 /* TitlesBaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA192C4C2CC6A62200655769 /* TitlesBaseViewController.swift */; };
 		FA192C502CC6A6B100655769 /* TitlesBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA192C4F2CC6A69600655769 /* TitlesBarView.swift */; };
 		FA7095602CC7E857006D0F10 /* BookmarksCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA70955F2CC7E84B006D0F10 /* BookmarksCell.swift */; };
@@ -105,6 +107,8 @@
 		F326FA762CC7DBB3000FF0E2 /* NewsModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsModel.swift; sourceTree = "<group>"; };
 		F326FABD2CCBCE7E000FF0E2 /* RecSearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecSearchViewController.swift; sourceTree = "<group>"; };
 		F326FAC02CCBD8F3000FF0E2 /* RecSearchViewControllerCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecSearchViewControllerCell.swift; sourceTree = "<group>"; };
+		FA0F69F52CD2FA6400AB6ED4 /* PersistenceManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersistenceManager.swift; sourceTree = "<group>"; };
+		FA0F69F72CD2FAE800AB6ED4 /* ErrorMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorMessage.swift; sourceTree = "<group>"; };
 		FA192C4C2CC6A62200655769 /* TitlesBaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitlesBaseViewController.swift; sourceTree = "<group>"; };
 		FA192C4F2CC6A69600655769 /* TitlesBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitlesBarView.swift; sourceTree = "<group>"; };
 		FA70955F2CC7E84B006D0F10 /* BookmarksCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookmarksCell.swift; sourceTree = "<group>"; };
@@ -267,6 +271,8 @@
 				F326FA722CC7C6A7000FF0E2 /* NewsManager.swift */,
 				F326FA742CC7C6B3000FF0E2 /* NewsData.swift */,
 				F326FA762CC7DBB3000FF0E2 /* NewsModel.swift */,
+				FA0F69F72CD2FAE800AB6ED4 /* ErrorMessage.swift */,
+				FA0F69F52CD2FA6400AB6ED4 /* PersistenceManager.swift */,
 			);
 			path = App;
 			sourceTree = "<group>";
@@ -444,6 +450,8 @@
 				F1EBD61D2CC97D9700A63CF2 /* ProfileViewController.swift in Sources */,
 				F1EBD61B2CC976AA00A63CF2 /* LanguageViewController.swift in Sources */,
 				FA7095602CC7E857006D0F10 /* BookmarksCell.swift in Sources */,
+				FA0F69F62CD2FA6A00AB6ED4 /* PersistenceManager.swift in Sources */,
+				FA0F69F82CD2FAED00AB6ED4 /* ErrorMessage.swift in Sources */,
 				791F1C712CCEBFB0008B9D22 /* CustomPageControl.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
