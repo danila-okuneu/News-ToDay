@@ -19,10 +19,9 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 		DefaultsManager.loadData()
 		
 		window = UIWindow(frame: windowScene.coordinateSpace.bounds)
-		
 		let tabController = TabController()
 		window?.windowScene = windowScene
-		window?.rootViewController = tabController
+		window?.rootViewController = RegisterViewController()
 		window?.makeKeyAndVisible()
 		
 //		if DefaultsManager.isFirstOpen {

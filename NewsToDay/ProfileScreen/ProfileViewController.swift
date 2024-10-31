@@ -6,6 +6,9 @@
 //
 
 import UIKit
+import FirebaseCore
+import FirebaseFirestore
+import FirebaseAuth
 
 final class ProfileViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
 	
@@ -247,7 +250,20 @@ final class ProfileViewController: UIViewController, UIImagePickerControllerDele
 	}
 	
 	@objc private func signOutButtonTapped() {
-		self.navigationController?.pushViewController(ProfileViewController(), animated: true)
+
+        do {
+          try Auth.auth().signOut()
+            
+            let loginVC = RegisterViewController()
+            loginVC.modalPresentationStyle = .overFullScreen
+            self.present(loginVC, animated: true, completion: nil)
+            
+        } catch let signOutError as NSError {
+          print("Error signing out: %@", signOutError)
+        } 
+        
+        
+        
 	}
 	
 	@objc private func TermsButtonTapped() {
