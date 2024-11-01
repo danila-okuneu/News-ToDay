@@ -23,13 +23,18 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 		
 		window = UIWindow(frame: windowScene.coordinateSpace.bounds)
         
-        if Auth.auth().currentUser != nil {
-                     let tabController = TabController()
-                    window?.rootViewController = tabController
+        Auth.auth().addStateDidChangeListener { auth, user in
+                if let user = user {
+                    print("User is signed in: \(user.uid)")
+                    let tabController = TabController()
+                    self.window?.rootViewController = tabController
                 } else {
-
-                    window?.rootViewController = OnboardingViewController()
+                    print("No user is signed in.")
+                    self.window?.rootViewController = OnboardingViewController()
                 }
+                self.window?.makeKeyAndVisible()
+            }
+    
         
 		window?.windowScene = windowScene
 		window?.makeKeyAndVisible()
