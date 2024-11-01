@@ -6,6 +6,9 @@
 //
 
 import UIKit
+import FirebaseCore
+import FirebaseFirestore
+import FirebaseAuth
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
@@ -19,9 +22,16 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 		DefaultsManager.loadData()
 		
 		window = UIWindow(frame: windowScene.coordinateSpace.bounds)
-		let tabController = TabController()
+        
+        if Auth.auth().currentUser != nil {
+                     let tabController = TabController()
+                    window?.rootViewController = tabController
+                } else {
+
+                    window?.rootViewController = OnboardingViewController()
+                }
+        
 		window?.windowScene = windowScene
-		window?.rootViewController = RegisterViewController()
 		window?.makeKeyAndVisible()
 		
 //		if DefaultsManager.isFirstOpen {

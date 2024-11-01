@@ -105,39 +105,59 @@ class RegisterViewController: TitlesBaseViewController {
 
         if let username = usernameField.text, !username.isEmpty,
            let email = emailField.text, !email.isEmpty {
-            
+
             if passwordField.text == confirmField.text {
-                
                 if let password = passwordField.text {
                     Auth.auth().createUser(withEmail: email, password: password) { authResult, error in
                         if let e = error {
                             print(e.localizedDescription)
                         } else {
-                            print("go to screen")
-                            DispatchQueue.main.async {
-                                let tabController = TabController()
-                                if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
-                                   let window = windowScene.windows.first {
-                                    window.rootViewController = tabController
-                                    window.makeKeyAndVisible()
+                            print("User registered successfully")
+
+                            Auth.auth().currentUser?.createProfileChangeRequest().displayName = username
+                            Auth.auth().currentUser?.createProfileChangeRequest().commitChanges { error in
+                                if let error = error {
+                                    print("Error updating profile: \(error.localizedDescription)")
+                                } else {
+                                    print("User profile updated successfully")
+                                    
+                                    guard let userId = Auth.auth().currentUser?.uid else { return }
+                                    let db = Firestore.firestore()
+                                    db.collection("users").document(userId).setData([
+                                        "uid": userId,
+                                        "displayName": username,
+                                        "email": email
+                                    ]) { error in
+                                        if let error = error {
+                                            print("Error saving user data to Firestore: \(error.localizedDescription)")
+                                        } else {
+                                            print("User data saved to Firestore successfully")
+                                            // Переход на экран Browse
+                                            DispatchQueue.main.async {
+                                                let tabController = TabController()
+                                                if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
+                                                   let window = windowScene.windows.first {
+                                                    window.rootViewController = tabController
+                                                    window.makeKeyAndVisible()
+                                                }
+                                            }
+                                        }
+                                    }
                                 }
-                            }
                             }
                         }
                     }
-                    
-                    
-                } else {
-                    print("dont match")
-                    passwordAlert(title: "Passwords don't match")
                 }
+            } else {
+                print("Passwords don't match")
+                passwordAlert(title: "Passwords don't match")
+            }
         } else {
-            
-            print("enter your name and email")
+            print("Enter your name and email")
             passwordAlert(title: "Enter your name and email")
         }
-        }
-    
+    }
+
     func passwordAlert(title: String) {
         let alert = UIAlertController(title: title, message: "Try again", preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "ОК", style: .default, handler: nil))
@@ -153,8 +173,7 @@ class RegisterViewController: TitlesBaseViewController {
         self.present(loginVC, animated: true, completion: nil)
     }
     
-    
-    
+
 }
 
 // MARK: - UITextFieldDelegate
