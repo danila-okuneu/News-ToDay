@@ -6,6 +6,9 @@
 //
 
 import UIKit
+import FirebaseCore
+import FirebaseFirestore
+import FirebaseAuth
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
@@ -19,9 +22,21 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 		DefaultsManager.loadData()
 		
 		window = UIWindow(frame: windowScene.coordinateSpace.bounds)
-		let tabController = TabController()
+        
+        Auth.auth().addStateDidChangeListener { auth, user in
+                if let user = user {
+                    print("User is signed in: \(user.uid)")
+                    let tabController = TabController()
+                    self.window?.rootViewController = tabController
+                } else {
+                    print("No user is signed in.")
+                    self.window?.rootViewController = OnboardingViewController()
+                }
+                self.window?.makeKeyAndVisible()
+            }
+    
+        
 		window?.windowScene = windowScene
-		window?.rootViewController = RegisterViewController()
 		window?.makeKeyAndVisible()
 		
 //		if DefaultsManager.isFirstOpen {

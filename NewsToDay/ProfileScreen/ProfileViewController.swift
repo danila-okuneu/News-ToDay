@@ -80,7 +80,7 @@ final class ProfileViewController: UIViewController, UIImagePickerControllerDele
 		setupButtonTargets()
 		setupGestureRecognizer()
 		
-	
+        loadUserProfile()
 		
 	}
     
@@ -269,6 +269,35 @@ final class ProfileViewController: UIViewController, UIImagePickerControllerDele
 	@objc private func TermsButtonTapped() {
 		self.navigationController?.pushViewController(TermsViewController(), animated: true)
 	}
+    
+    //MARK: Firebase
+    func loadUserProfile() {
+        
+        guard let currentUser = Auth.auth().currentUser else {
+               print("No user")
+               return
+           }
+//        nameLabel.text = Auth.auth().currentUser?.displayName
+        emailLabel.text = Auth.auth().currentUser?.email
+
+        let db = Firestore.firestore()
+        let userID = Auth.auth().currentUser?.uid ?? "no user"
+           
+           db.collection("users").document(userID).getDocument { (document, error) in
+               if let error = error {
+                   print("Error getting document: \(error)")
+                   return
+               }
+
+               if let document = document, document.exists {
+                   let data = document.data()
+                   let username = data?["displayName"] as? String ?? "No Name"
+                   self.nameLabel.text = username
+               } else {
+                   print("Document does not exist")
+               }
+           }
+       }
     
     //MARK: - Localization
     private func addObserverForLocalization() {

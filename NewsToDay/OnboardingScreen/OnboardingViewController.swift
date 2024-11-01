@@ -63,7 +63,6 @@ final class OnboardingViewController: UIViewController, UICollectionViewDelegate
         button.backgroundColor = UIColor.app(.purplePrimary)
         button.tintColor = .white
         button.layer.cornerRadius = 12
-        button.addTarget(OnboardingViewController.self, action: #selector(nextButtonTapped), for: .touchUpInside)
         return button
     }()
     
@@ -71,6 +70,9 @@ final class OnboardingViewController: UIViewController, UICollectionViewDelegate
     //MARK: - Lifecycle
     override func viewDidLoad() {
         setupUI()
+        
+        nextButton.addTarget(self, action: #selector(nextButtonTapped), for: .touchUpInside)
+
     }
     
     
@@ -118,12 +120,17 @@ final class OnboardingViewController: UIViewController, UICollectionViewDelegate
         }
     }
     
-    @objc private func nextButtonTapped() {
+    @objc func nextButtonTapped() {
+        print("Next button tapped")
+
         let nextIndex = min(Int(onboardingCollectionView.contentOffset.x / onboardingCollectionView.frame.width) + 1, imageNames.count - 1)
         onboardingCollectionView.scrollToItem(at: IndexPath(item: nextIndex, section: 0), at: .centeredHorizontally, animated: true)
         
         if nextIndex == imageNames.count - 1 {
             nextButton.setTitle("get_started_button".localized(), for: .normal)
+            let loginVC = RegisterViewController()
+            loginVC.modalPresentationStyle = .overFullScreen
+            self.present(loginVC, animated: true, completion: nil)
         }
     }
       
