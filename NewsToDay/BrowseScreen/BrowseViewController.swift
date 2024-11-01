@@ -22,7 +22,7 @@ final class BrowseViewController: TitlesBaseViewController {
         "Technology"
     ]
     var selectedIndexPath: IndexPath?
-    var currentCategory = "General"
+    var currentCategory = "random"
     var allNewsData: [NewsModel]?
     var displayedData: [NewsModel] = []
     var categories: [String] = ["General", "Entertainment"]
@@ -111,9 +111,9 @@ final class BrowseViewController: TitlesBaseViewController {
         
         setupUI()
         
-        newsManager.fetchByKeyWord(keyWord: currentCategory, isCategory: true)
-        newsManager.fetchNews(topic: currentCategory, isCategory: true)
+//        newsManager.fetchNews(topic: currentCategory, isCategory: true)
         fetchRecomData()
+        newsManager.fetchByKeyWord(keyWord: currentCategory, isCategory: true)
         
         header.viewAll.addTarget(self, action: #selector(viewAllTapped), for: .touchUpInside)
         
@@ -246,6 +246,11 @@ final class BrowseViewController: TitlesBaseViewController {
                            self.bigCollectionV.reloadData()
                        }
         }
+         smallCollectionH.selectItem(
+            at: IndexPath(item: 0, section: 0),
+            animated: true,
+            scrollPosition: .centeredHorizontally
+         )
     }
     // MARK: See All Recommendations method
     
