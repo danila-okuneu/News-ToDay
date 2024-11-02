@@ -30,6 +30,15 @@
 "recommended_section_title" = "Рекомендуем для вас";
 "see_all_section_button" = "Смотреть всё";
 
+"random_newscategories" = "Случайное";
+"general_newscategories" = "Общее";
+"business_newscategories" = "Бизнес";
+"entertainment_newscategories" = "Развлечения";
+"health_newscategories" = "Здоровье";
+"science_newscategories" = "Наука";
+"sports_newscategories" = "Спорт";
+"technology_newscategories" = "Технологии";
+
 // MARK: - Category Screen
 "categories_screen_title" = "Категории";
 "description_categories_title" = "Тысячи статей в каждой категории";
