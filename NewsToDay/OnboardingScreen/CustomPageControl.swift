@@ -59,13 +59,18 @@ class CustomPageControl: UIView {
     }
 
     private func updateActiveDot() {
-        guard currentPage < dotViews.count else { return }
-        
-        for (index, dotView) in dotViews.enumerated() {
-                    dotView.alpha = (index == currentPage ) ? 0 : 1
+       guard currentPage < dotViews.count else { return }
+       
+       for (index, dotView) in dotViews.enumerated() {
+                   dotView.alpha = (index == currentPage ) ? 0 : 1
+           if index == currentPage {
+               dotView.alpha = 0
+            } else {
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
+                    dotView.alpha = 1
                 }
-        
-            
+            }
+        }
         
         UIView.animate(withDuration: 0.3, animations: {
             let dotSize: CGFloat = 8

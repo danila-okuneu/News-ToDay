@@ -9,7 +9,9 @@
 /* Begin PBXBuildFile section */
 		791F1C6E2CCEB3E8008B9D22 /* TabController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 791F1C6D2CCEB3E8008B9D22 /* TabController.swift */; };
 		791F1C712CCEBFB0008B9D22 /* CustomPageControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 791F1C702CCEBFB0008B9D22 /* CustomPageControl.swift */; };
-		792FCBF02CC988AC00636140 /* CategoriesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 792FCBEF2CC988AC00636140 /* CategoriesViewController.swift */; };
+		792FCBF02CC988AC00636140 /* BaseCategoriesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 792FCBEF2CC988AC00636140 /* BaseCategoriesViewController.swift */; };
+		7941BC4C2CD655F300D8AB4A /* FavoriteTopicsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7941BC4B2CD655F300D8AB4A /* FavoriteTopicsViewController.swift */; };
+		7941BC4E2CD656E000D8AB4A /* CategoriesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7941BC4D2CD656C700D8AB4A /* CategoriesViewController.swift */; };
 		7970C5472CD16F2900C836D6 /* ImagePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7970C5462CD16F2900C836D6 /* ImagePicker.swift */; };
 		79BD6BB92CC84C5100B128B6 /* OnboardingCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79BD6BB82CC84C5100B128B6 /* OnboardingCollectionViewCell.swift */; };
 		DD6CDEC52CC5787300CE12B3 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD6CDEC42CC5787300CE12B3 /* AppDelegate.swift */; };
@@ -64,7 +66,9 @@
 /* Begin PBXFileReference section */
 		791F1C6D2CCEB3E8008B9D22 /* TabController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabController.swift; sourceTree = "<group>"; };
 		791F1C702CCEBFB0008B9D22 /* CustomPageControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomPageControl.swift; sourceTree = "<group>"; };
-		792FCBEF2CC988AC00636140 /* CategoriesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoriesViewController.swift; sourceTree = "<group>"; };
+		792FCBEF2CC988AC00636140 /* BaseCategoriesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseCategoriesViewController.swift; sourceTree = "<group>"; };
+		7941BC4B2CD655F300D8AB4A /* FavoriteTopicsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteTopicsViewController.swift; sourceTree = "<group>"; };
+		7941BC4D2CD656C700D8AB4A /* CategoriesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoriesViewController.swift; sourceTree = "<group>"; };
 		7970C5462CD16F2900C836D6 /* ImagePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePicker.swift; sourceTree = "<group>"; };
 		79BD6BB82CC84C5100B128B6 /* OnboardingCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingCollectionViewCell.swift; sourceTree = "<group>"; };
 		DD6CDEC12CC5787300CE12B3 /* NewsToDay.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = NewsToDay.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -143,7 +147,9 @@
 		792FCBEE2CC9887100636140 /* CategoriesScreen */ = {
 			isa = PBXGroup;
 			children = (
-				792FCBEF2CC988AC00636140 /* CategoriesViewController.swift */,
+				792FCBEF2CC988AC00636140 /* BaseCategoriesViewController.swift */,
+				7941BC4B2CD655F300D8AB4A /* FavoriteTopicsViewController.swift */,
+				7941BC4D2CD656C700D8AB4A /* CategoriesViewController.swift */,
 			);
 			path = CategoriesScreen;
 			sourceTree = "<group>";
@@ -433,7 +439,8 @@
 				F1EBD60D2CC9767B00A63CF2 /* TermsViewController.swift in Sources */,
 				F3257DC72CD1A42A00097509 /* ViewExtension.swift in Sources */,
 				7970C5472CD16F2900C836D6 /* ImagePicker.swift in Sources */,
-				792FCBF02CC988AC00636140 /* CategoriesViewController.swift in Sources */,
+				792FCBF02CC988AC00636140 /* BaseCategoriesViewController.swift in Sources */,
+				7941BC4E2CD656E000D8AB4A /* CategoriesViewController.swift in Sources */,
 				F1EBD6132CC9769D00A63CF2 /* LanguageManager.swift in Sources */,
 				F1EBD6142CC9769D00A63CF2 /* LanguageModel.swift in Sources */,
 				F129117A2CC57D1700DAC490 /* FontExtension.swift in Sources */,
@@ -449,6 +456,7 @@
 				F3257DC32CD1800600097509 /* LoginViewController.swift in Sources */,
 				F1EBD61D2CC97D9700A63CF2 /* ProfileViewController.swift in Sources */,
 				F1EBD61B2CC976AA00A63CF2 /* LanguageViewController.swift in Sources */,
+				7941BC4C2CD655F300D8AB4A /* FavoriteTopicsViewController.swift in Sources */,
 				FA7095602CC7E857006D0F10 /* BookmarksCell.swift in Sources */,
 				FA0F69F62CD2FA6A00AB6ED4 /* PersistenceManager.swift in Sources */,
 				FA0F69F82CD2FAED00AB6ED4 /* ErrorMessage.swift in Sources */,

@@ -134,10 +134,10 @@ class RegisterViewController: TitlesBaseViewController {
                                             print("User data saved to Firestore successfully")
                                             // Переход на экран Browse
                                             DispatchQueue.main.async {
-                                                let tabController = TabController()
+                                                let favoriteController = FavoriteTopicsViewController()
                                                 if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
                                                    let window = windowScene.windows.first {
-                                                    window.rootViewController = tabController
+                                                    window.rootViewController = favoriteController
                                                     window.makeKeyAndVisible()
                                                 }
                                             }
