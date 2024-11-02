@@ -11,18 +11,21 @@ import SnapKit
 final class BrowseViewController: TitlesBaseViewController {
     
     var newsManager = NewsManager()
-    let newsCategories = [
-        "Random",
-        "General",
-        "Business",
-        "Entertainment",
-        "Health",
-        "Science",
-        "Sports",
-        "Technology"
-    ]
+    var newsCategories: [String] {
+        return [
+            "random_newscategories".localized(),
+            "general_newscategories".localized(),
+            "business_newscategories".localized(),
+            "entertainment_newscategories".localized(),
+            "health_newscategories".localized(),
+            "science_newscategories".localized(),
+            "sports_newscategories".localized(),
+            "technology_newscategories".localized()
+        ]
+    }
+    
     var selectedIndexPath: IndexPath?
-    var currentCategory = "random"
+    var currentCategory = "Random"
     var allNewsData: [NewsModel]?
     var displayedData: [NewsModel] = []
     var categories: [String] = ["Science", "Entertainment"]
@@ -292,6 +295,7 @@ final class BrowseViewController: TitlesBaseViewController {
             description: "description_browse_title".localized()
         )
         header.updateLocalizedText()
+        smallCollectionH.reloadData()
     }
     
     //MARK: - Bookmark functionality
@@ -391,27 +395,32 @@ extension BrowseViewController: UICollectionViewDelegate, UICollectionViewDataSo
                     collectionView.deselectItem(at: selectedIndexPath, animated: true)
                 }
             }
+            
             selectedIndexPath = indexPath
-            if let string = cell.titleLabel.text {
-                if string.lowercased() == "random" {
-                    let randomCategories = [
-                        "General",
-                        "Business",
-                        "Entertainment",
-                        "Health",
-                        "Science",
-                        "Sports",
-                        "Technology"
-                    ]
-                    newsManager.getRandomNews(for: randomCategories) { news in
-                        self.allNewsData = news
-                        DispatchQueue.main.async {
-                            self.bigCollectionH.reloadData()
-                        }
+            
+            let categoriesAPI = [
+                "random",
+                "general",
+                "business",
+                "entertainment",
+                "health",
+                "science",
+                "sports",
+                "technology"
+            ]
+            
+            let choosedCategory = categoriesAPI[selectedIndexPath?.row ?? 0]
+            
+            if choosedCategory == "random" {
+                let randomCategories = Array(categoriesAPI.dropFirst())
+                newsManager.getRandomNews(for: randomCategories) { news in
+                    self.allNewsData = news
+                    DispatchQueue.main.async {
+                        self.bigCollectionH.reloadData()
                     }
-                } else {
-                    newsManager.fetchNews(topic: string, isCategory: true)
                 }
+            } else {
+                newsManager.fetchNews(topic: categoriesAPI[selectedIndexPath?.row ?? 0], isCategory: true)
             }
         } else if let cell = collectionView.cellForItem(at: indexPath) as? BigCollectionViewCell {
             let touchLocation = collectionView.panGestureRecognizer.location(in: cell)
