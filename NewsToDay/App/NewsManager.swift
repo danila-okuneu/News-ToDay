@@ -17,7 +17,7 @@ struct NewsManager {
     
     var delegate: NewsManagerDelegate?
     
-    let apiKey = "a436527d11564832bc5e25e61497bcf2"
+    let apiKey = "30804caa0fa442909fd0a2999f25c04c"
 //    30804caa0fa442909fd0a2999f25c04c
 //    57420ecd8c544522a97e09f00b8f979d
    // fab4adf6e44443e492c247e2dd606cd9
@@ -60,8 +60,7 @@ struct NewsManager {
             }
         }
         fetchGroup.notify(queue: .main) {
-                completion(newsArticles.shuffled()
-                )
+                completion(newsArticles)
             }
     }
             
