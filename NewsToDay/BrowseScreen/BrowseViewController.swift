@@ -66,7 +66,7 @@ final class BrowseViewController: TitlesBaseViewController {
             forCellWithReuseIdentifier: "SmallHCollectionViewCell"
         )
         collection.tag = 1
-        collection.allowsMultipleSelection = true
+        collection.allowsMultipleSelection = false
         collection.showsHorizontalScrollIndicator = false
         return collection
     }()
@@ -115,8 +115,9 @@ final class BrowseViewController: TitlesBaseViewController {
         setupUI()
         
 //        newsManager.fetchNews(topic: currentCategory, isCategory: true)
+        getRandomNews()
         fetchRecomData()
-        newsManager.fetchByKeyWord(keyWord: currentCategory, isCategory: true)
+//        newsManager.fetchByKeyWord(keyWord: currentCategory, isCategory: true)
         
         header.viewAll.addTarget(self, action: #selector(viewAllTapped), for: .touchUpInside)
         
@@ -243,7 +244,7 @@ final class BrowseViewController: TitlesBaseViewController {
      func fetchRecomData() {
         newsManager.fetchRandom(categories: categories) { [weak self] articles in
             guard let self = self else { return }
-            self.didUpdateNews(manager: self.newsManager, news: articles, requestType: true)
+            self.didUpdateNews(manager: self.newsManager, news: articles, requestType: false)
 
             self.recomNews = articles
             DispatchQueue.main.async {
@@ -358,24 +359,29 @@ extension BrowseViewController: UICollectionViewDelegate, UICollectionViewDataSo
                 for: indexPath
             ) as! BigCollectionViewCell
             if let allNewsData {
-                displayedData = Array(allNewsData.prefix(5))
-                let article = displayedData[indexPath.row]
-                let isBookmarked = checkBookmark(for: article)
-                print(indexPath.row)
-                cell.set(article: article, isBookmarked: isBookmarked)
-                cell.categoryLabel.text = currentCategory
+                if allNewsData.count >= 5 {
+                    displayedData = Array(allNewsData.prefix(5))
+                    print(displayedData)
+                    let article = displayedData[indexPath.row]
+                    let isBookmarked = checkBookmark(for: article)
+                    print(indexPath.row)
+                    cell.set(article: article, isBookmarked: isBookmarked)
+                    cell.categoryLabel.text = currentCategory
+                }
             }
             return cell
         case 3:
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "BigVerticalCollectionViewCell", for: indexPath) as! BigVerticalCollectionViewCell
             updateHeightCollection()
             if let allNewsData {
-                displayedData = Array(allNewsData.prefix(5))
-                let article = displayedData[indexPath.row]
-                print(indexPath.row)
-                cell.set(article: article)
-//                cell.categoryLabel.text = currentCategory
-
+                if allNewsData.count >= 5 {
+                    displayedData = Array(allNewsData.prefix(5))
+                    let article = displayedData[indexPath.row]
+                    print(indexPath.row)
+                    cell.set(article: article)
+                    //                cell.categoryLabel.text = currentCategory
+                    
+                }
             }
             
             return cell
@@ -386,7 +392,7 @@ extension BrowseViewController: UICollectionViewDelegate, UICollectionViewDataSo
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-
+        
         if let cell = collectionView.cellForItem(at: indexPath) as?
             SmallHCollectionViewCell {
             currentCategory = cell.titleLabel.text ?? "general"
@@ -446,7 +452,7 @@ extension BrowseViewController: UICollectionViewDelegate, UICollectionViewDataSo
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) { [weak self] in
                 guard let self else {return}
                 let articleVC = ArticleViewController()
-                articleVC.article = self.displayedData[indexPath.row] 
+                articleVC.article = self.displayedData[indexPath.row]
                 articleVC.topic = currentCategory
                 self.navigationController?.pushViewController(articleVC, animated: true)
             }
@@ -468,6 +474,31 @@ extension BrowseViewController: UICollectionViewDelegate, UICollectionViewDataSo
         print(cell.titleLabel.text ?? "")
     }
     
+    private func getRandomNews() {
+        let categoriesAPI = [
+            "random",
+            "general",
+            "business",
+            "entertainment",
+            "health",
+            "science",
+            "sports",
+            "technology"
+        ]
+        
+        let choosedCategory = categoriesAPI[selectedIndexPath?.row ?? 0]
+        
+        if choosedCategory == "random" {
+            let randomCategories = Array(categoriesAPI.dropFirst())
+            newsManager.getRandomNews(for: randomCategories) { news in
+                self.allNewsData = news
+                DispatchQueue.main.async {
+                    self.bigCollectionH.reloadData()
+                }
+            }
+        }
+        
+    }
 }
 
 extension BrowseViewController: UICollectionViewDelegateFlowLayout {
@@ -530,8 +561,9 @@ extension BrowseViewController: NewsManagerDelegate {
             allNewsData = news
             
             DispatchQueue.main.async {
-                self.bigCollectionH.reloadData()
-
+                if requestType! {
+                                    self.bigCollectionH.reloadData()
+                }
             }
         } else {
             DispatchQueue.main.async {
