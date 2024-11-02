@@ -30,6 +30,15 @@
 "recommended_section_title" = "Recommended for you";
 "see_all_section_button" = "See All";
 
+"random_newscategories" = "Random";
+"general_newscategories" = "General";
+"business_newscategories" = "Business";
+"entertainment_newscategories" = "Entertainment";
+"health_newscategories" = "Health";
+"science_newscategories" = "Science";
+"sports_newscategories" = "Sports";
+"technology_newscategories" = "Technology";
+
 // MARK: - Category Screen
 "categories_screen_title" = "Categories";
 "description_categories_title" = "Thousands of articles in each category";

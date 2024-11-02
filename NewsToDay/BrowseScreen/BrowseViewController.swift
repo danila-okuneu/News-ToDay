@@ -11,21 +11,24 @@ import SnapKit
 final class BrowseViewController: TitlesBaseViewController {
     
     var newsManager = NewsManager()
-    let newsCategories = [
-        "Random",
-        "General",
-        "Business",
-        "Entertainment",
-        "Health",
-        "Science",
-        "Sports",
-        "Technology"
-    ]
+    var newsCategories: [String] {
+        return [
+            "random_newscategories".localized(),
+            "general_newscategories".localized(),
+            "business_newscategories".localized(),
+            "entertainment_newscategories".localized(),
+            "health_newscategories".localized(),
+            "science_newscategories".localized(),
+            "sports_newscategories".localized(),
+            "technology_newscategories".localized()
+        ]
+    }
+    
     var selectedIndexPath: IndexPath?
-    var currentCategory = "random"
+    var currentCategory = "Random"
     var allNewsData: [NewsModel]?
     var displayedData: [NewsModel] = []
-    var categories: [String] = ["General", "Entertainment"]
+    var categories: [String] = ["Science", "Entertainment"]
     var recomNews:[NewsModel]?
     
     
@@ -122,6 +125,7 @@ final class BrowseViewController: TitlesBaseViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         addObserverForLocalization()
+        bigCollectionH.reloadData()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -284,18 +288,6 @@ final class BrowseViewController: TitlesBaseViewController {
         )
     }
     
-    func imageTapped(for image: UIImageView, isSelected: inout Bool) {
-        isSelected.toggle()
-        
-        if isSelected {
-            image.image = UIImage(systemName: "bookmark.fill")
-            image.tintColor = .white
-        } else {
-            image.image = UIImage(systemName: "bookmark")
-            image.tintColor = .white
-        }
-    }
-    
     @objc private func updateLocalizedText() {
         searchBar.placeholder = "search_placeholder_textfield".localized()
         setTitlesNavBar(
@@ -303,6 +295,29 @@ final class BrowseViewController: TitlesBaseViewController {
             description: "description_browse_title".localized()
         )
         header.updateLocalizedText()
+        smallCollectionH.reloadData()
+    }
+    
+    //MARK: - Bookmark functionality
+    private func imageTapped(for image: UIImageView, isSelected: inout Bool) {
+        isSelected.toggle()
+        
+        if isSelected {
+            image.image = UIImage(systemName: "bookmark.fill")
+        } else {
+            image.image = UIImage(systemName: "bookmark")
+        }
+        image.tintColor = .white
+    }
+    
+    private func checkBookmark(for article: NewsModel) -> Bool {
+        var state = false
+        PersistenceManager.isBookmarked(article) { [weak self] isBookmarked in
+            guard let _ = self else { return }
+            state = isBookmarked
+        }
+        
+        return state
     }
     
 }
@@ -345,8 +360,9 @@ extension BrowseViewController: UICollectionViewDelegate, UICollectionViewDataSo
             if let allNewsData {
                 displayedData = Array(allNewsData.prefix(5))
                 let article = displayedData[indexPath.row]
+                let isBookmarked = checkBookmark(for: article)
                 print(indexPath.row)
-                cell.set(article: article)
+                cell.set(article: article, isBookmarked: isBookmarked)
                 cell.categoryLabel.text = currentCategory
             }
             return cell
@@ -379,32 +395,50 @@ extension BrowseViewController: UICollectionViewDelegate, UICollectionViewDataSo
                     collectionView.deselectItem(at: selectedIndexPath, animated: true)
                 }
             }
+            
             selectedIndexPath = indexPath
-            if let string = cell.titleLabel.text {
-                if string.lowercased() == "random" {
-                    let randomCategories = [
-                        "General",
-                        "Business",
-                        "Entertainment",
-                        "Health",
-                        "Science",
-                        "Sports",
-                        "Technology"
-                    ]
-                    newsManager.getRandomNews(for: randomCategories) { news in
-                        self.allNewsData = news
-                        DispatchQueue.main.async {
-                            self.bigCollectionH.reloadData()
-                        }
+            
+            let categoriesAPI = [
+                "random",
+                "general",
+                "business",
+                "entertainment",
+                "health",
+                "science",
+                "sports",
+                "technology"
+            ]
+            
+            let choosedCategory = categoriesAPI[selectedIndexPath?.row ?? 0]
+            
+            if choosedCategory == "random" {
+                let randomCategories = Array(categoriesAPI.dropFirst())
+                newsManager.getRandomNews(for: randomCategories) { news in
+                    self.allNewsData = news
+                    DispatchQueue.main.async {
+                        self.bigCollectionH.reloadData()
                     }
-                } else {
-                    newsManager.fetchNews(topic: string, isCategory: true)
                 }
+            } else {
+                newsManager.fetchNews(topic: categoriesAPI[selectedIndexPath?.row ?? 0], isCategory: true)
             }
         } else if let cell = collectionView.cellForItem(at: indexPath) as? BigCollectionViewCell {
             let touchLocation = collectionView.panGestureRecognizer.location(in: cell)
             if cell.bookmarkImageView.frame.contains(touchLocation) {
+                let article = displayedData[indexPath.row]
+                let isBookmarked = checkBookmark(for: article)
+                let actionType: PersistenceActionType = isBookmarked ? .remove : .add
+                
+                PersistenceManager.updateWith(bookmark: article, actionType: actionType) { [weak self] error in
+                    guard let _ = self else { return }
+                    guard error == nil else {
+                        print(error ?? "Something wrong")
+                        return
+                    }
+                }
+                
                 imageTapped(for: cell.bookmarkImageView, isSelected: &cell.isBookmarked)
+                
                 return
             }
             animationForTuchCollection(for: cell)
