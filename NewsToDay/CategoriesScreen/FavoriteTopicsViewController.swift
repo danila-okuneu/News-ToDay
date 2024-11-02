@@ -9,16 +9,19 @@ import UIKit
 import SnapKit
 
 
-final class CategoriesViewController: BaseCategoriesViewController {
+final class FavoriteTopicsViewController: BaseCategoriesViewController {
+    
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        setTitlesNavBar(title: "categories_screen_title".localized(), description: "description_categories_title".localized())
-        nextButton.setTitle("Back", for: .normal)
-        nextButton.isHidden = true
+        
+        setTitlesNavBar(title: "categories_onboard_screen_title".localized(), description: "description_onboard_categories_title".localized())
+        nextButton.setTitle("next_button_title".localized(), for: .normal)
+        
+        
     }
-    
     override func setupCategoriesButtons() {
         
         categoryButtons.removeAll()
@@ -26,8 +29,7 @@ final class CategoriesViewController: BaseCategoriesViewController {
         
         for (index, category) in categories.enumerated() {
             let button = createCategoryButton(name: category)
-            button.layer.borderColor = UIColor.app(.greyLighter).cgColor
-            button.layer.borderWidth = 1.0
+            button.backgroundColor = UIColor.app(.greyLighter)
             categoryButtons.append(button)
             
             if index % 2 == 0 {
@@ -53,29 +55,7 @@ final class CategoriesViewController: BaseCategoriesViewController {
             }
         }
     }
-    
-    @objc override func topicButtonTapped(_ sender: UIButton) {
-        guard let title = sender.title(for: .normal) else { return }
-        
-        let cleanTitle = title.cleanCategory()
-        
-        UIView.animate(withDuration: 0.3) {
-            if self.selectedCategories.contains(cleanTitle) {
-                self.selectedCategories.removeAll { $0 == cleanTitle }
-                sender.backgroundColor = .white
-                sender.setTitleColor(UIColor.app(.greyDark), for: .normal)
-            } else {
-                self.selectedCategories.append(cleanTitle)
-                sender.backgroundColor = UIColor.app(.purplePrimary)
-                sender.setTitleColor(.white, for: .normal)
-            }
-            
-        }
-            print("выбрано: \(selectedCategories)")
-            print(selectedCategories)
-        
-    }
-    
 }
 
-#Preview { CategoriesViewController() }
+
+#Preview { FavoriteTopicsViewController() }

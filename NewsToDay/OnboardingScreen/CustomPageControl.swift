@@ -28,11 +28,7 @@ class CustomPageControl: UIView {
         setupActiveDot()
     }
 
-    private func setupActiveDot() {
-        activeDotView.backgroundColor = UIColor.app(.purplePrimary)
-        activeDotView.layer.cornerRadius = 4
-        addSubview(activeDotView)
-    }
+   
 
     private func setupDots() {
         dotViews.forEach { $0.removeFromSuperview() }
@@ -48,6 +44,12 @@ class CustomPageControl: UIView {
         layoutDots()
         updateActiveDot()
     }
+	
+	private func setupActiveDot() {
+		activeDotView.backgroundColor = UIColor.app(.purplePrimary)
+		activeDotView.layer.cornerRadius = 4
+		addSubview(activeDotView)
+	}
 
     private func layoutDots() {
         let dotSize: CGFloat = 8
@@ -64,8 +66,6 @@ class CustomPageControl: UIView {
         for (index, dotView) in dotViews.enumerated() {
                     dotView.alpha = (index == currentPage ) ? 0 : 1
                 }
-        
-            
         
         UIView.animate(withDuration: 0.3, animations: {
             let dotSize: CGFloat = 8

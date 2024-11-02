@@ -42,13 +42,13 @@
 // MARK: - Category Screen
 "categories_screen_title" = "Categories";
 "description_categories_title" = "Thousands of articles in each category";
-"business_categories_cell" = "💼 Business";
-"entertainment_categories_cell" = "🎭 Entertainment";
-"general_categories_cell" = "🌍 General";
-"health_categories_cell" = "🏥 Health";
-"science_categories_cell" = "🔬 Science";
-"technology_categories_cell" = "💻 Technology";
-"sports_categories_cell" = "⚽ Sports";
+"business" = "💼 Business";
+"entertainment" = "🎭 Entertainment";
+"general" = "🌍 General";
+"health" = "🏥 Health";
+"science" = "🔬 Science";
+"technology" = "💻 Technology";
+"sports" = "⚽ Sports";
 
 // MARK: - Bookmarks Screen
 "bookmarks_screen_title" = "Bookmarks";

@@ -254,8 +254,9 @@ final class ProfileViewController: UIViewController, UIImagePickerControllerDele
         do {
           try Auth.auth().signOut()
             
-            let loginVC = RegisterViewController()
-            loginVC.modalPresentationStyle = .overFullScreen
+			let loginVC = LoginViewController()
+			loginVC.modalPresentationStyle = .fullScreen
+			loginVC.modalTransitionStyle = .flipHorizontal
             self.present(loginVC, animated: true, completion: nil)
             
         } catch let signOutError as NSError {

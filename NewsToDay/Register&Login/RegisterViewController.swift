@@ -75,7 +75,9 @@ class RegisterViewController: TitlesBaseViewController {
         emailField.configureTextField(placeholder: "Email Address", icon: UIImage(systemName: "envelope"))
         passwordField.configurePasswordField(placeholder: "Password")
         confirmField.configurePasswordField(placeholder: "Repeat Password")
-        
+		
+		usernameField.autocapitalizationType = .none
+		emailField.autocapitalizationType = .none
         emailField.textContentType = .emailAddress
         
         let stackView = UIStackView(arrangedSubviews: [usernameField, emailField, passwordField, confirmField, signUpButton])
@@ -113,7 +115,7 @@ class RegisterViewController: TitlesBaseViewController {
                             print(e.localizedDescription)
                         } else {
                             print("User registered successfully")
-
+					
                             Auth.auth().currentUser?.createProfileChangeRequest().displayName = username
                             Auth.auth().currentUser?.createProfileChangeRequest().commitChanges { error in
                                 if let error = error {
@@ -134,12 +136,10 @@ class RegisterViewController: TitlesBaseViewController {
                                             print("User data saved to Firestore successfully")
                                             // Переход на экран Browse
                                             DispatchQueue.main.async {
-                                                let tabController = TabController()
-                                                if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
-                                                   let window = windowScene.windows.first {
-                                                    window.rootViewController = tabController
-                                                    window.makeKeyAndVisible()
-                                                }
+												let categoriesVC = CategoriesViewController()
+												categoriesVC.modalPresentationStyle = .fullScreen
+												categoriesVC.modalTransitionStyle = .coverVertical
+												self.present(categoriesVC, animated: true)
                                             }
                                         }
                                     }

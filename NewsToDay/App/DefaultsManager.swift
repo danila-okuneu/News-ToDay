@@ -8,14 +8,12 @@ import Foundation
 
 struct DefaultsManager {
 	
-	static var isFirstOpen: Bool {
-		get {
-			return !UserDefaults.standard.bool(forKey: "isFirstOpen")
-		}
-		set {
-			return UserDefaults.standard.set(newValue, forKey: "isFirstOpen")
-		}
-	}
+	
+	static var hasSeenOnboarding = false 
+	static var isRegistered = false
+	static var hasSelectedCategories = false
+	
+
 	static var bookmarks: [NewsModel] {
 		get {
 			get(key: "bookmarks", as: [NewsModel].self) ?? []
@@ -25,9 +23,9 @@ struct DefaultsManager {
 		}
 		
 	}
-	static var selectedCategories: [String] {
+	static var selectedCategories: [Category] {
 		get {
-			return (UserDefaults.standard.array(forKey: "selectedCategories") as! [String]?) ?? []
+			return (UserDefaults.standard.array(forKey: "selectedCategories") as! [Category]?) ?? []
 		}
 		set {
 			UserDefaults.standard.set(newValue, forKey: "selectedCategories")
