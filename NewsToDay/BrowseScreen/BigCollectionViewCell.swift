@@ -36,7 +36,7 @@ class BigCollectionViewCell: UICollectionViewCell {
     private func setupNewsImage() {
         contentView.addSubview(newsImageView)
         
-        newsImageView.image = UIImage()
+        newsImageView.image = UIImage(named: "chinatown")
         newsImageView.contentMode = .scaleAspectFill
         
         newsImageView.snp.makeConstraints { make in

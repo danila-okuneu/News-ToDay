@@ -558,7 +558,7 @@ extension BrowseViewController: NewsManagerDelegate {
     
     func didUpdateNews(manager: NewsManager, news: [NewsModel], requestType: Bool?) {
         if requestType != nil {
-            allNewsData = news
+            allNewsData = news.shuffled()
             
             DispatchQueue.main.async {
                 if requestType! {
