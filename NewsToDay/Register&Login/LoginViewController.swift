@@ -22,7 +22,7 @@ class LoginViewController: TitlesBaseViewController {
 		button.backgroundColor = UIColor.app(.purplePrimary)
 		button.setTitleColor(.white, for: .normal)
 		button.layer.cornerRadius = 15
-		button.titleLabel?.font = UIFont.interFont(ofSize: 16)
+		button.titleLabel?.font = UIFont.interFont(ofSize: 18, weight: .semibold)
 		button.heightAnchor.constraint(equalToConstant: 56).isActive = true
 		button.translatesAutoresizingMaskIntoConstraints = false
 		return button
@@ -59,6 +59,10 @@ class LoginViewController: TitlesBaseViewController {
 		
 		emailField.configureTextField(placeholder: "email_placeholder".localized(), icon: UIImage(systemName: "envelope"))
 		passwordField.configurePasswordField(placeholder: "password_placeholder".localized())
+		
+		emailField.autocapitalizationType = .none
+		emailField.autocorrectionType = .no
+		emailField.textContentType = .emailAddress
 		
 		let stackView = UIStackView(arrangedSubviews: [emailField, passwordField, signInButton])
 		stackView.axis = .vertical

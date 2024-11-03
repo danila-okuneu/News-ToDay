@@ -23,7 +23,7 @@ class RegisterViewController: TitlesBaseViewController {
 		button.backgroundColor = UIColor.app(.purplePrimary)
 		button.setTitleColor(.white, for: .normal)
 		button.layer.cornerRadius = 15
-		button.titleLabel?.font = UIFont.interFont(ofSize: 16)
+		button.titleLabel?.font = UIFont.interFont(ofSize: 18, weight: .semibold)
 		button.heightAnchor.constraint(equalToConstant: 56).isActive = true
 		button.translatesAutoresizingMaskIntoConstraints = false
 		return button

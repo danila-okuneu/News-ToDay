@@ -26,6 +26,7 @@
 "categories_onboard_screen_title" = "Select your favorite topics";
 "description_onboard_categories_title" = "Select some of your favorite topics to let us suggest better news for you.";
 "next_button_title" = "Save";
+"no_selection_favourite" = "It's doesn't matter";
 
 // MARK: - Browse Screen
 "browse_screen_title" = "Browse";
