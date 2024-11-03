@@ -54,7 +54,9 @@ final class TermsViewController: UIViewController {
 		view.addSubview(textView)
 		
 		textView.snp.makeConstraints { make in
-			make.edges.equalTo(view.safeAreaLayoutGuide)
+            make.top.bottom.equalTo(view.safeAreaLayoutGuide)
+            make.left.right.equalTo(view.safeAreaLayoutGuide).inset(20)
+
 		}
 	}
 	
@@ -96,7 +98,7 @@ final class TermsViewController: UIViewController {
 }
 
 
-
+#Preview{ TermsViewController()} 
 
 
 
