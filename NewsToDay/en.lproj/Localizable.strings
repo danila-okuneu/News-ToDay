@@ -6,11 +6,15 @@
   
 */
 
-// MARK: - Onboarding Screen
-"first_to_know_label" = "First to know";
-"description_label" = "All news in one place, be the first to know last news";
-"next_button" = "Next";
-"get_started_button" = "Get Started";
+// MARK: - Onboarding Screen (En)
+"first_to_know" = "First to know";
+"description_first" = "All news in one place, be \n the first to know last news";
+"next" = "Next";
+"stay_informed" = "Stay Informed";
+"description_second" = "Curated stories from reliable sources, covering everything you care about. \n Find the news that matters most to you.";
+"get_started" = "Get Started!";
+"description_third" = "Personalize your experience to see the news \n that matters to you first. Let's dive in!";
+"button_get_started" = "Get Started";
 
 // MARK: - TabBar Screen
 "tab_browse" = "Browse";
@@ -42,6 +46,7 @@
 // MARK: - Category Screen
 "categories_screen_title" = "Categories";
 "description_categories_title" = "Thousands of articles in each category";
+"random" = "🪙 Random";
 "business" = "💼 Business";
 "entertainment" = "🎭 Entertainment";
 "general" = "🌍 General";
@@ -73,3 +78,32 @@
 // MARK: - Terms Screen
 "terms_screen_title" = "Terms & Conditions";
 "textview_terms_text" = "Terms of Use Last updated: [Date] Welcome to News ToDay. By accessing or using our mobile application (the “App”), you agree to be bound by these Terms of Use (“Terms”). If you do not agree to these Terms, you should not use the App. Please read these Terms carefully before using our services. 1. Acceptance of Terms By downloading, accessing, or using the App, you agree to comply with and be bound by these Terms. If you do not agree to these Terms, please do not use the App. 2. Changes to Terms We reserve the right to modify these Terms at any time. If we make changes, we will notify you by revising the date at the top of the Terms. Your continued use of the App following any changes means you accept the revised Terms. 3. User Conduct By using the App, you agree not to: Use the App for any illegal or unauthorized purpose. Interfere with the proper working of the App, including through the use of viruses, bots, or other harmful means. Post or transmit any content that is harmful, obscene, defamatory, or otherwise objectionable. 4. User-Generated Content You may be able to submit, post, or share content within the App. You retain ownership of any content you submit, but by submitting content, you grant us a worldwide, non-exclusive, royalty-free license to use, display, and distribute such content in connection with the App. 5. Privacy Policy Your privacy is important to us. Please review our Privacy Policy, which explains how we collect, use, and share your personal information. 6. Third-Party Links The App may contain links to third-party websites or services that we do not own or control. We are not responsible for the content, privacy policies, or practices of any third-party websites or services. 7. Intellectual Property All content provided in the App, including text, graphics, logos, and software, is the property of News ToDay or its licensors. You may not copy, distribute, or modify any part of the App without our written permission. 8. Disclaimer of Warranties The App is provided on an “as is” and “as available” basis without any warranties of any kind. We do not guarantee that the App will be available, secure, or error-free at all times. 9. Limitation of Liability To the maximum extent permitted by law, News ToDay will not be liable for any direct, indirect, incidental, or consequential damages arising from your use of the App. 10. Termination We reserve the right to terminate or suspend your access to the App at any time, without notice, for conduct that we believe violates these Terms or is harmful to other users or the App. 11. Governing Law These Terms are governed by the laws of [Your Country/State]. Any legal action or proceeding arising out of these Terms will be brought in the appropriate courts located in [Your Jurisdiction]. 12. Contact Information If you have any questions about these Terms, please contact us at: [Email Address].";
+
+
+// MARK: - Register Screen (En)
+
+"sign_up" = "Sign Up";
+"already_have_account" = "Already have an account? Sign in";
+"bar_welcome" = "Welcome to News ToDay";
+"bar_welcome_description" = "Hello, I guess you are new around here. You can start using the application after sign up";
+"username_placeholder" = "Username";
+"email_placeholder" = "Email Address";
+"password_placeholder" = "Password";
+"confirm_password_placeholder" = "Repeat Password";
+"password_mismatch_alert" = "Passwords don't match";
+"enter_name_email_alert" = "Enter your name and email";
+"alert_try_again" = "Try again";
+"alert_ok" = "OK";
+
+// MARK: - Login Screen (En)
+
+"sign_in" = "Sign In";
+"register_prompt" = "Don't have an account? Sign up";
+"welcome_back" = "Welcome back 👋";
+"welcome_description" = "You can continue where you left off by logging in";
+"email_placeholder" = "Email Address";
+"password_placeholder" = "Password";
+"wrong_credentials_alert" = "Wrong email or password";
+"missing_credentials_alert" = "Please, enter email and password";
+"try_again" = "Try again";
+"alert_ok" = "OK";

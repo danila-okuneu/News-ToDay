@@ -12,19 +12,7 @@ import SnapKit
 class BaseCategoriesViewController: TitlesBaseViewController {
     
     
-    var categories: [String] {
-        return [
-            "business_categories_cell".localized(),
-            "entertainment_categories_cell".localized(),
-            "general_categories_cell".localized(),
-            "health_categories_cell".localized(),
-            "science_categories_cell".localized(),
-            "technology_categories_cell".localized(),
-            "sports_categories_cell".localized()
-        ]
-    }
-    
-     var selectedCategories: [String] = []
+	var categories: [Category] = Category.allCases
      var categoryButtons: [UIButton] = []
  
     
@@ -38,24 +26,12 @@ class BaseCategoriesViewController: TitlesBaseViewController {
         return stackView
     }()
        
-    let nextButton: UIButton = {
-        let button = UIButton(type: .system)
-        button.setTitle("next_button_title".localized(), for: .normal)
-        button.titleLabel?.font = UIFont.interFont(ofSize: 16)
-        button.backgroundColor = UIColor.app(.purplePrimary)
-        button.tintColor = .white
-        button.layer.cornerRadius = 12
-        return button
-    }()
     
     
     //MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
-        
-        nextButton.addTarget(self, action: #selector(nextButtonTapped), for: .touchUpInside)
-
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -76,7 +52,6 @@ class BaseCategoriesViewController: TitlesBaseViewController {
 
         view.addSubview(stackView)
         setupCategoriesButtons()
-        view.addSubview(nextButton)
         setupConstraints()
     }
     
@@ -87,20 +62,16 @@ class BaseCategoriesViewController: TitlesBaseViewController {
             make.top.equalTo(view.safeAreaLayoutGuide).offset(120)
         }
         
-        nextButton.snp.makeConstraints { make in
-            make.bottom.equalTo(view.safeAreaLayoutGuide).offset(-90)
-            make.leading.trailing.equalToSuperview().inset(20)
-            make.height.equalTo(50)
-        }
+        
     }
     
-    func createCategoryButton(name: String) -> UIButton {
-        let button = UIButton()
-        button.setTitle(name.capitalized, for: .normal)
-        button.titleLabel?.font = UIFont.interFont(ofSize: 16, weight: .semibold)
-        button.setTitleColor(UIColor.app(.greyDark), for: .normal)
-
-        button.layer.cornerRadius = 12
+	func createButtonFor(category: Category) -> UIButton {
+		let button = CategoryButton(with: category)
+		button.backgroundColor = .app(.greyLighter)
+		if DefaultsManager.selectedCategories.contains(category) {
+			button.activate()
+		}
+		
         button.addTarget(self, action: #selector(topicButtonTapped(_:)), for: .touchUpInside)
         return button
     }
@@ -111,7 +82,7 @@ class BaseCategoriesViewController: TitlesBaseViewController {
         var horizontalStack: UIStackView?
         
         for (index, category) in categories.enumerated() {
-            let button = createCategoryButton(name: category)
+			let button = createButtonFor(category: category)
             categoryButtons.append(button)
             
             if index % 2 == 0 {
@@ -141,88 +112,42 @@ class BaseCategoriesViewController: TitlesBaseViewController {
     
 
     
-    @objc  func topicButtonTapped(_ sender: UIButton) {
-        guard let title = sender.title(for: .normal) else { return }
+	@objc  func topicButtonTapped(_ sender: CategoryButton) {
         
-        let cleanTitle = title.cleanCategory()
-        
-        UIView.animate(withDuration: 0.3) {
-            if self.selectedCategories.contains(cleanTitle) {
-                self.selectedCategories.removeAll { $0 == cleanTitle }
-                sender.backgroundColor = UIColor.app(.greyLighter)
-                sender.setTitleColor(UIColor.app(.greyDark), for: .normal)
-            } else {
-                self.selectedCategories.append(cleanTitle)
-                sender.backgroundColor = UIColor.app(.purplePrimary)
-                sender.setTitleColor(.white, for: .normal)
-            }
-            
-        }
-            print("выбрано: \(selectedCategories)")
-            print(selectedCategories)
-        
+		let category = sender.category
+		
+		if DefaultsManager.selectedCategories.contains(category) {
+			DefaultsManager.selectedCategories.removeAll(where: { $0 == category } )
+			sender.deactivate()
+		} else {
+			DefaultsManager.selectedCategories.append(category)
+			sender.activate()
+		}
+		
+		print("You select: \(category.rawValue)")
+		print("Actual calegories: \(DefaultsManager.selectedCategories.map( {$0.rawValue } ))")
     }
     
-    @objc private func nextButtonTapped(_ sender: UIButton) {
-        print("tapped next")
         
-        if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
-           let window = windowScene.windows.first,
-           let tabBarController = window.rootViewController as? TabController {
-            tabBarController.selectedIndex = 0
-            print("Selected Tab Index: \(tabBarController.selectedIndex)")
-            
-            // Проверяем, какие контроллеры есть в tabBarController
-            if let navController = tabBarController.viewControllers?[0] as? UINavigationController,
-               let browseVC = navController.viewControllers.first as? BrowseViewController {
-                browseVC.categories = selectedCategories
-                print("Selected Categories: \(selectedCategories)")
-                browseVC.fetchRecomData()
-            } else {
-                print("BrowseViewController not found.")
-            }
-        }
-            if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
-               let window = windowScene.windows.first {
-                window.rootViewController = tabBarController
-                window.makeKeyAndVisible()
-            } else {
-                print("Could not retrieve tab bar controller or window.")
-                
-            
-        }
-    }
-    
     //MARK: - Localization
-    private func addObserverForLocalization() {
+    func addObserverForLocalization() {
         NotificationCenter.default.addObserver(forName: LanguageManager.languageDidChangeNotification, object: nil, queue: .main) { [weak self] _ in
             self?.updateLocalizedText()
         }
     }
     
-    private func removeObserverForLocalization() {
+	func removeObserverForLocalization() {
         NotificationCenter.default.removeObserver(self, name: LanguageManager.languageDidChangeNotification, object: nil)
     }
     
     @objc private func updateLocalizedText() {
         for (index, button) in categoryButtons.enumerated() {
-            let localizedTitle = categories[index]
-            button.setTitle(localizedTitle, for: .normal)
+			let localizedTitle = categories[index].rawValue.localized()
+			button.setTitle(localizedTitle, for: .normal)
         }
     }
   
     
 }
 
-// MARK: Extension - String formatter
-
-extension String {
-    func cleanCategory () -> String {
-        let cleanedTitle = self.replacingOccurrences(of: "^[\\W_]*|_categories_cell$", with: "", options: .regularExpression)
-        return cleanedTitle
-    }
-}
-
-
-#Preview { BaseCategoriesViewController() }
 

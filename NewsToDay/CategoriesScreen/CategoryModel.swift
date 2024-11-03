@@ -6,7 +6,7 @@
 //
 
 
-enum Category: String, CaseIterable {
+enum Category: String, CaseIterable, Codable {
 	case business
 	case entertainment
 	case general

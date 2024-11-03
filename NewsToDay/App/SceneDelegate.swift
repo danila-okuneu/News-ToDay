@@ -24,12 +24,19 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 		window = UIWindow(frame: windowScene.coordinateSpace.bounds)
 		window?.backgroundColor = .app(.purpleDark)
 		
+		print(DefaultsManager.selectedCategories)
+		
 		if Auth.auth().currentUser == nil {
-			print("User is not authorized")
-			self.window?.rootViewController = OnboardingViewController()
+			
+			self.window?.rootViewController = switchRootController()
+			
 		} else {
 			let tabController = TabController()
 			self.window?.rootViewController = tabController
+			
+			if !DefaultsManager.hasSelectedCategories {
+				tabController.present(FavoriteTopicsViewController(), animated: true)
+			}
 			
 		}
 		window?.windowScene = windowScene
@@ -39,6 +46,20 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 		
 		UINavigationBar.appearance().backIndicatorImage = backButtonImage
 		UINavigationBar.appearance().backIndicatorTransitionMaskImage = backButtonImage
+		
+		
+		func switchRootController() -> UIViewController {
+			if !DefaultsManager.hasSeenOnboarding {
+				return OnboardingViewController()
+			}
+			
+			if DefaultsManager.isRegistered {
+				return LoginViewController()
+			}
+			
+			
+			return RegisterViewController()
+		}
 		
 	}
 	

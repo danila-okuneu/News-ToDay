@@ -29,6 +29,7 @@
 		F12911762CC57CC900DAC490 /* Adamina.ttf in Resources */ = {isa = PBXBuildFile; fileRef = F12911752CC57CC900DAC490 /* Adamina.ttf */; };
 		F12911792CC57D1700DAC490 /* ColorExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = F12911772CC57D1700DAC490 /* ColorExtension.swift */; };
 		F129117A2CC57D1700DAC490 /* FontExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = F12911782CC57D1700DAC490 /* FontExtension.swift */; };
+		F12947182CD7063B00B09DF8 /* ShadowExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = F12947172CD7063600B09DF8 /* ShadowExtension.swift */; };
 		F1657AA82CD6AB35008DECFB /* CarouselSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1657AA72CD6AB32008DECFB /* CarouselSection.swift */; };
 		F1657AAC2CD6AB8B008DECFB /* OnboardingItems.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1657AAB2CD6AB8B008DECFB /* OnboardingItems.swift */; };
 		F1657AAE2CD6AB9F008DECFB /* UIPageControl+Interacting.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1657AAD2CD6AB9F008DECFB /* UIPageControl+Interacting.swift */; };
@@ -36,6 +37,7 @@
 		F1657AB32CD6D26F008DECFB /* FavoriteTopicsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1657AB12CD6D26F008DECFB /* FavoriteTopicsViewController.swift */; };
 		F1657AB42CD6D26F008DECFB /* CategoriesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1657AB02CD6D26F008DECFB /* CategoriesViewController.swift */; };
 		F1657AB62CD6D973008DECFB /* CategoryModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1657AB52CD6D970008DECFB /* CategoryModel.swift */; };
+		F1657AB82CD6DDC0008DECFB /* CategoryButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1657AB72CD6DDBC008DECFB /* CategoryButton.swift */; };
 		F1EBD60A2CC9765E00A63CF2 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = F1EBD6092CC9765E00A63CF2 /* Localizable.strings */; };
 		F1EBD60D2CC9767B00A63CF2 /* TermsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1EBD60C2CC9767B00A63CF2 /* TermsViewController.swift */; };
 		F1EBD60F2CC9768C00A63CF2 /* CustomButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1EBD60E2CC9768C00A63CF2 /* CustomButton.swift */; };
@@ -91,6 +93,7 @@
 		F12911752CC57CC900DAC490 /* Adamina.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Adamina.ttf; sourceTree = "<group>"; };
 		F12911772CC57D1700DAC490 /* ColorExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorExtension.swift; sourceTree = "<group>"; };
 		F12911782CC57D1700DAC490 /* FontExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FontExtension.swift; sourceTree = "<group>"; };
+		F12947172CD7063600B09DF8 /* ShadowExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShadowExtension.swift; sourceTree = "<group>"; };
 		F1657AA72CD6AB32008DECFB /* CarouselSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarouselSection.swift; sourceTree = "<group>"; };
 		F1657AAB2CD6AB8B008DECFB /* OnboardingItems.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingItems.swift; sourceTree = "<group>"; };
 		F1657AAD2CD6AB9F008DECFB /* UIPageControl+Interacting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIPageControl+Interacting.swift"; sourceTree = "<group>"; };
@@ -98,6 +101,7 @@
 		F1657AB02CD6D26F008DECFB /* CategoriesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoriesViewController.swift; sourceTree = "<group>"; };
 		F1657AB12CD6D26F008DECFB /* FavoriteTopicsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteTopicsViewController.swift; sourceTree = "<group>"; };
 		F1657AB52CD6D970008DECFB /* CategoryModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryModel.swift; sourceTree = "<group>"; };
+		F1657AB72CD6DDBC008DECFB /* CategoryButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryButton.swift; sourceTree = "<group>"; };
 		F1EBD6052CC9765E00A63CF2 /* Localizable.strings */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Localizable.strings; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		F1EBD6062CC9765E00A63CF2 /* Localizable.strings */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Localizable.strings; path = ru.lproj/Localizable.strings; sourceTree = "<group>"; };
 		F1EBD6072CC9765E00A63CF2 /* Localizable.strings */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Localizable.strings; path = uk.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -155,6 +159,7 @@
 		792FCBEE2CC9887100636140 /* CategoriesScreen */ = {
 			isa = PBXGroup;
 			children = (
+				F1657AB72CD6DDBC008DECFB /* CategoryButton.swift */,
 				F1657AB52CD6D970008DECFB /* CategoryModel.swift */,
 				F1657AAF2CD6D26F008DECFB /* BaseCategoriesViewController.swift */,
 				F1657AB02CD6D26F008DECFB /* CategoriesViewController.swift */,
@@ -217,6 +222,7 @@
 		F129115C2CC57A3E00DAC490 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
+				F12947172CD7063600B09DF8 /* ShadowExtension.swift */,
 				F3257DC62CD1A42A00097509 /* ViewExtension.swift */,
 				F12911772CC57D1700DAC490 /* ColorExtension.swift */,
 				F12911782CC57D1700DAC490 /* FontExtension.swift */,
@@ -437,8 +443,10 @@
 				DDE1FD0B2CCB10A600F0AACE /* HeaderVerticalCollection.swift in Sources */,
 				791F1C6E2CCEB3E8008B9D22 /* TabController.swift in Sources */,
 				F129116D2CC57B9800DAC490 /* ArticleViewController.swift in Sources */,
+				F12947182CD7063B00B09DF8 /* ShadowExtension.swift in Sources */,
 				F1EBD60F2CC9768C00A63CF2 /* CustomButton.swift in Sources */,
 				DD76DB432CC9BEC2007D741D /* BigVerticalCollectionViewCell.swift in Sources */,
+				F1657AB82CD6DDC0008DECFB /* CategoryButton.swift in Sources */,
 				FA192C502CC6A6B100655769 /* TitlesBarView.swift in Sources */,
 				F326FA732CC7C6A7000FF0E2 /* NewsManager.swift in Sources */,
 				DD6CDEC52CC5787300CE12B3 /* AppDelegate.swift in Sources */,
@@ -634,12 +642,14 @@
 				DEVELOPMENT_TEAM = 3V899K3TN7;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = NewsToDay/Info.plist;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.news";
 				INFOPLIST_KEY_NSCameraUsageDescription = "For the avatar";
 				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "For the avatar";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UIStatusBarStyle = UIStatusBarStyleLightContent;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -667,12 +677,14 @@
 				DEVELOPMENT_TEAM = 3V899K3TN7;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = NewsToDay/Info.plist;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.news";
 				INFOPLIST_KEY_NSCameraUsageDescription = "For the avatar";
 				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "For the avatar";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UIStatusBarStyle = UIStatusBarStyleLightContent;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

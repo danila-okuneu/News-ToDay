@@ -5,7 +5,6 @@
 //  Created by SM Team 6 on 20.10.24.
 //
 
-
 import UIKit
 import SnapKit
 
@@ -36,7 +35,7 @@ final class OnboardingViewController: UIViewController {
 		label.font = .interFont(ofSize: 24, weight: .semibold)
 		label.textAlignment = .center
 		label.textColor = .app(.blackDark)
-		label.text = "First to know"
+		label.text = "first_to_know".localized()
 		return label
 	}()
 	
@@ -45,14 +44,14 @@ final class OnboardingViewController: UIViewController {
 		label.font = .interFont(ofSize: 18)
 		label.textColor = .app(.greyDark)
 		label.textAlignment = .center
-		label.numberOfLines = 2
-		label.text = "All news in one place, be \n the first to know last news"
+		label.numberOfLines = 0
+		label.text = "description_first".localized()
 		return label
 	}()
 
 	private lazy var nextButton: UIButton = {
 		let button = UIButton()
-		button.setTitle("Next", for: .normal)
+		button.setTitle("next".localized(), for: .normal)
 		button.titleLabel?.font = .interFont(ofSize: 18, weight: .semibold)
 		button.setTitleColor(.white, for: .normal)
 		button.backgroundColor = .app(.purplePrimary)
@@ -109,10 +108,13 @@ final class OnboardingViewController: UIViewController {
 		
 		descriptionLabel.snp.makeConstraints { make in
 			make.bottom.equalTo(nextButton.snp.top).offset(-40)
+			make.left.equalToSuperview().offset(20)
+			make.right.equalToSuperview().offset(-20)
 			make.centerX.equalToSuperview()
 		}
 		
 		titleLabel.snp.makeConstraints { make in
+			
 			make.bottom.equalTo(descriptionLabel.snp.top).offset(-30)
 			make.centerX.equalToSuperview()
 		}
@@ -120,40 +122,30 @@ final class OnboardingViewController: UIViewController {
 
 	private lazy var layout: UICollectionViewLayout = UICollectionViewCompositionalLayout { [self] sectionIndex, layoutEnvironment in
 		
-		// PageControl Update Method
 		self.carouselSection.didUpdatePage = { page in
 			self.pageControl.currentPage = page
 		}
 		
-		
 		return self.carouselSection.layoutSection(for: sectionIndex, layoutEnvironment: layoutEnvironment)
 	}
 
-	
-	
 	private lazy var dataSource: DataSource = {
 		let carouselCellRegistration = UICollectionView.CellRegistration<OnboardingItemCell, Item> { cell, indexPath, itemIdentifier in
 			cell.configure(with: itemIdentifier.image)
 		}
-
-
-
 		let dataSource = DataSource(collectionView: collectionView) { collectionView, indexPath, itemIdentifier in
 			collectionView.dequeueConfiguredReusableCell(using: carouselCellRegistration, for: indexPath, item: itemIdentifier)
 		}
-
 		return dataSource
 	}()
 
 	private func reloadData() {
 		var snap = NSDiffableDataSourceSnapshot<Int, Item>()
-		snap.appendSections([0])  // Используем только одну секцию с индексом 0
+		snap.appendSections([0])
 		snap.appendItems(CarouselItems.makeItems())
 		
 		dataSource.apply(snap) { [weak self] in
 			guard let self = self else { return }
-			
-			// Программная прокрутка, чтобы активировать visibleItemsInvalidationHandler
 			DispatchQueue.main.async {
 				self.collectionView.scrollToItem(at: IndexPath(item: 1, section: 0), at: .centeredHorizontally, animated: false)
 				self.collectionView.scrollToItem(at: IndexPath(item: 0, section: 0), at: .centeredHorizontally, animated: false)
@@ -161,46 +153,35 @@ final class OnboardingViewController: UIViewController {
 		}
 	}
 	
-	private func applyInitialScaleToVisibleItems() {
-		for cell in collectionView.visibleCells {
-			if let indexPath = collectionView.indexPath(for: cell) {
-				carouselSection.applyTransform(to: cell, at: indexPath)
-			}
-		}
-	}
-
 	private func didPageChange(_ currentPage: Int) {
 		let indexPath = IndexPath(item: currentPage, section: 0)
 		collectionView.scrollToItem(at: indexPath, at: .centeredVertically, animated: true)
 	}
 	
-	
 	// MARK: - Next button methods
 	private func updateElementsState(for page: Int) {
-
-		
 		switch page {
 		case 1:
 			UIView.transition(with: titleLabel, duration: 0.2, options: .transitionCrossDissolve, animations: {
-				self.titleLabel.text = "Stay Informed"
+				self.titleLabel.text = "stay_informed".localized()
 			}, completion: nil)
 
 			UIView.transition(with: descriptionLabel, duration: 0.2, options: .transitionCrossDissolve, animations: {
-				self.descriptionLabel.text = "Curated stories from reliable sources, covering everything you care about. \n Find the news that matters most to you."
+				self.descriptionLabel.text = "description_second".localized()
 			}, completion: nil)
 		case 2:
-			
 			UIView.transition(with: titleLabel, duration: 0.2, options: .transitionCrossDissolve, animations: {
-				self.titleLabel.text = "Get Started!"
+				self.titleLabel.text = "get_started".localized()
 			}, completion: nil)
 
 			UIView.transition(with: descriptionLabel, duration: 0.2, options: .transitionCrossDissolve, animations: {
-				self.descriptionLabel.text = "Personalize your experience to see the news \n that matters to you first. Let's dive in!"
+				self.descriptionLabel.text = "description_third".localized()
 			}, completion: nil)
 			
 			UIView.transition(with: nextButton, duration: 0.2, options: [.transitionCrossDissolve, .curveEaseOut], animations: {
-				self.nextButton.setTitle("Get Started", for: .normal)
+				self.nextButton.setTitle("button_get_started".localized(), for: .normal)
 			}, completion: nil)
+			DefaultsManager.hasSeenOnboarding = true
 		default:
 			let registerVC = RegisterViewController()
 			registerVC.modalPresentationStyle = .fullScreen

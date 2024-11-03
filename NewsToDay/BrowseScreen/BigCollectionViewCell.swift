@@ -66,7 +66,7 @@ class BigCollectionViewCell: UICollectionViewCell {
         categoryLabel.textColor = .white
         
         categoryLabel.snp.makeConstraints { make in
-            make.leading.equalToSuperview().inset(24)
+            make.leading.equalToSuperview().inset(10)
             make.bottom.equalToSuperview().inset(70)
         }
     }
@@ -75,13 +75,14 @@ class BigCollectionViewCell: UICollectionViewCell {
         contentView.addSubview(discriptionLabel)
         
         discriptionLabel.text = "The discription of news. The discription of news."
+		discriptionLabel.dropShadow()
         discriptionLabel.font = UIFont.interFont(ofSize: 16, weight: .bold)
         discriptionLabel.textColor = .white
         discriptionLabel.numberOfLines = 0
         
         discriptionLabel.snp.makeConstraints { make in
             make.top.equalTo(categoryLabel.snp.bottom).offset(8)
-            make.leading.equalToSuperview().inset(24)
+            make.leading.equalToSuperview().inset(10)
             make.trailing.equalToSuperview().inset(5)
             
         }

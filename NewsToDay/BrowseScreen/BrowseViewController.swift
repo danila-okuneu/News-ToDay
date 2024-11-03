@@ -8,30 +8,27 @@
 import UIKit
 import SnapKit
 
+
 final class BrowseViewController: TitlesBaseViewController {
     
     var newsManager = NewsManager()
-    var newsCategories: [String] {
-        return [
-            "random_newscategories".localized(),
-            "general_newscategories".localized(),
-            "business_newscategories".localized(),
-            "entertainment_newscategories".localized(),
-            "health_newscategories".localized(),
-            "science_newscategories".localized(),
-            "sports_newscategories".localized(),
-            "technology_newscategories".localized()
-        ]
-    }
-    
+	var newsCategories: [Category] { return DefaultsManager.selectedCategories }
+	var allCategories = ["random".localized()] + Category.allCases.map { $0.rawValue.localized() }
+		
     var selectedIndexPath: IndexPath?
     var currentCategory = "Random"
     var allNewsData: [NewsModel]?
     var displayedData: [NewsModel] = []
-    var categories: [String] = ["Science", "Entertainment"]
+	var categories: [Category] { Array(DefaultsManager.selectedCategories) }
     var recomNews:[NewsModel]?
     
     
+	private lazy var refreshControl: UIRefreshControl = {
+		let refreshControl = UIRefreshControl()
+		refreshControl.addTarget(self, action: #selector(refreshData), for: .valueChanged)
+		return refreshControl
+	}()
+	
     private let scrollView: UIScrollView = {
         let scrollView = UIScrollView()
         scrollView.translatesAutoresizingMaskIntoConstraints = false
@@ -145,6 +142,8 @@ final class BrowseViewController: TitlesBaseViewController {
             title: "browse_screen_title".localized(),
             description: "description_browse_title".localized()
         )
+		scrollView.refreshControl = refreshControl
+		
         scrollView.addSubview(containerStackView)
         
         containerStackView.addArrangedSubview(customNavBar)
@@ -241,23 +240,27 @@ final class BrowseViewController: TitlesBaseViewController {
         newsManager.fetchByKeyWord(keyWord: currentCategory, isCategory: true)
     }
     
-     func fetchRecomData() {
-        newsManager.fetchRandom(categories: categories) { [weak self] articles in
-            guard let self = self else { return }
-            self.didUpdateNews(manager: self.newsManager, news: articles, requestType: false)
+	func fetchRecomData() {
+		
+		let categoriesToFetch = DefaultsManager.selectedCategories.isEmpty ? Category.allCases : DefaultsManager.selectedCategories
+		
+		newsManager.fetchRandom(categories: categoriesToFetch) { [weak self] articles in
+			guard let self = self else { return }
+			self.didUpdateNews(manager: self.newsManager, news: articles, requestType: false)
 
-            self.recomNews = articles
-            DispatchQueue.main.async {
-                           self.bigCollectionV.reloadData()
-                       }
-        }
-         smallCollectionH.selectItem(
-            at: IndexPath(item: 0, section: 0),
-            animated: true,
-            scrollPosition: .centeredHorizontally
-         )
-    }
-    // MARK: See All Recommendations method
+			self.recomNews = articles
+			DispatchQueue.main.async {
+				self.bigCollectionV.reloadData()
+				if self.smallCollectionH.numberOfItems(inSection: 0) > 0 {
+					self.smallCollectionH.selectItem(
+						at: IndexPath(item: 0, section: 0),
+						animated: true,
+						scrollPosition: .centeredHorizontally
+					)
+				}
+			}
+		}
+	}    // MARK: See All Recommendations method
     
     @objc func viewAllTapped() {
         print(categories)
@@ -331,7 +334,7 @@ extension BrowseViewController: UICollectionViewDelegate, UICollectionViewDataSo
     ) -> Int {
         switch collectionView.tag {
         case 1:
-            return newsCategories.count
+			return allCategories.count
         case 2:
             return 5
         case 3:
@@ -351,7 +354,7 @@ extension BrowseViewController: UICollectionViewDelegate, UICollectionViewDataSo
                 withReuseIdentifier: "SmallHCollectionViewCell",
                 for: indexPath
             ) as! SmallHCollectionViewCell
-            cell.titleLabel.text = newsCategories[indexPath.item]
+			cell.titleLabel.text = allCategories[indexPath.item]
             return cell
         case 2:
             let cell = collectionView.dequeueReusableCell(
@@ -499,6 +502,14 @@ extension BrowseViewController: UICollectionViewDelegate, UICollectionViewDataSo
         }
         
     }
+	
+	@objc private func refreshData() {
+		fetchRecomData()
+	
+		DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+			self.refreshControl.endRefreshing()
+		}
+	}
 }
 
 extension BrowseViewController: UICollectionViewDelegateFlowLayout {
@@ -512,7 +523,7 @@ extension BrowseViewController: UICollectionViewDelegateFlowLayout {
             let height: CGFloat = 32
             let minimumWidth: CGFloat = 80
             
-            let text = newsCategories[indexPath.item]
+			let text = allCategories[indexPath.item]
             
             let width: CGFloat = (text as NSString).size(
                 withAttributes: [.font: UIFont.interFont(ofSize: 12)]
@@ -562,7 +573,7 @@ extension BrowseViewController: NewsManagerDelegate {
             
             DispatchQueue.main.async {
                 if requestType! {
-                                    self.bigCollectionH.reloadData()
+					self.bigCollectionH.reloadData()
                 }
             }
         } else {

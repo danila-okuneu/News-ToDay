@@ -2,7 +2,7 @@
 //  UIPageControl+Interacting.swift
 //  CarouselDemo
 //
-//  Created by Ugur Bozkurt on 28/04/2024.
+//  Created by Danila Okuneu on 2.09.24.
 //
 
 import UIKit
