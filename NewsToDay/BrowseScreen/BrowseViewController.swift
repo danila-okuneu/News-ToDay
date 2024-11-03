@@ -13,7 +13,12 @@ final class BrowseViewController: TitlesBaseViewController {
     
     var newsManager = NewsManager()
 	var newsCategories: [Category] { return DefaultsManager.selectedCategories }
-	var allCategories = ["random".localized()] + Category.allCases.map { $0.rawValue.localized() }
+    var allCategories: [String] {
+        get {
+            return ["random".localized()] + Category.allCases.map { $0.rawValue.localized()
+            }
+        }
+    }
 		
     var selectedIndexPath: IndexPath?
     var currentCategory = "Random"
