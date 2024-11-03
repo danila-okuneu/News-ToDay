@@ -11,75 +11,90 @@ import FirebaseFirestore
 import FirebaseAuth
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
-
-    var window: UIWindow?
-
-
-    func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
-       
-        guard let windowScene = (scene as? UIWindowScene) else { return }
+	
+	var window: UIWindow?
+	
+	
+	func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
+		
+		guard let windowScene = (scene as? UIWindowScene) else { return }
 		
 		DefaultsManager.loadData()
 		
 		window = UIWindow(frame: windowScene.coordinateSpace.bounds)
-        
-        Auth.auth().addStateDidChangeListener { auth, user in
-                if let user = user {
-                    print("User is signed in: \(user.uid)")
-                    let tabController = TabController()
-                    self.window?.rootViewController = tabController
-                } else {
-                    print("No user is signed in.")
-                    self.window?.rootViewController = OnboardingViewController()
-                }
-                self.window?.makeKeyAndVisible()
-            }
-    
-        
+		window?.backgroundColor = .app(.purpleDark)
+		
+		print(DefaultsManager.selectedCategories)
+		
+		if Auth.auth().currentUser == nil {
+			
+			self.window?.rootViewController = switchRootController()
+			
+		} else {
+			let tabController = TabController()
+			self.window?.rootViewController = tabController
+			
+			if !DefaultsManager.hasSelectedCategories {
+				tabController.present(FavoriteTopicsViewController(), animated: true)
+			}
+			
+		}
 		window?.windowScene = windowScene
 		window?.makeKeyAndVisible()
+	
+		let backButtonImage = UIImage(systemName: "arrow.left")?.withRenderingMode(.alwaysOriginal)
 		
-//		if DefaultsManager.isFirstOpen {
-//			let onboardingVC = OnboardingViewController()
-//			onboardingVC.modalPresentationStyle = .fullScreen
-//			tabController.present(onboardingVC, animated: false)
-//		}
+		UINavigationBar.appearance().backIndicatorImage = backButtonImage
+		UINavigationBar.appearance().backIndicatorTransitionMaskImage = backButtonImage
 		
-        let backButtonImage = UIImage(systemName: "arrow.left")?.withRenderingMode(.alwaysOriginal)
-        
-        UINavigationBar.appearance().backIndicatorImage = backButtonImage
-        UINavigationBar.appearance().backIndicatorTransitionMaskImage = backButtonImage
-
-    }
-
-    func sceneDidDisconnect(_ scene: UIScene) {
-        // Called as the scene is being released by the system.
-        // This occurs shortly after the scene enters the background, or when its session is discarded.
-        // Release any resources associated with this scene that can be re-created the next time the scene connects.
-        // The scene may re-connect later, as its session was not necessarily discarded (see `application:didDiscardSceneSessions` instead).
-    }
-
-    func sceneDidBecomeActive(_ scene: UIScene) {
-        // Called when the scene has moved from an inactive state to an active state.
-        // Use this method to restart any tasks that were paused (or not yet started) when the scene was inactive.
-    }
-
-    func sceneWillResignActive(_ scene: UIScene) {
-        // Called when the scene will move from an active state to an inactive state.
-        // This may occur due to temporary interruptions (ex. an incoming phone call).
-    }
-
-    func sceneWillEnterForeground(_ scene: UIScene) {
-        // Called as the scene transitions from the background to the foreground.
-        // Use this method to undo the changes made on entering the background.
-    }
-
-    func sceneDidEnterBackground(_ scene: UIScene) {
-        // Called as the scene transitions from the foreground to the background.
-        // Use this method to save data, release shared resources, and store enough scene-specific state information
-        // to restore the scene back to its current state.
-    }
-
-
+		
+		func switchRootController() -> UIViewController {
+			if !DefaultsManager.hasSeenOnboarding {
+				return OnboardingViewController()
+			}
+			
+			if DefaultsManager.isRegistered {
+				return LoginViewController()
+			}
+			
+			
+			return RegisterViewController()
+		}
+		
+	}
+	
+	
+	
+	
+	
+	func sceneDidDisconnect(_ scene: UIScene) {
+		// Called as the scene is being released by the system.
+		// This occurs shortly after the scene enters the background, or when its session is discarded.
+		// Release any resources associated with this scene that can be re-created the next time the scene connects.
+		// The scene may re-connect later, as its session was not necessarily discarded (see `application:didDiscardSceneSessions` instead).
+	}
+	
+	func sceneDidBecomeActive(_ scene: UIScene) {
+		// Called when the scene has moved from an inactive state to an active state.
+		// Use this method to restart any tasks that were paused (or not yet started) when the scene was inactive.
+	}
+	
+	func sceneWillResignActive(_ scene: UIScene) {
+		// Called when the scene will move from an active state to an inactive state.
+		// This may occur due to temporary interruptions (ex. an incoming phone call).
+	}
+	
+	func sceneWillEnterForeground(_ scene: UIScene) {
+		// Called as the scene transitions from the background to the foreground.
+		// Use this method to undo the changes made on entering the background.
+	}
+	
+	func sceneDidEnterBackground(_ scene: UIScene) {
+		// Called as the scene transitions from the foreground to the background.
+		// Use this method to save data, release shared resources, and store enough scene-specific state information
+		// to restore the scene back to its current state.
+	}
+	
+	
 }
 

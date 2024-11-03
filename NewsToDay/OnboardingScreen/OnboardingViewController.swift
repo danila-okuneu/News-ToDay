@@ -8,180 +8,201 @@
 import UIKit
 import SnapKit
 
+final class OnboardingViewController: UIViewController {
+	typealias DataSource = UICollectionViewDiffableDataSource<Int, Item>
 
-final class OnboardingViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
-   
-    var imageNames = ["chinatown", "handLuggage", "timesquare"]
-    
-    //MARK: - UI Elements
-    
-    
-    private lazy var onboardingCollectionView : UICollectionView = {
-        let layout = UICollectionViewFlowLayout()
-        layout.scrollDirection = .horizontal
-        layout.minimumLineSpacing = 22
-        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
-        collectionView.backgroundColor = .white
-        collectionView.isPagingEnabled = true
-        collectionView.delegate = self
-        collectionView.dataSource = self
-        collectionView.register(OnboardingCollectionViewCell.self, forCellWithReuseIdentifier: OnboardingCollectionViewCell.reuseId)
-        collectionView.showsHorizontalScrollIndicator = false
-        return collectionView
-    }()
-    
-    private var customPageControl : CustomPageControl = {
-        let pageControl = CustomPageControl()
-        pageControl.numberOfPages = 3
-        pageControl.currentPage = 0
-        return pageControl
-    }()
-   
-    private let titleLabel: UILabel = {
-        let label = UILabel()
-        label.text = "first_to_know_label".localized()
-        label.font = UIFont.interFont(ofSize: 24, weight: .bold)
-        label.textAlignment = .center
-        label.textColor = UIColor.app(.blackPrimary)
-        return label
-    }()
-    
-    private let descriptionLabel: UILabel = {
-        let label = UILabel()
-        label.text = "description_label".localized()
-        label.font = UIFont.interFont(ofSize: 16)
-        label.textColor = UIColor.app(.greyPrimary)
-        label.textAlignment = .center
-        label.numberOfLines = 2
-        return label
-    }()
-    
-    private let nextButton: UIButton = {
-        let button = UIButton(type: .system)
-        button.setTitle("next_button".localized(), for: .normal)
-        button.titleLabel?.font = UIFont.interFont(ofSize: 16)
-        button.backgroundColor = UIColor.app(.purplePrimary)
-        button.tintColor = .white
-        button.layer.cornerRadius = 12
-        return button
-    }()
-    
-    
-    //MARK: - Lifecycle
-    override func viewDidLoad() {
-        setupUI()
-        
-        nextButton.addTarget(self, action: #selector(nextButtonTapped), for: .touchUpInside)
+	// MARK: - UI Components
+	
+	private lazy var carouselSection = CarouselSection(collectionView: collectionView, pageControl: pageControl)
+	
+	private lazy var pageControl: CustomPageControl = {
+		let pageControl = CustomPageControl()
+		pageControl.numberOfPages = CarouselItems.imageNames.count
+		pageControl.currentPage = 0
+		return pageControl
+	}()
+	
+	private lazy var collectionView: UICollectionView = {
+		let view = UICollectionView(frame: .zero, collectionViewLayout: layout)
+		view.translatesAutoresizingMaskIntoConstraints = false
+		view.isScrollEnabled = false
+		view.delegate = self
+		return view
+	}()
+	
+	private lazy var titleLabel: UILabel = {
+		let label = UILabel()
+		label.font = .interFont(ofSize: 24, weight: .semibold)
+		label.textAlignment = .center
+		label.textColor = .app(.blackDark)
+		label.text = "first_to_know".localized()
+		return label
+	}()
+	
+	private lazy var descriptionLabel: UILabel = {
+		let label = UILabel()
+		label.font = .interFont(ofSize: 18)
+		label.textColor = .app(.greyDark)
+		label.textAlignment = .center
+		label.numberOfLines = 0
+		label.text = "description_first".localized()
+		return label
+	}()
 
-    }
-    
-    
-    //MARK: - Methods
-    
-    private func setupUI() {
-        view.backgroundColor = .white
-        
-        view.addSubview(onboardingCollectionView)
-        view.addSubview(customPageControl)
-        view.addSubview(titleLabel)
-        view.addSubview(descriptionLabel)
-        view.addSubview(nextButton)
-        setupConstraints()
-    }
-    
-    private func setupConstraints() {
-        onboardingCollectionView.snp.makeConstraints { make in
-            make.leading.trailing.equalToSuperview()
-            make.top.equalToSuperview().offset(120)
-            make.height.equalTo(336)
-        }
-        
-        customPageControl.snp.makeConstraints { make in
-            make.centerX.equalToSuperview()
-            make.top.equalTo(onboardingCollectionView.snp.bottom).offset(20)
-            make.height.equalTo(8)
-            make.width.equalTo(56)
-        }
-        
-        nextButton.snp.makeConstraints { make in
-            make.bottom.equalTo(view.safeAreaLayoutGuide).offset(-16)
-            make.leading.trailing.equalToSuperview().inset(40)
-            make.height.equalTo(50)
-        }
-        
-        descriptionLabel.snp.makeConstraints { make in
-            make.bottom.equalToSuperview().offset(-174)
-            make.leading.trailing.equalToSuperview().inset(16)
-        }
-        
-        titleLabel.snp.makeConstraints { make in
-            make.bottom.equalTo(descriptionLabel.snp.top).offset(-24)
-            make.leading.trailing.equalToSuperview().inset(16)
-        }
-    }
-    
-    @objc func nextButtonTapped() {
-        print("Next button tapped")
+	private lazy var nextButton: UIButton = {
+		let button = UIButton()
+		button.setTitle("next".localized(), for: .normal)
+		button.titleLabel?.font = .interFont(ofSize: 18, weight: .semibold)
+		button.setTitleColor(.white, for: .normal)
+		button.backgroundColor = .app(.purplePrimary)
+		button.layer.cornerRadius = 20
+		return button
+	}()
+	
+	// MARK: - Lifecycle
+	override func loadView() {
+		super.loadView()
+		setupViews()
+	}
 
-        let nextIndex = min(Int(onboardingCollectionView.contentOffset.x / onboardingCollectionView.frame.width) + 1, imageNames.count - 1)
-        onboardingCollectionView.scrollToItem(at: IndexPath(item: nextIndex, section: 0), at: .centeredHorizontally, animated: true)
-        
-        if nextIndex == imageNames.count - 1 {
-            nextButton.setTitle("get_started_button".localized(), for: .normal)
-            let loginVC = RegisterViewController()
-            loginVC.modalPresentationStyle = .overFullScreen
-            self.present(loginVC, animated: true, completion: nil)
-        }
-    }
-      
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return imageNames.count
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: OnboardingCollectionViewCell.reuseId, for: indexPath) as! OnboardingCollectionViewCell
-        cell.imageView.image = UIImage(named: imageNames[indexPath.item])
-        return cell
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        let collectionViewWidth = collectionView.frame.width
-        let defaultSize = CGSize(width: collectionViewWidth * 0.7, height: 336)
-        return defaultSize
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-        return UIEdgeInsets(top: 0, left: 44, bottom: 0, right: 44)
-    }
-    
-    func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        let widthImageAndSpacing = onboardingCollectionView.frame.width * 0.7 + 44
-        let currentPage = Int((scrollView.contentOffset.x + onboardingCollectionView.frame.width / 2) / widthImageAndSpacing)
-        customPageControl.currentPage = currentPage
-        
-        if currentPage == imageNames.count - 1 {
-            nextButton.setTitle("get_started_button".localized(), for: .normal)
-            titleLabel.isHidden = true
-        } else if currentPage == imageNames.count - 2 {
-            nextButton.setTitle("next_button".localized(), for: .normal)
-            titleLabel.isHidden = true
-        } else {
-            nextButton.setTitle("next_button".localized(), for: .normal)
-            titleLabel.isHidden = false
-        }
-        // масштабирование относительно отдаления от центра
-        let centerPoint = CGPoint(x: scrollView.frame.size.width / 2 + scrollView.contentOffset.x, y: scrollView.frame.size.height / 2)
-        
-        for cell in onboardingCollectionView.visibleCells {
-            guard let indexPath = onboardingCollectionView.indexPath(for: cell) else { continue }
-            let cellFrame = onboardingCollectionView.layoutAttributesForItem(at: indexPath)?.frame ?? CGRect.zero
-            let distanceFromCenter = abs(cellFrame.midX - centerPoint.x)
-            let scale = max(0.85, 1 - (distanceFromCenter / scrollView.frame.size.width))
-            
-            cell.transform = CGAffineTransform(scaleX: scale, y: scale)
-        }
-    }
+	override func viewDidLoad() {
+		super.viewDidLoad()
+		reloadData()
+	}
+
+	// MARK: - Layout
+	private func setupViews() {
+		view.backgroundColor = .white
+		view.addSubview(collectionView)
+		view.addSubview(pageControl)
+		
+		view.addSubview(titleLabel)
+		view.addSubview(descriptionLabel)
+		
+		view.addSubview(nextButton)
+		
+		nextButton.addTarget(self, action: #selector(nextButtonTapped), for: .touchUpInside)
+		makeConstraints()
+	}
+	
+	private func makeConstraints() {
+		collectionView.snp.makeConstraints { make in
+			make.top.equalTo(view.safeAreaLayoutGuide.snp.top).offset(10)
+			make.height.equalTo(view.snp.width)
+			make.left.right.equalTo(view.safeAreaLayoutGuide)
+		}
+		
+		pageControl.snp.makeConstraints { make in
+			make.top.equalTo(collectionView.snp.bottom)
+			make.centerX.equalToSuperview()
+			make.width.equalTo(40)
+			make.height.equalTo(10)
+		}
+		
+		nextButton.snp.makeConstraints { make in
+			make.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom)
+			make.left.equalTo(view.safeAreaLayoutGuide).offset(20)
+			make.right.equalTo(view.safeAreaLayoutGuide).offset(-20)
+			make.height.equalTo(60)
+		}
+		
+		descriptionLabel.snp.makeConstraints { make in
+			make.bottom.equalTo(nextButton.snp.top).offset(-40)
+			make.left.equalToSuperview().offset(20)
+			make.right.equalToSuperview().offset(-20)
+			make.centerX.equalToSuperview()
+		}
+		
+		titleLabel.snp.makeConstraints { make in
+			
+			make.bottom.equalTo(descriptionLabel.snp.top).offset(-30)
+			make.centerX.equalToSuperview()
+		}
+	}
+
+	private lazy var layout: UICollectionViewLayout = UICollectionViewCompositionalLayout { [self] sectionIndex, layoutEnvironment in
+		
+		self.carouselSection.didUpdatePage = { page in
+			self.pageControl.currentPage = page
+		}
+		
+		return self.carouselSection.layoutSection(for: sectionIndex, layoutEnvironment: layoutEnvironment)
+	}
+
+	private lazy var dataSource: DataSource = {
+		let carouselCellRegistration = UICollectionView.CellRegistration<OnboardingItemCell, Item> { cell, indexPath, itemIdentifier in
+			cell.configure(with: itemIdentifier.image)
+		}
+		let dataSource = DataSource(collectionView: collectionView) { collectionView, indexPath, itemIdentifier in
+			collectionView.dequeueConfiguredReusableCell(using: carouselCellRegistration, for: indexPath, item: itemIdentifier)
+		}
+		return dataSource
+	}()
+
+	private func reloadData() {
+		var snap = NSDiffableDataSourceSnapshot<Int, Item>()
+		snap.appendSections([0])
+		snap.appendItems(CarouselItems.makeItems())
+		
+		dataSource.apply(snap) { [weak self] in
+			guard let self = self else { return }
+			DispatchQueue.main.async {
+				self.collectionView.scrollToItem(at: IndexPath(item: 1, section: 0), at: .centeredHorizontally, animated: false)
+				self.collectionView.scrollToItem(at: IndexPath(item: 0, section: 0), at: .centeredHorizontally, animated: false)
+			}
+		}
+	}
+	
+	private func didPageChange(_ currentPage: Int) {
+		let indexPath = IndexPath(item: currentPage, section: 0)
+		collectionView.scrollToItem(at: indexPath, at: .centeredVertically, animated: true)
+	}
+	
+	// MARK: - Next button methods
+	private func updateElementsState(for page: Int) {
+		switch page {
+		case 1:
+			UIView.transition(with: titleLabel, duration: 0.2, options: .transitionCrossDissolve, animations: {
+				self.titleLabel.text = "stay_informed".localized()
+			}, completion: nil)
+
+			UIView.transition(with: descriptionLabel, duration: 0.2, options: .transitionCrossDissolve, animations: {
+				self.descriptionLabel.text = "description_second".localized()
+			}, completion: nil)
+		case 2:
+			UIView.transition(with: titleLabel, duration: 0.2, options: .transitionCrossDissolve, animations: {
+				self.titleLabel.text = "get_started".localized()
+			}, completion: nil)
+
+			UIView.transition(with: descriptionLabel, duration: 0.2, options: .transitionCrossDissolve, animations: {
+				self.descriptionLabel.text = "description_third".localized()
+			}, completion: nil)
+			
+			UIView.transition(with: nextButton, duration: 0.2, options: [.transitionCrossDissolve, .curveEaseOut], animations: {
+				self.nextButton.setTitle("button_get_started".localized(), for: .normal)
+			}, completion: nil)
+			DefaultsManager.hasSeenOnboarding = true
+		default:
+			let registerVC = RegisterViewController()
+			registerVC.modalPresentationStyle = .fullScreen
+			registerVC.modalTransitionStyle = .flipHorizontal
+			self.present(registerVC, animated: true)
+		}
+	}
+	
+	@objc private func nextButtonTapped() {
+		carouselSection.scrollToNextPage() { nextPage in
+			updateElementsState(for: nextPage)
+		}
+	}
+}
+
+extension OnboardingViewController: UICollectionViewDelegate {
+	func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+		carouselSection.applyTransform(to: cell, at: indexPath)
+		
+			
+	}
 }
 
 
-#Preview { OnboardingViewController() }

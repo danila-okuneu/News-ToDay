@@ -17,19 +17,24 @@ struct NewsManager {
     
     var delegate: NewsManagerDelegate?
     
-    let apiKey = "c79d25903c394f31816a5e00eaa10b7c"
-//    30804caa0fa442909fd0a2999f25c04c
-//    57420ecd8c544522a97e09f00b8f979d
-   // fab4adf6e44443e492c247e2dd606cd9
-    
-    func fetchRandom(categories: [String], completion: @escaping ([NewsModel]) -> Void) {
+    let apiKey = "66ebfdb00e474e718dc3a70bd709a6a6"
+//	66ebfdb00e474e718dc3a70bd709a6a6
+//	d507c162e0a84f1ba2ca94ad479f4473
+// 	52e11f09cba549a1a0817c88044c2783
+//	b1b8d7d4598c477aaeeab9946c28120e
+//	3868bda889de4df7aa38f2de477b1cfc
+//	30804caa0fa442909fd0a2999f25c04c
+//	57420ecd8c544522a97e09f00b8f979d
+//	fab4adf6e44443e492c247e2dd606cd9
+
+	func fetchRandom(categories: [Category], completion: @escaping ([NewsModel]) -> Void) {
         var newsArticles: [NewsModel] = []
         let fetchGroup = DispatchGroup()
         
         categories.forEach { topic in
             fetchGroup.enter()
 
-            let category = topic
+			let category = topic.rawValue
             let urlString = "https://newsapi.org/v2/top-headlines?category=\(category)&apiKey=\(apiKey)"
             
             if let url = URL(string: urlString) {
@@ -43,7 +48,7 @@ struct NewsManager {
                     }
                     
                     if let safeData = data {
-                        if let newsArray = self.parseJSON(safeData, category: topic)  {
+						if let newsArray = self.parseJSON(safeData, category: topic.rawValue)  {
                             newsArticles.append(contentsOf: newsArray)
                             
                         } else {
@@ -77,7 +82,7 @@ struct NewsManager {
         let urlString = "https://newsapi.org/v2/everything?q=\(keyWord)&apiKey=\(apiKey)"
         print(urlString)
         print("json \(keyWord)")
-        performRequest(with: urlString, category: "General", requestType: isCategory)
+        performRequest(with: urlString, category: "", requestType: isCategory)
         
     }
        
@@ -119,7 +124,7 @@ struct NewsManager {
                     print("Skipped removed content.")
                     continue
                 }
-                
+				
                 let author = article.author ?? ""
                 let title = article.title ?? ""
                 let content = article.content ?? "Read the full article on the site of the publisher"
