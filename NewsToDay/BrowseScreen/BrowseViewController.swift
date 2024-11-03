@@ -252,7 +252,7 @@ final class BrowseViewController: TitlesBaseViewController {
 		newsManager.fetchRandom(categories: categoriesToFetch) { [weak self] articles in
 			guard let self = self else { return }
 
-			self.didUpdateNews(manager: self.newsManager, news: articles, requestType: true)
+			self.didUpdateNews(manager: self.newsManager, news: articles, requestType: false)
 
 
 			self.recomNews = articles
