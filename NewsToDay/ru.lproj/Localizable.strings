@@ -27,6 +27,7 @@
 "categories_onboard_screen_title" = "Выберите любимые темы";
 "description_onboard_categories_title" = "Выберите несколько любимых тем, чтобы мы могли предлагать вам лучшие новости";
 "next_button_title" = "Далее";
+"no_selection_favourite" = "It's doesn't matter";
 
 // MARK: - Browse Screen
 "browse_screen_title" = "Обзор";
