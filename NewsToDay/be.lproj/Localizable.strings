@@ -16,6 +16,7 @@
 "get_started" = "Пачнём!";
 "description_third" = "Персаналізуйце свой вопыт, каб першымі бачыць навіны, \n якія вам важныя. Наперад!";
 "button_get_started" = "Пачаць";
+"no_selection_favourite" = "Гэта не мае значэння";
 
 // MARK: - TabBar Screen
 "tab_browse" = "Агляд";

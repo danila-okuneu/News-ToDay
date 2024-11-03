@@ -274,12 +274,7 @@ final class ProfileViewController: UIViewController, UIImagePickerControllerDele
     
     //MARK: Firebase
     func loadUserProfile() {
-        
-        guard let currentUser = Auth.auth().currentUser else {
-               print("No user")
-               return
-           }
-//        nameLabel.text = Auth.auth().currentUser?.displayName
+    
         emailLabel.text = Auth.auth().currentUser?.email
 
         let db = Firestore.firestore()
