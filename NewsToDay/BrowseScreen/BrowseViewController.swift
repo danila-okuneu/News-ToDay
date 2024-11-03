@@ -394,19 +394,19 @@ extension BrowseViewController: UICollectionViewDelegate, UICollectionViewDataSo
             selectedIndexPath = indexPath
             
             let categoriesAPI = [
-                "random",
-                "general",
-                "business",
-                "entertainment",
-                "health",
-                "science",
-                "sports",
-                "technology"
+                "Random",
+                "General",
+                "Business",
+                "Entertainment",
+                "Health",
+                "Science",
+                "Sports",
+                "Technology"
             ]
             
             let choosedCategory = categoriesAPI[selectedIndexPath?.row ?? 0]
             
-            if choosedCategory == "random" {
+            if choosedCategory == "Random" {
                 let randomCategories = Array(categoriesAPI.dropFirst())
                 newsManager.getRandomNews(for: randomCategories) { news in
                     self.allNewsData = news
@@ -463,19 +463,19 @@ extension BrowseViewController: UICollectionViewDelegate, UICollectionViewDataSo
     
     private func getRandomNews() {
         let categoriesAPI = [
-            "random",
-            "general",
-            "business",
-            "entertainment",
-            "health",
-            "science",
-            "sports",
-            "technology"
+            "Random",
+            "General",
+            "Business",
+            "Entertainment",
+            "Health",
+            "Science",
+            "Sports",
+            "Technology"
         ]
         
         let choosedCategory = categoriesAPI[selectedIndexPath?.row ?? 0]
         
-        if choosedCategory == "random" {
+        if choosedCategory == "Random" {
             let randomCategories = Array(categoriesAPI.dropFirst())
             newsManager.getRandomNews(for: randomCategories) { news in
                 self.allNewsData = news
