@@ -13,8 +13,8 @@ final class FavoriteTopicsViewController: BaseCategoriesViewController {
 	
 	let nextButton: UIButton = {
 		let button = UIButton(type: .system)
-		button.setTitle("next_button_title".localized(), for: .normal)
-		button.titleLabel?.font = UIFont.interFont(ofSize: 16)
+		button.setTitle("no_selection_favourite".localized(), for: .normal)
+		button.titleLabel?.font = UIFont.interFont(ofSize: 18, weight: .semibold)
 		button.backgroundColor = UIColor.app(.purplePrimary)
 		button.tintColor = .white
 		button.layer.cornerRadius = 12
@@ -28,8 +28,6 @@ final class FavoriteTopicsViewController: BaseCategoriesViewController {
 		nextButton.addTarget(self, action: #selector(nextButtonTapped), for: .touchUpInside)
 
 		setTitlesNavBar(title: "categories_onboard_screen_title".localized(), description: "description_onboard_categories_title".localized())
-		nextButton.setTitle("next_button_title".localized(), for: .normal)
-		
 		
 	}
 	
@@ -58,31 +56,39 @@ final class FavoriteTopicsViewController: BaseCategoriesViewController {
 			window.makeKeyAndVisible()
 			
 		}
-//		if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
-//		   let window = windowScene.windows.first,
-//		   let tabBarController = window.rootViewController as? TabController {
-//			tabBarController.selectedIndex = 0
-//			print("Selected Tab Index: \(tabBarController.selectedIndex)")
-//			
-//			// Проверяем, какие контроллеры есть в tabBarController
-//			if let navController = tabBarController.viewControllers?[0] as? UINavigationController,
-//			   let browseVC = navController.viewControllers.first as? BrowseViewController {
-//				browseVC.fetchRecomData()
-//			} else {
-//				print("BrowseViewController not found.")
-//			}
-//		}
-//			if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
-//			   let window = windowScene.windows.first {
-//				window.rootViewController = tabBarController
-//				window.makeKeyAndVisible()
-//			} else {
-//				print("Could not retrieve tab bar controller or window.")
-//				
-//			
-//		}
 	}
 
+	
+	@objc override func topicButtonTapped(_ sender: CategoryButton) {
+		
+		let category = sender.category
+		
+		if DefaultsManager.selectedCategories.contains(category) {
+			DefaultsManager.selectedCategories.removeAll(where: { $0 == category } )
+			sender.deactivate()
+		} else {
+			DefaultsManager.selectedCategories.append(category)
+			sender.activate()
+		}
+		
+		updateButtonState()
+		
+		print("You select: \(category.rawValue)")
+		print("Actual calegories: \(DefaultsManager.selectedCategories.map( {$0.rawValue } ))")
+	}
+	
+	func updateButtonState() {
+		if DefaultsManager.selectedCategories.isEmpty {
+			UIView.transition(with: nextButton, duration: 0.2, options: .transitionCrossDissolve) {
+				self.nextButton.setTitle("no_selection_favourite".localized(), for: .normal)
+			}
+		} else {
+			UIView.transition(with: nextButton, duration: 0.2, options: .transitionCrossDissolve) {
+				self.nextButton.setTitle("next_button_title".localized(), for: .normal)
+			}
+		}
+		
+	}
 }
 
 

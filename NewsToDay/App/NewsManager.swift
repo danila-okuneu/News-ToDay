@@ -17,7 +17,8 @@ struct NewsManager {
     
     var delegate: NewsManagerDelegate?
     
-    let apiKey = "bc469d6a6dfd4c319cc34a34714e46c4"
+    let apiKey = "d507c162e0a84f1ba2ca94ad479f4473"
+
 //	66ebfdb00e474e718dc3a70bd709a6a6
 //	d507c162e0a84f1ba2ca94ad479f4473
 // 	52e11f09cba549a1a0817c88044c2783
