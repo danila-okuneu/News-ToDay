@@ -98,8 +98,13 @@ class BigVerticalCollectionViewCell: UICollectionViewCell {
     }
     
     func didUpdateImage(from url: String) {
-        guard let imageUrl = URL(string: url) else { return }
         
+        guard let imageUrl = URL(string: url) else {
+            DispatchQueue.main.async {
+                self.articleImageView.image = UIImage(named: "chinatown")
+            }
+            return
+        }
         let activityIndicator = UIActivityIndicatorView(style: .medium)
         activityIndicator.center = articleImageView.center
         activityIndicator.hidesWhenStopped = true
@@ -115,6 +120,9 @@ class BigVerticalCollectionViewCell: UICollectionViewCell {
                 }
             } else {
                 print(error?.localizedDescription ?? "error")
+                DispatchQueue.main.async {
+                    self.articleImageView.image = UIImage(named: "chinatown")
+                }
             }
         }.resume()
     }
