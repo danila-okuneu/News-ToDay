@@ -14,8 +14,9 @@ final class ProfileViewController: UIViewController, UIImagePickerControllerDele
 	
 	private lazy var avatar: UIImageView = {
 		let imageView = UIImageView()
+		imageView.image = UIImage(named: "avatar")
 		imageView.layer.cornerRadius = Constants.avatarHeight / 2
-		imageView.backgroundColor = .red
+		imageView.backgroundColor = .app(.greyLight)
 		return imageView
 	}()
 	
@@ -38,14 +39,14 @@ final class ProfileViewController: UIViewController, UIImagePickerControllerDele
 		let label = UILabel()
 		label.font = .interFont(ofSize: 20, weight: .semibold)
 		label.textColor = .app(.blackDark)
-		label.text = "Dev P"
+		label.text = "Team 6"
 		return label
 	}()
 	
 	private let emailLabel: UILabel = {
 		let label = UILabel()
 		label.textColor = .app(.blackLighter)
-		label.text = "dev@gmail.com"
+		label.text = "team6@best.com"
 		label.font = .interFont(ofSize: 18)
 		return label
 	}()
@@ -254,8 +255,9 @@ final class ProfileViewController: UIViewController, UIImagePickerControllerDele
         do {
           try Auth.auth().signOut()
             
-            let loginVC = RegisterViewController()
-            loginVC.modalPresentationStyle = .overFullScreen
+			let loginVC = LoginViewController()
+			loginVC.modalPresentationStyle = .fullScreen
+			loginVC.modalTransitionStyle = .flipHorizontal
             self.present(loginVC, animated: true, completion: nil)
             
         } catch let signOutError as NSError {

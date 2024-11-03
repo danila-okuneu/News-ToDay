@@ -13,7 +13,11 @@ class BigCollectionViewCell: UICollectionViewCell {
     let bookmarkImageView = UIImageView()
     let categoryLabel = UILabel()
     let discriptionLabel = UILabel()
-    var isBookmarked = false
+    var isBookmarked: Bool = false {
+        didSet {
+            updateBoormarkImage()
+        }
+    }
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -66,7 +70,7 @@ class BigCollectionViewCell: UICollectionViewCell {
         categoryLabel.textColor = .white
         
         categoryLabel.snp.makeConstraints { make in
-            make.leading.equalToSuperview().inset(24)
+            make.leading.equalToSuperview().inset(10)
             make.bottom.equalToSuperview().inset(70)
         }
     }
@@ -75,16 +79,22 @@ class BigCollectionViewCell: UICollectionViewCell {
         contentView.addSubview(discriptionLabel)
         
         discriptionLabel.text = "The discription of news. The discription of news."
+		discriptionLabel.dropShadow()
         discriptionLabel.font = UIFont.interFont(ofSize: 16, weight: .bold)
         discriptionLabel.textColor = .white
         discriptionLabel.numberOfLines = 0
         
         discriptionLabel.snp.makeConstraints { make in
             make.top.equalTo(categoryLabel.snp.bottom).offset(8)
-            make.leading.equalToSuperview().inset(24)
+            make.leading.equalToSuperview().inset(10)
             make.trailing.equalToSuperview().inset(5)
             
         }
+    }
+    
+    private func updateBoormarkImage() {
+        let imageName = isBookmarked ? "bookmark.fill" : "bookmark"
+        bookmarkImageView.image = UIImage(systemName: imageName)
     }
     
     func set(article: NewsModel, isBookmarked: Bool) {
@@ -100,11 +110,10 @@ class BigCollectionViewCell: UICollectionViewCell {
         
         if isBookmarked {
             bookmarkImageView.image = UIImage(systemName: "bookmark.fill")
-            bookmarkImageView.tintColor = .white
         } else {
             bookmarkImageView.image = UIImage(systemName: "bookmark")
-            bookmarkImageView.tintColor = .white
         }
+        bookmarkImageView.tintColor = .white
     }
     
     func didUpdateImage(from url: String) {

@@ -23,7 +23,7 @@ final class BookmarksViewController: TitlesBaseViewController {
         view.isHidden = true
         return view
     }()
-    
+        
     //TEST DATA
     //private var bookmarks = BookmarksTests.data
     //private var bookmarks = [Bookmark]()
@@ -94,11 +94,16 @@ final class BookmarksViewController: TitlesBaseViewController {
     
     private func updateUI(with bookmarks: [NewsModel]) {
         if bookmarks.isEmpty {
-            emptyView.isHidden = false
+            DispatchQueue.main.async {
+                self.emptyView.isHidden = false
+                self.tableView.isHidden = true
+                self.view.bringSubviewToFront(self.emptyView)
+            }
         } else {
-            emptyView.isHidden = true
             self.bookmarks = bookmarks
             DispatchQueue.main.async {
+                self.emptyView.isHidden = true
+                self.tableView.isHidden = false
                 self.tableView.reloadData()
                 //if we have before empty state, show tableview exactly
                 self.view.bringSubviewToFront(self.tableView)
@@ -156,6 +161,7 @@ extension BookmarksViewController: UITableViewDelegate, UITableViewDataSource {
                 //update favorites only if we have success persistence update
                 bookmarks.remove(at: indexPath.row)
                 tableView.deleteRows(at: [indexPath], with: .left)
+                updateUI(with: bookmarks)
                 return
             }
             print(error)

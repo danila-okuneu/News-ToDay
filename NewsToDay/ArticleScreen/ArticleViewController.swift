@@ -64,18 +64,21 @@ final class ArticleViewController: UIViewController {
     
     func setupUI() {
         
+
         scrollView.translatesAutoresizingMaskIntoConstraints = false
+		
+		scrollView.alwaysBounceVertical = true
         contentView.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(scrollView)
         scrollView.addSubview(contentView)
         
         NSLayoutConstraint.activate([
-                 scrollView.topAnchor.constraint(equalTo: view.topAnchor, constant: 0),
+                 scrollView.topAnchor.constraint(equalTo: view.topAnchor),
                  scrollView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
                  scrollView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
                  scrollView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
                  
-                 contentView.topAnchor.constraint(equalTo: scrollView.topAnchor, constant: -60),
+				 contentView.topAnchor.constraint(equalTo: scrollView.topAnchor, constant: -65),
                  contentView.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor),
                  contentView.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor),
                  contentView.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor),
@@ -92,6 +95,7 @@ final class ArticleViewController: UIViewController {
         
         categoryLabel.text = topic
         categoryLabel.textColor = .white
+		categoryLabel.dropShadow()
         categoryLabel.backgroundColor = UIColor.app(.purplePrimary)
         categoryLabel.layer.masksToBounds = true
         categoryLabel.layer.cornerRadius = 15
@@ -103,10 +107,7 @@ final class ArticleViewController: UIViewController {
         contentView.addSubview(categoryLabel)
         
         titleLabel.textColor = .white
-        titleLabel.shadowColor = .black
-        titleLabel.shadowOffset = CGSize(width: 0, height: 0)
-        titleLabel.layer.shadowRadius = 9
-        titleLabel.layer.shadowOpacity = 0.9
+		titleLabel.dropShadow()
         titleLabel.font = UIFont.interFont(ofSize: 20, weight: .semibold)
         titleLabel.adjustsFontSizeToFitWidth = true
         titleLabel.minimumScaleFactor = 0.2
@@ -115,15 +116,14 @@ final class ArticleViewController: UIViewController {
         contentView.addSubview(titleLabel)
         
         authorLabel.textColor = .white
-        authorLabel.shadowColor = .black
-        authorLabel.shadowOffset = CGSize(width: 0, height: 0)
-        authorLabel.layer.shadowRadius = 9
-        authorLabel.layer.shadowOpacity = 0.9
+		authorLabel.dropShadow()
         authorLabel.font = UIFont.interFont(ofSize: 13, weight: .bold)
         authorLabel.translatesAutoresizingMaskIntoConstraints = false
         contentView.addSubview(authorLabel)
         
+		
         authorConstLabel.text = "Author"
+		authorConstLabel.dropShadow()
         authorConstLabel.textColor = .white
         authorConstLabel.font = UIFont.interFont(ofSize: 12, weight: .regular)
         authorConstLabel.translatesAutoresizingMaskIntoConstraints = false
@@ -131,15 +131,13 @@ final class ArticleViewController: UIViewController {
         
         dateLabel.textColor = .white
         dateLabel.textAlignment = .right
-        dateLabel.shadowColor = .black
-        dateLabel.shadowOffset = CGSize(width: 0, height: 0)
-        dateLabel.layer.shadowRadius = 9
-        dateLabel.layer.shadowOpacity = 0.9
+		dateLabel.dropShadow()
         dateLabel.font = UIFont.interFont(ofSize: 13, weight: .bold)
         dateLabel.translatesAutoresizingMaskIntoConstraints = false
         contentView.addSubview(dateLabel)
         
         articleLabel.textColor = .black
+		
         articleLabel.font = UIFont.interFont(ofSize: 18, weight: .regular)
         articleLabel.textColor = UIColor.app(.greyDark)
         articleLabel.numberOfLines = 0
@@ -150,6 +148,7 @@ final class ArticleViewController: UIViewController {
         let imgConfigBook = UIImage.SymbolConfiguration(pointSize: 20, weight: .medium, scale: .medium)
         let imageBook = UIImage(systemName: "bookmark", withConfiguration: imgConfigBook)
         bookmarkButton.setImage(imageBook, for: .normal)
+		bookmarkButton.dropShadow()
         bookmarkButton.tintColor = .white
         bookmarkButton.addTarget(self, action: #selector(bookmarkButtonTapped), for: .touchUpInside)
         bookmarkButton.translatesAutoresizingMaskIntoConstraints = false
@@ -157,6 +156,7 @@ final class ArticleViewController: UIViewController {
         let imgConfigShare = UIImage.SymbolConfiguration(pointSize: 20, weight: .medium, scale: .medium)
         let imageShare = UIImage(systemName: "arrowshape.turn.up.right", withConfiguration: imgConfigShare)
         shareButton.setImage(imageShare, for: .normal)
+		shareButton.dropShadow()
         shareButton.tintColor = .white
         shareButton.addTarget(self, action: #selector(shareTapped), for: .touchUpInside)
         shareButton.translatesAutoresizingMaskIntoConstraints = false
@@ -316,8 +316,13 @@ extension ArticleViewController {
             categoryLabel.text = article.category
                 authorLabel.text = article.author
                 dateLabel.text = article.publishedAt.makeDate()
-                articleLabel.text = article.content + "\n\nRead more at: \n" + article.urlArticle
+			let attrStr = NSMutableAttributedString(string: article.content + "\n\nRead more at: \n")
 
+			let attributedLink = NSAttributedString(string: article.urlArticle, attributes: [NSAttributedString.Key.link: article.urlArticle])
+			
+			attrStr.append(attributedLink)
+			articleLabel.attributedText = attrStr
+		
                 // Загрузка изображения, если оно доступно
                 if let urlToImage = article.urlToImage {
                     didUpdateImage(from: urlToImage)
