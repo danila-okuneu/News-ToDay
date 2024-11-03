@@ -13,7 +13,11 @@ class BigCollectionViewCell: UICollectionViewCell {
     let bookmarkImageView = UIImageView()
     let categoryLabel = UILabel()
     let discriptionLabel = UILabel()
-    var isBookmarked = false
+    var isBookmarked: Bool = false {
+        didSet {
+            updateBoormarkImage()
+        }
+    }
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -87,6 +91,11 @@ class BigCollectionViewCell: UICollectionViewCell {
         }
     }
     
+    private func updateBoormarkImage() {
+        let imageName = isBookmarked ? "bookmark.fill" : "bookmark"
+        bookmarkImageView.image = UIImage(systemName: imageName)
+    }
+    
     func set(article: NewsModel, isBookmarked: Bool) {
         newsImageView.image = UIImage()
         discriptionLabel.text = article.description
@@ -100,11 +109,10 @@ class BigCollectionViewCell: UICollectionViewCell {
         
         if isBookmarked {
             bookmarkImageView.image = UIImage(systemName: "bookmark.fill")
-            bookmarkImageView.tintColor = .white
         } else {
             bookmarkImageView.image = UIImage(systemName: "bookmark")
-            bookmarkImageView.tintColor = .white
         }
+        bookmarkImageView.tintColor = .white
     }
     
     func didUpdateImage(from url: String) {

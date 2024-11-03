@@ -299,18 +299,7 @@ final class BrowseViewController: TitlesBaseViewController {
         smallCollectionH.reloadData()
     }
     
-    //MARK: - Bookmark functionality
-    private func imageTapped(for image: UIImageView, isSelected: inout Bool) {
-        isSelected.toggle()
-        
-        if isSelected {
-            image.image = UIImage(systemName: "bookmark.fill")
-        } else {
-            image.image = UIImage(systemName: "bookmark")
-        }
-        image.tintColor = .white
-    }
-    
+    //MARK: - Bookmark functionality    
     private func checkBookmark(for article: NewsModel) -> Bool {
         var state = false
         PersistenceManager.isBookmarked(article) { [weak self] isBookmarked in
@@ -433,6 +422,7 @@ extension BrowseViewController: UICollectionViewDelegate, UICollectionViewDataSo
             if cell.bookmarkImageView.frame.contains(touchLocation) {
                 let article = displayedData[indexPath.row]
                 let isBookmarked = checkBookmark(for: article)
+                cell.isBookmarked = !isBookmarked
                 let actionType: PersistenceActionType = isBookmarked ? .remove : .add
                 
                 PersistenceManager.updateWith(bookmark: article, actionType: actionType) { [weak self] error in
@@ -442,9 +432,6 @@ extension BrowseViewController: UICollectionViewDelegate, UICollectionViewDataSo
                         return
                     }
                 }
-                
-                imageTapped(for: cell.bookmarkImageView, isSelected: &cell.isBookmarked)
-                
                 return
             }
             animationForTuchCollection(for: cell)
