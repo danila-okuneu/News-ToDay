@@ -78,7 +78,15 @@ class BigVerticalCollectionViewCell: UICollectionViewCell {
     
     func set(article: NewsModel) {
         articleImageView.image = UIImage()
-        descriptionLabel.text = article.description
+        
+        if article.description != "" {
+            descriptionLabel.text = article.description
+        } else if article.title != "" {
+            descriptionLabel.text = article.title
+        } else {           
+            descriptionLabel.text = "Interestng article on the site of the publisher"
+}
+        
         categoriesLabel.text = article.category
         
         if let urlToImage = article.urlToImage {
