@@ -163,7 +163,7 @@ class BaseCategoriesViewController: TitlesBaseViewController {
         
     }
     
-    @objc private func nextButtonTapped(_ sender: UIButton) {
+    @objc func nextButtonTapped(_ sender: UIButton) {
         print("tapped next")
         
         if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
@@ -181,11 +181,11 @@ class BaseCategoriesViewController: TitlesBaseViewController {
             } else {
                 print("BrowseViewController not found.")
             }
-        }
-            if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
-               let window = windowScene.windows.first {
-                window.rootViewController = tabBarController
-                window.makeKeyAndVisible()
+//        }
+//            if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
+//               let window = windowScene.windows.first {
+//                window.rootViewController = tabBarController
+//                window.makeKeyAndVisible()
             } else {
                 print("Could not retrieve tab bar controller or window.")
                 
